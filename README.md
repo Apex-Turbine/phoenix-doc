@@ -1,2 +1,0 @@
-# phoenix-doc
-Phoenix Documentation
