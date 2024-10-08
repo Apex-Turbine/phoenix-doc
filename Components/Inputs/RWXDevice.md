@@ -1,8 +1,8 @@
-# APEXFileDevice
+# RWX Reader
 
 ## Description
 
-Opens an APEX rwx/pkx file and reads in the packets.
+Opens an APEX rwx file and reads in the packets.
 
 ## I/O
 
@@ -12,7 +12,7 @@ Produces single precision vectors for both APEX signals. Parameters only used fo
 
 Component specific global keys:
 - filename
-	- Accesible path to find the rwx/pkx file at
+	- Accesible path to find the rwx file at
 	- No default, **Must** be present or component will take no action
 
 
