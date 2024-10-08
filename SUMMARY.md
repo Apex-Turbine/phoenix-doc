@@ -2,10 +2,10 @@
 
 * [APEX Components](README.md)
   * [Inputs](Components/Inputs/README.md)
-    * [DS Receiver](Components/Inputs/DSReceiver.md)
-    * [DX+ Subscriber](Components/Inputs/DX+Subscriber.md)
     * [Data Simulator](Components/Inputs/DataSimulator.md)
     * [Datatel](Components/Inputs/Datatel.md)
+    * [DS Receiver](Components/Inputs/DSReceiver.md)
+    * [DX+ Subscriber](Components/Inputs/DX+Subscriber.md)
     * [MeCalc Device](Components/Inputs/MeCalcDevice.md)
     * [NI Device](Components/Inputs/NIDevice.md)
     * [RWX Reader](Components/Inputs/RWXDevice.md)
