@@ -32,5 +32,4 @@
     * [Rev Resample](Components/Processors/RevResample.md)
     * [Statistics](Components/Processors/Statistics.md)
     * [Tach](Components/Processors/Tach.md)
-    * [TW Processor](Components/Processors/TWProcessor.md)
     * [Triggers](Components/Processors/Triggers.md)
