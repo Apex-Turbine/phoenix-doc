@@ -1,4 +1,4 @@
-# APEXSimDevice
+# Sweep Simulator
 
 ## Description
 
