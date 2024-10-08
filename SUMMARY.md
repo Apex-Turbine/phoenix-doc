@@ -1,8 +1,6 @@
 # Table of contents
 
-* [phoenix-doc](README.md)
-* [Components](components/README.md)
-  * [APEX Components](Components/APEXComponents.md)
+* [APEX Components](Components/APEXComponents.md)
   * [Inputs](components/inputs/README.md)
     * [APEXSimDevice](Components/Inputs/APEXSimDevice.md)
     * [DSReceiver](Components/Inputs/DSReceiver.md)
@@ -12,7 +10,7 @@
     * [FocisDevice](Components/Inputs/FocisDevice.md)
     * [MeCalcDevice](Components/Inputs/MeCalcDevice.md)
     * [NIDevice](Components/Inputs/NIDevice.md)
-    * [APEXFileDevice](Components/Inputs/RWXDevice.md)
+    * [RWX Reader](Components/Inputs/RWXDevice.md)
     * [SQLiteInput](Components/Inputs/SQLiteInput.md)
     * [SoundDevice](Components/Inputs/SoundDevice.md)
     * [VTIDSADevice](Components/Inputs/VTIDSADevice.md)
