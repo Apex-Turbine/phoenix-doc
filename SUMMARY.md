@@ -1,6 +1,6 @@
 # Table of contents
 
-* [APEX Components](README.md)
+* [APEX Phoenix Components](README.md)
   * [Inputs](Components/Inputs/README.md)
     * [Data Simulator](Components/Inputs/DataSimulator.md)
     * [Datatel](Components/Inputs/Datatel.md)
