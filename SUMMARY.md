@@ -1,6 +1,6 @@
 # Table of contents
 
-* [APEX Components](APEXComponents.md)
+* [APEX Components](README.md)
   * [Inputs](Components/Inputs/README.md)
     * [Sweep Simulator](Components/Inputs/SweepSimulator.md)
     * [DS Receiver](Components/Inputs/DSReceiver.md)
