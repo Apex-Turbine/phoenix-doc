@@ -1,6 +1,6 @@
 # APEXSimDevice
 
-## Description
+## Description - test
 
 Produces a sweeping pseudo-sine wave on each channel for testing. Sine wave is made of several parabolic segments.
 
@@ -11,14 +11,13 @@ Produces single precision vectors for each channel.
 ## JSON Setup Keys
 
 Component specific global keys:
-- samplerate
-	- Rate, in Hz, that the component should produce samples for each channel.
-	- Default, 102.4kHz
+
+* samplerate
+  * Rate, in Hz, that the component should produce samples for each channel.
+  * Default, 102.4kHz
 
 This component follows standard input keys:
-- name
-- units
-- size
 
-
-
+* name
+* units
+* size
