@@ -25,5 +25,5 @@ This component follows standard input keys:
 - sourcename
 - streamid
 
-[Back](PhoenixComponents.md)
+
 

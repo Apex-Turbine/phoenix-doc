@@ -24,5 +24,5 @@ Component specific input keys:
 	- Vector of coefficients starting from the highest order
 	- No default, **Must** be present or channel will be ignored
 
-[Back](PhoenixComponents.md)
+
 

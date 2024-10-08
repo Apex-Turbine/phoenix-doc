@@ -15,5 +15,5 @@ Component specific global keys:
 	- Name of the task as shown in NIMax or similar NI software.
 	- No default, **Must** be present or component will take no action
 
-[Back](PhoenixComponents.md)
+
 

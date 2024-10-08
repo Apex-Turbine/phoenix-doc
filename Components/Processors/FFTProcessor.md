@@ -40,5 +40,5 @@ Component specific input keys:
 	- Set the index to use if in single value mode
 	- No default, **Must** be specified to use single mode
 
-[Back](PhoenixComponents.md)
+
 

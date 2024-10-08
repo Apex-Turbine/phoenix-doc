@@ -21,5 +21,5 @@ Component specific global keys:
 	- Name of the sound input device to use
 	- Default, system default device
 
-[Back](PhoenixComponents.md)
+
 

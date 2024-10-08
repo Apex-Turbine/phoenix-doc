@@ -15,5 +15,5 @@ Component specific global keys:
 	- Accesible path to find the rwx/pkx file at
 	- No default, **Must** be present or component will take no action
 
-[Back](PhoenixComponents.md)
+
 
