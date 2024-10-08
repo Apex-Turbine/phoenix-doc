@@ -2,7 +2,7 @@
 
 * [APEX Components](README.md)
   * [Inputs](readme/inputs/README.md)
-    * [APEXSimDevice](Components/Inputs/APEXSimDevice.md)
+    * [Sweep Simulator](Components/Inputs/Sweep Simulator.md)
     * [DSReceiver](Components/Inputs/DSReceiver.md)
     * [DX+Subscriber](Components/Inputs/DX+Subscriber.md)
     * [DataSimulator](Components/Inputs/DataSimulator.md)
