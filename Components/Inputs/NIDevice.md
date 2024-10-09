@@ -1,5 +1,12 @@
 # NI Device
 ## Settings
+- Task Name
+  - Name of NI MAX task to load
+  - No default, **Must** be present or component will take no action
+
+#### Functionality
+- Pull Setup
+  - This button **must** be pressed to test the connection and pull setup information from the device
 ___
 # Phoenix API
 ___
