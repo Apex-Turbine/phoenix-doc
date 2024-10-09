@@ -25,19 +25,24 @@
   * Wait
     * Makes the FIFO wait for reading before adding more data to the fifo. This prevents data loss, but if the client can't keep up, the memory usage will increase until eventual application or system crash.
 * Channel List Dropdown
-  * Shows a list of all channels in the Setup
+  * Shows a list of all channels in the Setup (Pull Setup to populate dropdown)
   * Allows you to change settings on a per channel basis or Apply All
+  #### Settings available when Channels are present
     * Function
       * selection of IEPE enables a field for setting Excitation Current
       * selection of Strain enables all available options for Strain mode (gauge resistance, gauge factor, etc.)
     * Sample Rate
       * all channels on a card must have the same sample rate
+      * Default, 102.4 kHz
     * Coupling
-        - TODO add info
+        - Stream Coupling (AC, DC, GND)
+        - Default, AC
     * Mode
-        - TODO add info
+        - Stream Mode (Differential, Single Ended, Pseudo Differential)
+        - Default, Differential
     * Range
-        - TODO add info
+        - Stream Range
+        - Default, 10
 
 ___
 # Phoenix API
