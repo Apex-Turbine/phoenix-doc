@@ -1,5 +1,8 @@
 # FocisDevice
-
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Opens a connection to a local Focis server to retrieve tip timing data from.

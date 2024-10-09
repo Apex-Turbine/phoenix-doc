@@ -1,5 +1,8 @@
 # RWX Reader
-
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Opens an APEX rwx file and reads in the packets.

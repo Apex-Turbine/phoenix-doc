@@ -1,5 +1,8 @@
-# NIDevice
-
+# NI Device
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Opens an NI task to be run and captured. Currently has limited settings import.

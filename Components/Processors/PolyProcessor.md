@@ -1,5 +1,8 @@
-# PolyProcessor
-
+# Poly Processor
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Applies a polynomial transform to incoming messages on an element-wise basis.

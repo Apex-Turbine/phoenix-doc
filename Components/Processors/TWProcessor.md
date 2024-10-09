@@ -1,5 +1,8 @@
-# TWProcessor
-
+# TW Processor
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Performs buffering and windowing of input samples, and submits them to a 

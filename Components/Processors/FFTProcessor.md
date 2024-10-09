@@ -1,5 +1,27 @@
-# FFTProcessor
+# FFT Processor
+## Settings
 
+- Block Size
+	- How many samples to use in each FFT pass
+	- Default, 1024
+
+- Overlap
+	- The ratio of FFT size to block size. 
+	- When the FFT size is greater than the base block size, multiple blocks are chained together to perform a higher resolution FFT. This increases overall signal FFT resolution and reduces averaging
+	- Default, None
+
+- Scalng
+	- Used to set the FFT scaling upon transformation to the frequency domain
+	- Default, P2P
+
+- Window
+	- A window name to be applied
+	- Options: None, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
+	- Default, Blakman-Harris
+
+___
+# Phoenix API
+___
 ## Description
 
 Performs buffering and windowing of input samples, and submits them to a floating-point FFT library. 
@@ -39,6 +61,3 @@ Component specific input keys:
 - singleid
 	- Set the index to use if in single value mode
 	- No default, **Must** be specified to use single mode
-
-
-

@@ -1,5 +1,8 @@
-# SoundOutput
-
+# Sound Output
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Opens a system sound output device to write samples to. Only available on Windows.

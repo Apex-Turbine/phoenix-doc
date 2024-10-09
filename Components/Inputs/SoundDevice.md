@@ -1,5 +1,8 @@
-# SoundDevice
-
+# Sound Device
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Opens a system sound input device to collect data from. Only available on Windows.

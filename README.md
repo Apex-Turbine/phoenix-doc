@@ -10,13 +10,13 @@ Users can call the standard GetComponents call to receive all of the types, and 
 
 ## Component Types
 
-* [APEXFileDevice](Components/RWXDevice.md)
-* [APEXSimDevice](Components/APEXSimDevice.md)
-* [FFTProcessor](Components/FFTProcessor.md)
-* [NIDevice](Components/NIDevice.md)
-* [PolyProcessor](Components/PolyProcessor.md)
-* [SoundDevice](Components/SoundDevice.md) (windows only)
-* [SoundOutput](Components/SoundOutput.md) (windows only)
+* [RWX Device](Components/RWXDevice.md)
+* [Sweep Simulator](Components/Inputs/SweepSimulator.md)
+* [FFT Processor](Components/Processors/FFTProcessor.md)
+* [NI Device](Components/Inputs/NIDevice.md)
+* [Poly Processor](Components/Processors/PolyProcessor.md)
+* [Sound Device](Components/Inputs/SoundDevice.md) (windows only)
+* [Sound Output](Components/Outputs/SoundOutput.md) (windows only)
 
 Pending (Re)Approval
 
@@ -26,7 +26,7 @@ Pending (Re)Approval
 * FileDevice
 * FileOutput
 * FIRProcessor
-* [FocisDevice](Components/FocisDevice.md)
+* [FocisDevice](Components/Inputs/FocisDevice.md)
 * NastranFileDevice
 * PeakProcessor
 * ReblockProcessor
@@ -35,7 +35,7 @@ Pending (Re)Approval
 * StatProcessor
 * SwatProcessor
 * TriggerProcessor
-* [TWProcessor](Components/TWProcessor.md)
+* [TWProcessor](Components/Processors/TWProcessor.md)
 
 Distinctly Incomplete
 

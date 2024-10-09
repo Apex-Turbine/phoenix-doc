@@ -1,5 +1,8 @@
 # Sweep Simulator
-
+## Settings
+___
+# Phoenix API
+___
 ## Description
 
 Produces a sweeping pseudo-sine wave on each channel for testing. Sine wave is made of several parabolic segments.
