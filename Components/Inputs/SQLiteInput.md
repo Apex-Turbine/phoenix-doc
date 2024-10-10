@@ -1,7 +1,7 @@
 # SQLite Input
 ## Settings
 - SQLite Path
-	- Accesible path to the SQLite file
+	- Accessible path to the SQLite file
 	- No default, **Must** be present or component will take no action
 - Start Time
     - Start date and time for the query

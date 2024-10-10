@@ -1,7 +1,7 @@
 # RWX Reader
 ## Settings
 - Path
-	- Accesible path to the rwx file
+	- Accessible path to the rwx file
 	- No default, **Must** be present or component will take no action
 #### DAQ Mode Settings
 - Playback
@@ -25,5 +25,5 @@ Produces single precision vectors for both APEX signals. Parameters only used fo
 
 Component specific global keys:
 - filename
-	- Accesible path to find the rwx file at
+	- Accessible path to find the rwx file at
 	- No default, **Must** be present or component will take no action

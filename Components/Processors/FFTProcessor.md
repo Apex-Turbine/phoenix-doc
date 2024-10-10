@@ -10,14 +10,14 @@
 	- When the FFT size is greater than the base block size, multiple blocks are chained together to perform a higher resolution FFT. This increases overall signal FFT resolution and reduces averaging
 	- Default, None
 
-- Scalng
+- Scaling
 	- Used to set the FFT scaling upon transformation to the frequency domain
 	- Default, P2P
 
 - Window
 	- A window name to be applied
 	- Options: None, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
-	- Default, Blakman-Harris
+	- Default, Blackman-Harris
 
 ___
 # Phoenix API
