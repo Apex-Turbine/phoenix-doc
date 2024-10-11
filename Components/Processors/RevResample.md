@@ -8,7 +8,7 @@
     - Default, 1.0
 - Angle Resolution
     - Resolution of resample with respect to angle domain
-    - Default, 0.088
+    - Default, 0.087890625
 ___
 # Phoenix API
 ___
@@ -19,4 +19,14 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- ppr
+  - The Pulses per Revolution of the tach device
+  - Default: 1.0
+
+- trigger_ref
+  - The trigger reference stream
+  - Default: ""
+
+- angle_resolution
+  - The resolution in degrees of the revolution
+  - Default: 0.087890625

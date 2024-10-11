@@ -22,4 +22,16 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- peak_numpeaks
+  - The number of peaks to collect per data message
+  - Default: 32
+
+- peak_threshold
+  - The magnitude threshold that must be exceeded before a peak is considered for collection
+  - Default: 0.01
+
+- peak_minfreq
+  - The minimum frequency allowed for peak extraction
+
+- peak_maxfreq
+  - The maximum frequency allowed for peak extraction

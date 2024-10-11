@@ -13,4 +13,6 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- tach_ppr
+  - The Pulses per Revolution of the tach device
+  - Default: 1.0

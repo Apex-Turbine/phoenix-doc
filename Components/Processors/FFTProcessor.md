@@ -41,23 +41,21 @@ This component follows standard input keys:
 - sourcename
 
 Component specific input keys:
-- size
-	- How many samples to use in each FFT pass
+- fft_block_size
+	- Number of samples from input data used to calculate FFT
+	- Options: 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072
 	- Default, 1024
-- skips
-	- How many samples to move forward between each FFT pass
-	- Must be greater than 0
-	- Default, size
-- pad
-	- How many 0 samples to pad onto the end before each pass
+- fft_overlap
+	- The % Overlap for the FFT
 	- Default, 0
-- window
-	- A window name to be applied
-	- Options: Hann, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
-	- Default, no window
-- single
-	- Set flag to only use a single sample out of each incoming message
-	- Default, off
-- singleid
-	- Set the index to use if in single value mode
-	- No default, **Must** be specified to use single mode
+- fft_zoom
+	- The % Zoom for the FFT
+	- Default, 100
+- fft_window
+	- The window function applied to the FFT
+	- Options: "None","Hamming","Blackman-Harris","Nuttall","Blackman","Flat-Top"
+	- Default, "Blackman-Harris"
+- fft_scaling
+	- The FFT Peak scaling method
+	- Options: "P2P","Peak","RMS","Average"
+	- Default, "P2P"

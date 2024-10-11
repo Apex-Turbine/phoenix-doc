@@ -23,9 +23,11 @@ This component follows standard input keys:
 - size
 
 Component specific input keys:
-- poly
-	- Vector of coefficients starting from the highest order
-	- No default, **Must** be present or channel will be ignored
+- poly_poly
+  - The array of polynomial coefficients used for applying to the specified stream. The array size determines order. i.e 1=0th order, 2=1st order, 3=2nd order
 
+- poly_units
+  - Units to change to
 
-
+- poly_user
+  - User saved settings for the polynomial

@@ -22,4 +22,11 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- stat_mode
+  - The statistics mode
+  - Options: "max", "min", "avg", "pk", "p2p", "rms"
+  - Default: "p2p"
+
+- stat_time
+  - The time period over which the statistics are calculated in seconds
+  - Default: 1
