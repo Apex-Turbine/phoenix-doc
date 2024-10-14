@@ -10,5 +10,4 @@ ___
 
 ## JSON Setup Keys
 
-Component specific global keys:
-- 
+No Settings

@@ -13,4 +13,10 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- config_file
+  - The File containing the JSON configuration for the sim
+  - No default, **Must** be present or component will take no action
+
+- output_rate
+  - The rate in Hz at which the simulator will output data
+  - Default, 10

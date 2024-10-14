@@ -22,8 +22,13 @@ Produces double precision vectors.
 
 Component specific global keys:
 - taskname
-	- Name of the task as shown in NIMax or similar NI software.
-	- No default, **Must** be present or component will take no action
+  - Description: Name of the task as shown in NIMax or similar NI software.
+  - Type: string
+  - No default, **Must** be present or component will take no action
+- num_samples
+  - Description: The number of samples to wait for and read
+  - Type: integer
+  - Default: 1000
 
 
 

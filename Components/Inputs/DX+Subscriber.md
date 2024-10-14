@@ -1,7 +1,7 @@
 # DX+ Subscriber
 ## Settings
 - Address
-  - IP address of the DS instance
+  - IP address of the DX+ Publisher instance
   - Default, 127.0.0.1:27026
 
 #### Functionality
@@ -17,4 +17,15 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- ip
+  - Description: The IP address of the Message Queue
+  - Type: string
+  - Default: 127.0.0.1
+- port
+  - Description: The port of the Message Queue
+  - Type: integer
+  - Default: 27026
+- output_rate
+  - Description: The output rate of the component in Hz
+  - Type: integer
+  - Default: 10

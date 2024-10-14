@@ -46,4 +46,12 @@ ___
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- poly_poly
+  - The array of polynomial coefficients used for applying to the specified stream. 
+  - The array size determines order. i.e 1=0th order, 2=1st order, 3=2nd order
+
+- poly_units
+  - Units to change to
+
+- poly_user
+  - User saved settings for the polynomial
