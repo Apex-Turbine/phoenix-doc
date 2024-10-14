@@ -17,7 +17,13 @@ ___
 ___
 ## Description
 
+Writes processed data to SQLite databases.
+
 ## I/O
+
+Receives numeric vector data and database connection parameters.
+
+Produces database entries in SQLite.
 
 ## JSON Setup Keys
 

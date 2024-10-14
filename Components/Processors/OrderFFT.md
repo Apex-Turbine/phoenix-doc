@@ -29,7 +29,13 @@ ___
 ___
 ## Description
 
+Performs Order-based Fast Fourier Transform (FFT) on input data.
+
 ## I/O
+
+Receives numeric vector data.
+
+Produces order-based FFT results.
 
 ## JSON Setup Keys
 

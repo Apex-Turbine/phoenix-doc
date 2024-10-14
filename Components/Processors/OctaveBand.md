@@ -30,7 +30,13 @@ ___
 ___
 ## Description
 
+Performs octave band analysis on input data.
+
 ## I/O
+
+Receives numeric vector data.
+
+Produces octave band analysis results.
 
 ## JSON Setup Keys
 

@@ -8,7 +8,13 @@ ___
 ___
 ## Description
 
+Publishes processed data to DX+ streams.
+
 ## I/O
+
+Receives numeric vector data for publishing.
+
+Produces data packets for DX+ streams.
 
 ## JSON Setup Keys
 

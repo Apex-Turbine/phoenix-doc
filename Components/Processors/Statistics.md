@@ -17,7 +17,13 @@ ___
 ___
 ## Description
 
+Calculates statistical metrics on input data.
+
 ## I/O
+
+Receives numeric vector data.
+
+Produces statistical analysis results.
 
 ## JSON Setup Keys
 

@@ -36,7 +36,13 @@ ___
 ___
 ## Description
 
+Writes processed data to PostgreSQL databases.
+
 ## I/O
+
+Receives numeric vector data and database connection parameters.
+
+Produces database entries in PostgreSQL.
 
 ## JSON Setup Keys
 

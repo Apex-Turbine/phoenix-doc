@@ -49,7 +49,13 @@ ___
 ___
 ## Description
 
+Interfaces with VTI DSA devices to retrieve and process data.
+
 ## I/O
+
+Receives connection parameters and query configurations.
+
+Produces numeric vector data from VTI DSA devices.
 
 ## JSON Setup Keys
 

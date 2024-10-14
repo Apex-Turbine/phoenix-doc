@@ -14,7 +14,13 @@ ___
 ___
 ## Description
 
+Detects and processes trigger events in input data.
+
 ## I/O
+
+Receives numeric vector data and trigger parameters.
+
+Produces trigger event data.
 
 ## JSON Setup Keys
 

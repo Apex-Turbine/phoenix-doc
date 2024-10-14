@@ -23,7 +23,13 @@ ___
 ___
 ## Description
 
+Performs Discrete Fourier Transform (DFT) on input samples.
+
 ## I/O
+
+Receives numeric vector compatible data.
+
+Produces single precision complex vectors containing DFT result.
 
 ## JSON Setup Keys
 

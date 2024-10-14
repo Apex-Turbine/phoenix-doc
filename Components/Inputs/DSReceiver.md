@@ -12,7 +12,13 @@ ___
 ___
 ## Description
 
+Receives data streams from DS devices.
+
 ## I/O
+
+Receives data packets from DS devices.
+
+Produces numeric vector data from DS devices.
 
 ## JSON Setup Keys
 

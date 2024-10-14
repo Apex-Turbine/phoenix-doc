@@ -12,7 +12,13 @@ ___
 ___
 ## Description
 
+Subscribes to DX+ data streams and processes incoming data.
+
 ## I/O
+
+Receives subscription parameters and data packets from DX+ streams.
+
+Produces numeric vector data from DX+ streams.
 
 ## JSON Setup Keys
 

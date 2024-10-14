@@ -21,7 +21,13 @@ ___
 ___
 ## Description
 
+Applies a Finite Impulse Response (FIR) filter to input data.
+
 ## I/O
+
+Receives numeric vector data and filter coefficients.
+
+Produces filtered numeric vector data.
 
 ## JSON Setup Keys
 

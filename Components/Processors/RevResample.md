@@ -14,7 +14,13 @@ ___
 ___
 ## Description
 
+Resamples input data to a different rate.
+
 ## I/O
+
+Receives numeric vector data and resampling parameters.
+
+Produces resampled numeric vector data.
 
 ## JSON Setup Keys
 

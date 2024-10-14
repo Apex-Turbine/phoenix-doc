@@ -14,7 +14,13 @@ ___
 ___
 ## Description
 
+Interfaces with MeCalc devices to retrieve and process data.
+
 ## I/O
+
+Receives connection parameters and query configurations.
+
+Produces numeric vector data from MeCalc devices.
 
 ## JSON Setup Keys
 

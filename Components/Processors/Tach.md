@@ -8,7 +8,13 @@ ___
 ___
 ## Description
 
+Processes tachometer signals to determine rotational speed.
+
 ## I/O
+
+Receives tachometer signal data.
+
+Produces rotational speed data.
 
 ## JSON Setup Keys
 

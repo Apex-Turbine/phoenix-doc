@@ -31,7 +31,13 @@ ___
 ___
 ## Description
 
+Applies an Infinite Impulse Response (IIR) filter to input data.
+
 ## I/O
+
+Receives numeric vector data and filter coefficients.
+
+Produces filtered numeric vector data.
 
 ## JSON Setup Keys
 

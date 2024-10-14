@@ -17,7 +17,13 @@ ___
 ___
 ## Description
 
+Identifies and processes peaks in input data.
+
 ## I/O
+
+Receives numeric vector data.
+
+Produces peak analysis results.
 
 ## JSON Setup Keys
 

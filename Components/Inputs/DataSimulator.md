@@ -2,13 +2,19 @@
 ## Settings
 - Configuration File
   - Accessible path to the configuration JSON file
-	- No default, **Must** be present or component will take no action
+  - No default, **Must** be present or component will take no action
 ___
 # Phoenix API
 ___
 ## Description
 
+Simulates data streams for testing and development purposes.
+
 ## I/O
+
+Receives configuration parameters for simulation.
+
+Produces simulated numeric vector data.
 
 ## JSON Setup Keys
 

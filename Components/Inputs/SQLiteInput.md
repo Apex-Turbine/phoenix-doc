@@ -17,7 +17,13 @@ ___
 ___
 ## Description
 
+Reads data from SQLite databases and processes it.
+
 ## I/O
+
+Receives database connection parameters and query configurations.
+
+Produces numeric vector data from SQLite databases.
 
 ## JSON Setup Keys
 
