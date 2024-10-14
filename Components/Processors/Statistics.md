@@ -23,10 +23,11 @@ ___
 
 Component specific global keys:
 - stat_mode
-  - The statistics mode
-  - Options: "max", "min", "avg", "pk", "p2p", "rms"
+  - Description: The statistics mode
+  - Type: string
+  - Enum: ["max", "min", "avg", "pk", "p2p", "rms"]
   - Default: "p2p"
-
 - stat_time
-  - The time period over which the statistics are calculated in seconds
+  - Description: The time period over which the statistics are calculated in seconds
+  - Type: number
   - Default: 1

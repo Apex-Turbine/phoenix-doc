@@ -14,5 +14,6 @@ ___
 
 Component specific global keys:
 - tach_ppr
-  - The Pulses per Revolution of the tach device
+  - Description: The Pulses per Revolution of the tach device
+  - Type: number
   - Default: 1.0

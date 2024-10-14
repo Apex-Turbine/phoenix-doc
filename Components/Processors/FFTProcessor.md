@@ -42,20 +42,29 @@ This component follows standard input keys:
 
 Component specific input keys:
 - fft_block_size
-	- Number of samples from input data used to calculate FFT
-	- Options: 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072
-	- Default, 1024
-- fft_overlap
-	- The % Overlap for the FFT
-	- Default, 0
-- fft_zoom
-	- The % Zoom for the FFT
-	- Default, 100
-- fft_window
-	- The window function applied to the FFT
-	- Options: "None","Hamming","Blackman-Harris","Nuttall","Blackman","Flat-Top"
-	- Default, "Blackman-Harris"
-- fft_scaling
-	- The FFT Peak scaling method
-	- Options: "P2P","Peak","RMS","Average"
-	- Default, "P2P"
+  - Title: FFT Block Size
+  - Type: integer
+  - Enum: ["128", "256", "512", "1024", "2048", "4096", "8192", "16384", "32768", "65536", "131072"]
+  - Description: Number of samples from input data used to calculate FFT
+  - Default: 1024
+- dft_overlap
+  - Title: FFT Overlap
+  - Type: number
+  - Description: The % Overlap for the FFT
+  - Default: 0
+- dft_zoom
+  - Title: FFT Zoom
+  - Type: number
+  - Description: The % Zoom for the FFT
+  - Default: 100
+- dft_window
+  - Title: FFT Window
+  - Type: string
+  - Enum: ["None", "Hamming", "Blackman-Harris", "Nuttall", "Blackman", "Flat-Top"]
+  - Description: The window function applied to the FFT
+  - Default: Blackman-Harris
+- dft_scaling
+  - Title: FFT Scaling
+  - Type: string
+  - Enum: ["P2P", "Peak", "RMS", "Average"]
+  - Description: The FFT Peak scaling method

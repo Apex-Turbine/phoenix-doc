@@ -24,10 +24,13 @@ This component follows standard input keys:
 
 Component specific input keys:
 - poly_poly
-  - The array of polynomial coefficients used for applying to the specified stream. The array size determines order. i.e 1=0th order, 2=1st order, 3=2nd order
-
+  - Description: The array of polynomial coefficients used for applying to the specified stream. The array size determines order. i.e 1=0th order, 2=1st order, 3=2nd order
+  - Type: array
+  - Items:
+    - Type: number
 - poly_units
-  - Units to change to
-
+  - Description: Units to change to
+  - Type: string
 - poly_user
-  - User saved settings for the polynomial
+  - Description: User saved settings for the polynomial
+  - Type: string

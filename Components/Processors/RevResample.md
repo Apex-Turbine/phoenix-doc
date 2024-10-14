@@ -20,13 +20,14 @@ ___
 
 Component specific global keys:
 - ppr
-  - The Pulses per Revolution of the tach device
+  - Description: The Pulses per Revolution of the tach device
+  - Type: number
   - Default: 1.0
-
 - trigger_ref
-  - The trigger reference stream
+  - Description: The trigger reference stream
+  - Type: string
   - Default: ""
-
 - angle_resolution
-  - The resolution in degrees of the revolution
+  - Description: The resolution in degrees of the revolution
+  - Type: number
   - Default: 0.087890625

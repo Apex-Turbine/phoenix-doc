@@ -1,7 +1,7 @@
 # Data Simulator
 ## Settings
 - Configuration File
-    - Accessible path to the configuration JSON file
+  - Accessible path to the configuration JSON file
 	- No default, **Must** be present or component will take no action
 ___
 # Phoenix API
