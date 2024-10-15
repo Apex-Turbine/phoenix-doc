@@ -26,7 +26,17 @@ Produces single precision vectors for each channel.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+* name
+* units
+* size
+
 Component specific global keys:
+
+This component follows standard input keys:
+* name
+* units
+* size
 
 - samplerate
   - The sample rate of the data
@@ -55,10 +65,3 @@ Component specific global keys:
 
 - sim_mimics
   - stream id's that this signal should mimic
-
-
-This component follows standard input keys:
-
-* name
-* units
-* size

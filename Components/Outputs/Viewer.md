@@ -16,4 +16,6 @@ Produces graphical representations of data.
 
 ## JSON Setup Keys
 
-No Settings
+This component follows standard input keys:
+- sourcename
+- streamid

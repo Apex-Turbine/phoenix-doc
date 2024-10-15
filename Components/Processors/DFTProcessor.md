@@ -33,6 +33,12 @@ Produces single precision complex vectors containing DFT result.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - dft_resolution
   - Title: DFT Resolution

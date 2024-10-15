@@ -13,6 +13,10 @@ Receives 2 channels of numeric vectors.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- sourcename
+- streamid
+
 Component specific global keys:
 - size
     - How many samples to send out at a time per channel
@@ -23,10 +27,5 @@ Component specific global keys:
 - devicename
 	- Name of the sound output device to use
 	- Default, system default device
-
-This component follows standard input keys:
-- sourcename
-- streamid
-
 
 

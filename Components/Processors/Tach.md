@@ -18,6 +18,12 @@ Produces rotational speed data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - tach_ppr
   - Description: The Pulses per Revolution of the tach device

@@ -24,6 +24,12 @@ Produces resampled numeric vector data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - ppr
   - Description: The Pulses per Revolution of the tach device

@@ -27,6 +27,10 @@ Produces database entries in SQLite.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- sourcename
+- streamid
+
 Component specific global keys:
 - storename
   - Description: The URI for the datastore to open

@@ -39,6 +39,12 @@ Produces order-based FFT results.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - order_resolution
   - Title: Order Resolution

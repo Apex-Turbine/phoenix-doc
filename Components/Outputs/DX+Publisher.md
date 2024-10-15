@@ -18,6 +18,10 @@ Produces data packets for DX+ streams.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- sourcename
+- streamid
+
 Component specific global keys:
 - port
   - Description: The port for the server to listen on

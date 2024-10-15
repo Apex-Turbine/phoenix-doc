@@ -40,6 +40,12 @@ Produces octave band analysis results.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 #### component_settings
 - octbank_ratio_base

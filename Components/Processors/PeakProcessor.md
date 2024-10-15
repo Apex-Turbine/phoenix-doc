@@ -27,6 +27,12 @@ Produces peak analysis results.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - peak_numpeaks
   - Description: The number of peaks to collect per data message

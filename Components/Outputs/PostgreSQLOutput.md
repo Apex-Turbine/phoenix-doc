@@ -46,6 +46,10 @@ Produces database entries in PostgreSQL.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- sourcename
+- streamid
+
 Component specific global keys:
 - uri
   - Description: The URI for the datastore to open

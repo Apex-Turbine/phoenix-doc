@@ -24,6 +24,12 @@ Produces trigger event data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - trig_level
   - Description: The level to trigger at

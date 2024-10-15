@@ -27,6 +27,12 @@ Produces statistical analysis results.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - stat_mode
   - Description: The statistics mode

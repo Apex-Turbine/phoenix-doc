@@ -31,6 +31,12 @@ Produces filtered numeric vector data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - fir_specification
   - Type: string
