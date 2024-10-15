@@ -1,4 +1,4 @@
-# APEX Components
+# APEX Phoenix Components
 
 ## Description
 
@@ -10,35 +10,35 @@ Users can call the standard GetComponents call to receive all of the types, and 
 
 ## Component Types
 
-* [RWX Device](Components/RWXDevice.md)
-* [Sweep Simulator](Components/Inputs/SweepSimulator.md)
-* [FFT Processor](Components/Processors/FFTProcessor.md)
-* [NI Device](Components/Inputs/NIDevice.md)
-* [Poly Processor](Components/Processors/PolyProcessor.md)
-* [Sound Device](Components/Inputs/SoundDevice.md) (windows only)
-* [Sound Output](Components/Outputs/SoundOutput.md) (windows only)
-
-Pending (Re)Approval
-
-* AdvPeakProcessor
-* CFFTProcessor
-* DynStatProcessor
-* FileDevice
-* FileOutput
-* FIRProcessor
-* [FocisDevice](Components/Inputs/FocisDevice.md)
-* NastranFileDevice
-* PeakProcessor
-* ReblockProcessor
-* SimDevice
-* SpectralTachProcessor
-* StatProcessor
-* SwatProcessor
-* TriggerProcessor
-* [TWProcessor](Components/Processors/TWProcessor.md)
-
-Distinctly Incomplete
-
-* DEWESoftFileDevice
-* PIDProcessor
-* SDROutput
+* [Inputs](Components/Inputs/README.md)
+    * [Data Simulator](Components/Inputs/DataSimulator.md)
+    * [Datatel](Components/Inputs/Datatel.md)
+    * [DS Receiver](Components/Inputs/DSReceiver.md)
+    * [DX+ Subscriber](Components/Inputs/DX+Subscriber.md)
+    * [MeCalc Device](Components/Inputs/MeCalcDevice.md)
+    * [NI Device](Components/Inputs/NIDevice.md)
+    * [RWX Reader](Components/Inputs/RWXDevice.md)
+    * [SQLite Input](Components/Inputs/SQLiteInput.md)
+    * [Sound Device](Components/Inputs/SoundDevice.md)
+    * [Sweep Simulator](Components/Inputs/SweepSimulator.md)
+    * [VTI DSA Device](Components/Inputs/VTIDSADevice.md)
+* [Outputs](Components/Outputs/README.md)
+    * [DX+ Publisher](Components/Outputs/DX+Publisher.md)
+    * [PSQL Database](Components/Outputs/PSQLDatabase.md)
+    * [SQLite Database](Components/Outputs/SQLiteDatabase.md)
+    * [Sound Output](Components/Outputs/SoundOutput.md)
+    * [Viewer](Components/Outputs/Viewer.md)
+* [Processors](Components/Processors/README.md)
+    * [DFT Processor](Components/Processors/DFTProcessor.md)
+    * [EU Scalar](<Components/Processors/EU Scalar.md>)
+    * [FFT Processor](Components/Processors/FFTProcessor.md)
+    * [FIR Filter](Components/Processors/FIRFilter.md)
+    * [IIR Filter](Components/Processors/IIRFilter.md)
+    * [Octave Band](Components/Processors/OctaveBand.md)
+    * [Order FFT](Components/Processors/OrderFFT.md)
+    * [Peak Processor](Components/Processors/PeakProcessor.md)
+    * [Poly Processor](Components/Processors/PolyProcessor.md)
+    * [Rev Resample](Components/Processors/RevResample.md)
+    * [Statistics](Components/Processors/Statistics.md)
+    * [Tach](Components/Processors/Tach.md)
+    * [Triggers](Components/Processors/Triggers.md)
