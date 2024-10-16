@@ -1,0 +1,10 @@
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/components/
+    DESTINATION ${PHOENIX_INSTALL_BINDIR}/components/doc
+    FILES_MATCHING PATTERN *.md
+)
+
+file(
+    COPY ${CMAKE_CURRENT_SOURCE_DIR}/components/
+    DESTINATION ${CMAKE_BINARY_DIR}/doc
+)
