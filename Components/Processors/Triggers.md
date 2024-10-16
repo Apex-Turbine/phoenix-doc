@@ -1,5 +1,5 @@
-# Triggers
-## Settings
+## Triggers
+### Settings
 - Tachometer Level
     - Threshold at which input signal activates trigger
     - Default, 0.01
@@ -10,19 +10,19 @@
     - Toggle Trigger Inverted
     - Default, off
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Detects and processes trigger events in input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data and trigger parameters.
 
 Produces trigger event data.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

@@ -1,5 +1,5 @@
-# DFT Processor
-## Settings
+## DFT Processor
+### Settings
 - Resolution
 	- DFT Resolution
 	- Default, 1.0 Hz
@@ -19,19 +19,19 @@
 	- Default, Blackman-Harris
 
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Performs Discrete Fourier Transform (DFT) on input samples.
 
-## I/O
+### I/O
 
 Receives numeric vector compatible data.
 
 Produces single precision complex vectors containing DFT result.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

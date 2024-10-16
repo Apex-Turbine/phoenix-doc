@@ -1,5 +1,5 @@
-# IIR Filter
-## Settings
+## IIR Filter
+### Settings
 - Filter Type
     - Pass type of the filter
     - Options, Low Pass, High Pass, Band Pass, Notch, Octave, One-third Octave
@@ -27,19 +27,19 @@
     - Maximum ripple loss in stopband
     - Default, 48.000 dB
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Applies an Infinite Impulse Response (IIR) filter to input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data and filter coefficients.
 
 Produces filtered numeric vector data.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

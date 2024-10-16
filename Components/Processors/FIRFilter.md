@@ -1,5 +1,5 @@
-# FIR Filter
-## Settings
+## FIR Filter
+### Settings
 - Delay
     - Duration of data collected in seconds before applying filter
     - Default, Auto
@@ -17,19 +17,19 @@
     - Secondary cutoff frequency for band-type filters
     - Default, 10000 Hz
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Applies a Finite Impulse Response (FIR) filter to input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data and filter coefficients.
 
 Produces filtered numeric vector data.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

@@ -1,5 +1,5 @@
-# Order FFT
-## Settings
+## Order FFT
+### Settings
 - Block Size
 	- Angle-Domain Block Size
 	- Default, 1024
@@ -25,19 +25,19 @@
     - Based on Block Size and Order Resolution
     - Default, 256
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Performs Order-based Fast Fourier Transform (FFT) on input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data.
 
 Produces order-based FFT results.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

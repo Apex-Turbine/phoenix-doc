@@ -1,22 +1,22 @@
-# DX+ Publisher
-## Settings
+## DX+ Publisher
+### Settings
 - Port
     - ZMQ Port Number
     - Default, 65424
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Publishes processed data to DX+ streams.
 
-## I/O
+### I/O
 
 Receives numeric vector data for publishing.
 
 Produces data packets for DX+ streams.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - sourcename

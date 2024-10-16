@@ -1,5 +1,5 @@
-# Octave Band
-## Settings
+## Octave Band
+### Settings
 - Octave Ratio
     - Exponent base used to define octave ratio
     - Default, Base 10
@@ -26,19 +26,19 @@
     - Signal Energy
     - Signal Power
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Performs octave band analysis on input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data.
 
 Produces octave band analysis results.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name
@@ -47,7 +47,7 @@ This component follows standard input keys:
 - sourcename
 
 Component specific global keys:
-#### component_settings
+##### component_settings
 - octbank_ratio_base
   - Type: string
   - Description: Base octave ratio for generating ANSI Octaves
@@ -76,7 +76,7 @@ Component specific global keys:
   - Enum: ["FIR", "FFT", "IIR"]
   - Default: IIR
 
-#### component_stream_settings
+##### component_stream_settings
 - octbank_stat_mode
   - Type: string
   - Description: Statistic that processor will compute

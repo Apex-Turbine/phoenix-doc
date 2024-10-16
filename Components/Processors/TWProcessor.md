@@ -1,20 +1,20 @@
-# TW Processor
-## Settings
+## TW Processor
+### Settings
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Performs buffering and windowing of input samples, and submits them to a 
 floating-point FFT library, followed by traveling wave analysis. 
 
-## I/O
+### I/O
 
 Receives BT formatted data.
 
 Produces vectors of a result structure.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

@@ -1,17 +1,17 @@
-# Sound Device
-## Settings
+## Sound Device
+### Settings
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Opens a system sound input device to collect data from. Only available on Windows.
 
-## I/O
+### I/O
 
 Produces 2 channels of 16-bit integer vectors.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - size

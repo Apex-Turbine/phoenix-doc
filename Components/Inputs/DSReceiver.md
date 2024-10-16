@@ -1,26 +1,26 @@
-# DS Receiver
-## Settings
+## DS Receiver
+### Settings
 - Address
   - IP address of the DS instance
   - Default, 127.0.0.1:Auto
 
-#### Functionality
+##### Functionality
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Receives data streams from DS devices.
 
-## I/O
+### I/O
 
 Receives data packets from DS devices.
 
 Produces numeric vector data from DS devices.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - ip

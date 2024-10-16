@@ -1,26 +1,26 @@
-# DX+ Subscriber
-## Settings
+## DX+ Subscriber
+### Settings
 - Address
   - IP address of the DX+ Publisher instance
   - Default, 127.0.0.1:27026
 
-#### Functionality
+##### Functionality
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Subscribes to DX+ data streams and processes incoming data.
 
-## I/O
+### I/O
 
 Receives subscription parameters and data packets from DX+ streams.
 
 Produces numeric vector data from DX+ streams.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - ip

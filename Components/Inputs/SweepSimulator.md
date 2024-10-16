@@ -1,5 +1,5 @@
-# Sweep Simulator
-## Settings
+## Sweep Simulator
+### Settings
 - Streams
   - Number of streams
   - Default, 16
@@ -10,21 +10,21 @@
   - Step size of frequency sweep
   - Default, 1 Hz
 
-#### Functionality
+##### Functionality
 - Pull Setup
   - This button **must** be pressed to send the configuration settings to the device
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Produces a sweeping pseudo-sine wave on each channel for testing. Sine wave is made of several parabolic segments.
 
-## I/O
+### I/O
 
 Produces single precision vectors for each channel.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 * name
@@ -54,7 +54,7 @@ This component follows standard input keys:
   - The frequency step size of the output data
   - Default, 1
 
-#### Stream Settings
+##### Stream Settings
 - sim_scale
   - The magnitude scale of the signal
   - Default, 10.0

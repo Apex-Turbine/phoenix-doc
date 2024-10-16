@@ -1,22 +1,22 @@
-# Tach
-## Settings
+## Tach
+### Settings
 - PPR (Pulses per Revolution)
     - Number of pulses expected in a revolution
     - Default, 1.0
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Processes tachometer signals to determine rotational speed.
 
-## I/O
+### I/O
 
 Receives tachometer signal data.
 
 Produces rotational speed data.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

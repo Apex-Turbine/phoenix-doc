@@ -1,5 +1,5 @@
-# PSQL Database
-## Settings
+## PSQL Database
+### Settings
 - Host
 	- Hostname for PostgreSQL server output store
 	- Default, localhost
@@ -32,19 +32,19 @@
     - Toggles recording at start
     - Default, enabled
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Writes processed data to PostgreSQL databases.
 
-## I/O
+### I/O
 
 Receives numeric vector data and database connection parameters.
 
 Produces database entries in PostgreSQL.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - sourcename

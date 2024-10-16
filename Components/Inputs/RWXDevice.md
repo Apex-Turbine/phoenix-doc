@@ -1,9 +1,9 @@
-# RWX Reader
-## Settings
+## RWX Reader
+### Settings
 - Path
 	- Accessible path to the rwx file
 	- No default, **Must** be present or component will take no action
-#### DAQ Mode Settings
+##### DAQ Mode Settings
 - Playback
 	- Playback speed of the file
 	- Default, 1x
@@ -11,17 +11,17 @@
 	- Toggle playback looping
 	- Default, Off
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Opens an APEX rwx file and reads in the packets.
 
-## I/O
+### I/O
 
 Produces single precision vectors for both APEX signals. Parameters only used for time currently.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - filename
@@ -31,7 +31,7 @@ Component specific global keys:
 	- The rate at which to output the data in Hz
 	- Default, 10
 
-#### DAQ Mode Settings
+##### DAQ Mode Settings
 - playback
 	- Whether or not to play the file as fast as possible or at a slower rate
 	- Options, "1x", "10x", "100x", "1000x", "Max"

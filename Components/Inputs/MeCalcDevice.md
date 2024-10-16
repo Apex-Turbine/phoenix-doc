@@ -1,28 +1,28 @@
-# MeCalc Device
-## Settings
+## MeCalc Device
+### Settings
 - Address
   - IP address of the DS instance
   - Default, 192.168.0.92:8080
 
-#### Functionality
+##### Functionality
 - QAquire
   - This button can be pressed to launch QAquire in your default internet browser
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Interfaces with MeCalc devices to retrieve and process data.
 
-## I/O
+### I/O
 
 Receives connection parameters and query configurations.
 
 Produces numeric vector data from MeCalc devices.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - ip

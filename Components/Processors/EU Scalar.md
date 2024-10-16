@@ -1,10 +1,10 @@
-# EU Scalar
-## Settings
+## EU Scalar
+### Settings
 - Polynomial Specification Mode
     - Mode (Strain, Custom Polynomial)
     - Default, Strain
 
-#### Strain Settings
+##### Strain Settings
 - Gage Resistance
     - Nominal Gage Resistance
     - Default, 120 Ohms
@@ -18,7 +18,7 @@
     - Units for output data (Strain, Millistrain, Microstrain)
     - Default, Strain
 
-#### Custom Polynomial Settings
+##### Custom Polynomial Settings
 - Order
     - Degree of polynomial applied to input data
     - Default, 1
@@ -30,26 +30,26 @@
 - EU B Coefficient
     - Default, 0.0
 
-#### Custom Polynomial Examples
+##### Custom Polynomial Examples
 Order = 1
 Y = Ax + B
 
 Order = 2
 Y = Ax^2 + Bx + C
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Applies a polynomial transform to incoming messages on an element-wise basis.
 
-## I/O
+### I/O
 
 Receives numeric vector compatible data.
 
 Produces single precision vectors containing polynomial mapped result.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

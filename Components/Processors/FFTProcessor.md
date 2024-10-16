@@ -1,5 +1,5 @@
-# FFT Processor
-## Settings
+## FFT Processor
+### Settings
 
 - Block Size
 	- How many samples to use in each FFT pass
@@ -20,19 +20,19 @@
 	- Default, Blackman-Harris
 
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Performs buffering and windowing of input samples, and submits them to a floating-point FFT library. 
 
-## I/O
+### I/O
 
 Receives numeric vector compatible data.
 
 Produces single precision complex vectors containing FFT result.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

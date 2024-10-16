@@ -1,4 +1,4 @@
-# Table of contents
+## Table of contents
 
 * [APEX Phoenix Components](README.md)
   * [Inputs](Components/Inputs/README.md)

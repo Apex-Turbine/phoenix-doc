@@ -1,20 +1,20 @@
-# Viewer
-## Settings
+## Viewer
+### Settings
 No Settings
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Displays processed data in a graphical user interface.
 
-## I/O
+### I/O
 
 Receives numeric vector data for visualization.
 
 Produces graphical representations of data.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - sourcename

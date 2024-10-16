@@ -1,5 +1,5 @@
-# Rev Resample
-## Settings
+## Rev Resample
+### Settings
 - Trigger Stream
     - Stream name for input channel providing trigger reference
     - No default, **Must** be present or component will take no action
@@ -10,19 +10,19 @@
     - Resolution of resample with respect to angle domain
     - Default, 0.087890625
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Resamples input data to a different rate.
 
-## I/O
+### I/O
 
 Receives numeric vector data and resampling parameters.
 
 Produces resampled numeric vector data.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

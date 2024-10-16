@@ -1,5 +1,5 @@
-# SQLite Input
-## Settings
+## SQLite Input
+### Settings
 - SQLite Path
 	- Accessible path to the SQLite file
 	- No default, **Must** be present or component will take no action
@@ -13,19 +13,19 @@
     - Filtering for data points only
     - Default, disabled
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Reads data from SQLite databases and processes it.
 
-## I/O
+### I/O
 
 Receives database connection parameters and query configurations.
 
 Produces numeric vector data from SQLite databases.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - uri

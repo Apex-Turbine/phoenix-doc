@@ -1,19 +1,19 @@
-# Poly Processor
-## Settings
+## Poly Processor
+### Settings
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Applies a polynomial transform to incoming messages on an element-wise basis.
 
-## I/O
+### I/O
 
 Receives numeric vector compatible data.
 
 Produces single precision vectors containing polynomial mapped result.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

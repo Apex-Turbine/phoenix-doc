@@ -1,5 +1,5 @@
-# Statistics
-## Settings
+## Statistics
+### Settings
 - Time
     - Length of time intervals used to calculate statistics
     - Default, 1.0 sec
@@ -13,19 +13,19 @@
     - Root Mean Square
 
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Calculates statistical metrics on input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data.
 
 Produces statistical analysis results.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

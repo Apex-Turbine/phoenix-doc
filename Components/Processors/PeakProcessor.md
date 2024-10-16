@@ -1,5 +1,5 @@
-# Peak Processor
-## Settings
+## Peak Processor
+### Settings
 - Peaks
     - Number of peaks to collect
     - Default, 32 Peaks
@@ -13,19 +13,19 @@
     - Maximum Frequency
     - Default, Max
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Identifies and processes peaks in input data.
 
-## I/O
+### I/O
 
 Receives numeric vector data.
 
 Produces peak analysis results.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - name

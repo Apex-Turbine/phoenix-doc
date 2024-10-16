@@ -1,5 +1,5 @@
-# SQLite Output
-## Settings
+## SQLite Output
+### Settings
 - Store
 	- Accessible path to write the SQLite file
 	- No default, **Must** be present or component will take no action
@@ -13,19 +13,19 @@
     - Toggles recording at start
     - Default, enabled
 ___
-# Phoenix API
+## Phoenix API
 ___
-## Description
+### Description
 
 Writes processed data to SQLite databases.
 
-## I/O
+### I/O
 
 Receives numeric vector data and database connection parameters.
 
 Produces database entries in SQLite.
 
-## JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
 - sourcename
