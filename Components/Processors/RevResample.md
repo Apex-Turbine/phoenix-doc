@@ -14,19 +14,32 @@ ___
 ___
 ## Description
 
+Resamples input data to a different rate.
+
 ## I/O
+
+Receives numeric vector data and resampling parameters.
+
+Produces resampled numeric vector data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - ppr
-  - The Pulses per Revolution of the tach device
+  - Description: The Pulses per Revolution of the tach device
+  - Type: number
   - Default: 1.0
-
 - trigger_ref
-  - The trigger reference stream
+  - Description: The trigger reference stream
+  - Type: string
   - Default: ""
-
 - angle_resolution
-  - The resolution in degrees of the revolution
+  - Description: The resolution in degrees of the revolution
+  - Type: number
   - Default: 0.087890625

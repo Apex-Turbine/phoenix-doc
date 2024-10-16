@@ -23,29 +23,46 @@ ___
 ___
 ## Description
 
+Performs Discrete Fourier Transform (DFT) on input samples.
+
 ## I/O
+
+Receives numeric vector compatible data.
+
+Produces single precision complex vectors containing DFT result.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - dft_resolution
-  - The desired frequency resolution of the DFT
+  - Title: DFT Resolution
+  - Description: The desired frequency resolution of the DFT
+  - Type: number
   - Default: 100
-
 - dft_overlap
-  - The % Overlap for the DFT
+  - Title: DFT Overlap
+  - Description: The % Overlap for the DFT
+  - Type: number
   - Default: 0
-
 - dft_zoom
-  - The % Zoom for the DFT
+  - Title: DFT Zoom
+  - Description: The % Zoom for the DFT
+  - Type: number
   - Default: 100
-
 - dft_window
-  - The window function applied to the DFT
-  - Options: "None", "Hamming", "Blackman-Harris", "Nuttall", "Blackman", "Flat-Top"
-  - Default: "Blackman-Harris"
-
+  - Title: DFT Window
+  - Description: The window function applied to the DFT
+  - Type: string
+  - Enum: [None, Hamming, Blackman-Harris, Nuttall, Blackman, Flat-Top]
+  - Default: Blackman-Harris
 - dft_scaling
-  - The DFT Peak scaling method
-  - Options: "P2P", "Peak", "RMS", "Average"
-  - Default, "P2P"
+  - Title: DFT Scaling
+  - Description: The DFT Peak scaling method
+  - Type: string
+  - Enum: [P2P, Peak, RMS, Average]

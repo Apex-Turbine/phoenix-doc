@@ -17,21 +17,34 @@ ___
 ___
 ## Description
 
+Identifies and processes peaks in input data.
+
 ## I/O
+
+Receives numeric vector data.
+
+Produces peak analysis results.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - peak_numpeaks
-  - The number of peaks to collect per data message
+  - Description: The number of peaks to collect per data message
+  - Type: integer
   - Default: 32
-
 - peak_threshold
-  - The magnitude threshold that must be exceeded before a peak is considered for collection
+  - Description: The magnitude threshold that must be exceeded before a peak is considered for collection
+  - Type: number
   - Default: 0.01
-
 - peak_minfreq
-  - The minimum frequency allowed for peak extraction
-
+  - Description: The minimum frequency allowed for peak extraction
+  - Type: number
 - peak_maxfreq
-  - The maximum frequency allowed for peak extraction
+  - Description: The maximum frequency allowed for peak extraction
+  - Type: number

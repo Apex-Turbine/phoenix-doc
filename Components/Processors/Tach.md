@@ -8,11 +8,24 @@ ___
 ___
 ## Description
 
+Processes tachometer signals to determine rotational speed.
+
 ## I/O
+
+Receives tachometer signal data.
+
+Produces rotational speed data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - tach_ppr
-  - The Pulses per Revolution of the tach device
+  - Description: The Pulses per Revolution of the tach device
+  - Type: number
   - Default: 1.0

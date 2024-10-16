@@ -49,9 +49,135 @@ ___
 ___
 ## Description
 
+Interfaces with VTI DSA devices to retrieve and process data.
+
 ## I/O
+
+Receives connection parameters and query configurations.
+
+Produces numeric vector data from VTI DSA devices.
 
 ## JSON Setup Keys
 
 Component specific global keys:
-- 
+- devices
+  - Description: The IP address of the VTI device
+  - Type: array
+  - Items:
+    - host
+      - Description: The IP address of the VTI device
+      - Type: string
+    - slots
+      - Description: The slots of the VTI device
+      - Type: array
+      - Items:
+        - Type: integer
+      - Default: []
+- allow_invalid_cal
+  - Description: Allow invalid calibration
+  - Type: boolean
+  - Default: true
+- enable_simulator
+  - Description: Enable the driver's simulated Device
+  - Type: boolean
+  - Default: false
+- simulated_model
+  - Description: The model of the simulated device
+  - Type: string
+  - Enum: [EX-1403, EX-1405, EMX-1434]
+  - Default: EX-1403
+- data_format
+  - Description: The data format of the device
+  - Type: string
+  - Enum: [Fixed Point EU, Double Precision EU, Single Precision EU, Raw Counts 32-bit, Raw Counts 16-bit, Double Precision Volts, Single Precision Volts]
+  - Default: Single Precision EU
+- fifo_mode
+  - Description: The FIFO mode
+  - Type: string
+  - Enum: [Overwrite, Stop, Wait]
+  - Default: Stop
+
+#### Stream Settings
+- stream_function
+  - Description: The stream function
+  - Type: string
+  - Enum: [Voltage, IEPE, Charge, Strain, MIC, MIC200, Cal, Resistance]
+  - Default: Voltage
+- stream_sample_rate
+  - Description: The stream sample rate
+  - Type: number
+  - Default: 102400
+- stream_coupling
+  - Description: The coupling
+  - Type: string
+  - Enum: [AC, DC, GND]
+  - Default: DC
+- stream_mode
+  - Description: The mode
+  - Type: string
+  - Enum: [Differential, Single Ended, Pseudo Differential]
+  - Default: Normal
+- stream_range
+  - Description: The range
+  - Type: number
+  - Default: 10
+- stream_iepe_settings
+  - Description: The stream IEPE settings
+  - Type: object
+  - Properties:
+    - excitation_current
+      - Description: The excitation value in A
+      - Type: number
+      - Default: 0.004
+- stream_strain_settings
+  - Description: The stream strain settings
+  - Type: object
+  - Properties:
+    - gauge_factor
+      - Description: The gauge factor
+      - Type: number
+      - Default: 2.1
+    - poisson_ratio
+      - Description: The poisson ratio
+      - Type: number
+      - Default: 0.3
+    - lead_wire_resistance
+      - Description: The resistance of the lead wire in Ohms
+      - Type: number
+      - Default: 0
+    - gauge_resistance
+      - Description: The gauge resistance
+      - Type: number
+      - Default: 120
+    - excitation_type
+      - Description: The excitation type
+      - Type: string
+      - Enum: [Voltage, Current, None, External]
+      - Default: Voltage
+    - excitation_value
+      - Description: The excitation value
+      - Type: number
+      - Default: 5
+    - bridge_type
+      - Description: The bridge type
+      - Type: string
+      - Enum: [Quarter 120, Quarter 350, Quarter 1000, Half Bending, Half Poisson, Full Bending, Full Poisson, Full Poisson Bending, Two Wire Ohm, Four Wire Ohm]
+      - Default: Full Bridge
+    - completion_resistor
+      - Description: The completion resistor
+      - Type: string
+      - Enum: [120 Ohm, 350 Ohm, 1000 Ohm]
+      - Default: 350 Ohm
+    - shunt_source
+      - Description: The shunt source
+      - Type: string
+      - Enum: [None, Internal, External, Internal 47K, Internal 310K, Remote]
+      - Default: None
+    - completion_resistance
+      - Description: The completion resistance
+      - Type: number
+      - Default: 0
+    - shunt_resistance
+      - Description: The shunt resistance
+      - Type: number
+      - Default: 0

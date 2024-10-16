@@ -30,39 +30,55 @@ ___
 ___
 ## Description
 
+Performs octave band analysis on input data.
+
 ## I/O
+
+Receives numeric vector data.
+
+Produces octave band analysis results.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
+#### component_settings
 - octbank_ratio_base
-  - Base octave ratio for generating ANSI Octaves
-  - Options: "Base 10", "Base 2"
-  - Default: "Base 10"
-
+  - Type: string
+  - Description: Base octave ratio for generating ANSI Octaves
+  - Enum: ["Base 10", "Base 2"]
+  - Default: Base 10
 - octbank_bandwidth_designator
-  - Number of bands per octave (ex. 3 subdivides octaves into 1/3-octave bands)
+  - Type: integer
+  - Description: Number of bands per octave (ex. 3 subdivides octaves into 1/3-octave bands)
   - Default: 3
-
 - octbank_frequency_lowerbound
-  - Minimum center frequency for included bands
+  - Type: number
+  - Description: Minimum center frequency for included bands
   - Default: 20
-
 - octbank_frequency_upperbound
-  - Maximum center frequency for included bands
+  - Type: number
+  - Description: Maximum center frequency for included bands
   - Default: 20000
-
 - octbank_weighting_scheme
-  - Standard weight scheme used to attenuate band outputs
-  - Options: "None", "A", "C", "Z"
-  - Default: "None"
-
+  - Type: string
+  - Description: Standard weight scheme used to attenuate band outputs
+  - Enum: ["None", "A", "C", "Z"]
+  - Default: None
 - octbank_filter_method
-  - Method used to filter signals for each octave
-  - Options: "FIR", "FFT", "IIR"
-  - Default: "IIR"
+  - Type: string
+  - Description: Method used to filter signals for each octave
+  - Enum: ["FIR", "FFT", "IIR"]
+  - Default: IIR
 
+#### component_stream_settings
 - octbank_stat_mode
-  - Statistic that processor will compute
-  - Options: "max", "min", "avg", "pk", "p2p", "rms", "sig_energy", "sig_power"
-  - Default: "rms"
+  - Type: string
+  - Description: Statistic that processor will compute
+  - Enum: ["max", "min", "avg", "pk", "p2p", "rms", "sig_energy", "sig_power"]
+  - Default: rms

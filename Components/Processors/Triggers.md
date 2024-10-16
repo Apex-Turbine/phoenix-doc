@@ -14,19 +14,32 @@ ___
 ___
 ## Description
 
+Detects and processes trigger events in input data.
+
 ## I/O
+
+Receives numeric vector data and trigger parameters.
+
+Produces trigger event data.
 
 ## JSON Setup Keys
 
+This component follows standard input keys:
+- name
+- units
+- streamid
+- sourcename
+
 Component specific global keys:
 - trig_level
-  - The level to trigger at
+  - Description: The level to trigger at
+  - Type: number
   - Default: 0.01
-
 - trig_debounce
-  - Debounce time in seconds
+  - Description: Debounce time in seconds
+  - Type: number
   - Default: 0.002
-
 - trig_inverted
-  - Tells the processor if the tach signal is an inverted tach
+  - Description: Tells the processor if the tach signal is an inverted tach
+  - Type: boolean
   - Default: false
