@@ -3,7 +3,7 @@
 - Path
 	- Accessible path to the rwx file
 	- No default, **Must** be present or component will take no action
-##### DAQ Mode Settings
+#### DAQ Mode Settings
 - Playback
 	- Playback speed of the file
 	- Default, 1x
@@ -31,7 +31,7 @@ Component specific global keys:
 	- The rate at which to output the data in Hz
 	- Default, 10
 
-##### DAQ Mode Settings
+#### DAQ Mode Settings
 - playback
 	- Whether or not to play the file as fast as possible or at a slower rate
 	- Options, "1x", "10x", "100x", "1000x", "Max"

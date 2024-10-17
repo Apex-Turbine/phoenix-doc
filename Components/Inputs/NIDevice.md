@@ -4,7 +4,7 @@
   - Name of NI MAX task to load
   - No default, **Must** be present or component will take no action
 
-##### Functionality
+#### Functionality
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 ___

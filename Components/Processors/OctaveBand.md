@@ -47,7 +47,7 @@ This component follows standard input keys:
 - sourcename
 
 Component specific global keys:
-##### component_settings
+#### component_settings
 - octbank_ratio_base
   - Type: string
   - Description: Base octave ratio for generating ANSI Octaves
@@ -76,7 +76,7 @@ Component specific global keys:
   - Enum: ["FIR", "FFT", "IIR"]
   - Default: IIR
 
-##### component_stream_settings
+#### component_stream_settings
 - octbank_stat_mode
   - Type: string
   - Description: Statistic that processor will compute

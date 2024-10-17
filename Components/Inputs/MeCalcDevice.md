@@ -4,7 +4,7 @@
   - IP address of the DS instance
   - Default, 192.168.0.92:8080
 
-##### Functionality
+#### Functionality
 - QAquire
   - This button can be pressed to launch QAquire in your default internet browser
 - Pull Setup

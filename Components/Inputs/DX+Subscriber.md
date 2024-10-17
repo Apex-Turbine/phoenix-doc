@@ -4,7 +4,7 @@
   - IP address of the DX+ Publisher instance
   - Default, 127.0.0.1:27026
 
-##### Functionality
+#### Functionality
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 ___

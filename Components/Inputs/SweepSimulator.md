@@ -10,7 +10,7 @@
   - Step size of frequency sweep
   - Default, 1 Hz
 
-##### Functionality
+#### Functionality
 - Pull Setup
   - This button **must** be pressed to send the configuration settings to the device
 ___
@@ -54,7 +54,7 @@ This component follows standard input keys:
   - The frequency step size of the output data
   - Default, 1
 
-##### Stream Settings
+#### Stream Settings
 - sim_scale
   - The magnitude scale of the signal
   - Default, 10.0

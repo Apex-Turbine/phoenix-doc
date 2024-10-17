@@ -6,13 +6,13 @@
 - Slots
     - Comma separated list of slot numbers (subset of all available slots)
     - Default, blank (All slots)
-##### Functionality
+#### Functionality
 - SFP
   - This button can be pressed to launch VTI Setup in your default internet browser
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 
-##### Settings Continued
+#### Settings Continued
 - Allow Invalid Cal
     - This is required to be checked to be able to connect and perform the measurement operation on the 4380 card
     - If you disable this and if the calibration is invalid, then it will not allow you to run. You'll get an error message on your setup step
@@ -27,7 +27,7 @@
 * Channel List Dropdown
   * Shows a list of all channels in the Setup (Pull Setup to populate dropdown)
   * Allows you to change settings on a per channel basis or Apply All
-  ##### Settings available when Channels are present
+  #### Settings available when Channels are present
     * Function
       * selection of IEPE enables a field for setting Excitation Current
       * selection of Strain enables all available options for Strain mode (gauge resistance, gauge factor, etc.)
@@ -97,7 +97,7 @@ Component specific global keys:
   - Enum: [Overwrite, Stop, Wait]
   - Default: Stop
 
-##### Stream Settings
+#### Stream Settings
 - stream_function
   - Description: The stream function
   - Type: string
