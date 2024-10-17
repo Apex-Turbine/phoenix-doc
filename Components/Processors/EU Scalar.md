@@ -1,10 +1,10 @@
 ## EU Scalar
-### Settings
+## Settings
 - Polynomial Specification Mode
     - Mode (Strain, Custom Polynomial)
     - Default, Strain
 
-#### Strain Settings
+### Strain Settings
 - Gage Resistance
     - Nominal Gage Resistance
     - Default, 120 Ohms
@@ -18,7 +18,7 @@
     - Units for output data (Strain, Millistrain, Microstrain)
     - Default, Strain
 
-#### Custom Polynomial Settings
+### Custom Polynomial Settings
 - Order
     - Degree of polynomial applied to input data
     - Default, 1
@@ -30,7 +30,7 @@
 - EU B Coefficient
     - Default, 0.0
 
-#### Custom Polynomial Examples
+### Custom Polynomial Examples
 Order = 1
 Y = Ax + B
 

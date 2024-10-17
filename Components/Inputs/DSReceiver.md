@@ -1,10 +1,10 @@
 ## DS Receiver
-### Settings
+## Settings
 - Address
   - IP address of the DS instance
   - Default, 127.0.0.1:Auto
 
-#### Functionality
+### Functionality
 - Pull Setup
   - This button **must** be pressed to test the connection and pull setup information from the device
 ___

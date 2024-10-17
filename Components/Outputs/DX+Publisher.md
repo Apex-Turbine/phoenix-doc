@@ -1,5 +1,5 @@
 ## DX+ Publisher
-### Settings
+## Settings
 - Port
     - ZMQ Port Number
     - Default, 65424

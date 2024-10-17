@@ -1,5 +1,5 @@
 ## SQLite Output
-### Settings
+## Settings
 - Store
 	- Accessible path to write the SQLite file
 	- No default, **Must** be present or component will take no action

@@ -1,5 +1,5 @@
 ## Statistics
-### Settings
+## Settings
 - Time
     - Length of time intervals used to calculate statistics
     - Default, 1.0 sec

@@ -1,5 +1,5 @@
 ## DFT Processor
-### Settings
+## Settings
 - Resolution
 	- DFT Resolution
 	- Default, 1.0 Hz

@@ -1,5 +1,5 @@
 ## Viewer
-### Settings
+## Settings
 No Settings
 ___
 ## Phoenix API

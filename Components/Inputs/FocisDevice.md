@@ -1,5 +1,5 @@
 ## FocisDevice
-### Settings
+## Settings
 ___
 ## Phoenix API
 ___

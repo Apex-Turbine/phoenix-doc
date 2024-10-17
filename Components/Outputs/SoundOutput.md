@@ -1,5 +1,5 @@
 ## Sound Output
-### Settings
+## Settings
 ___
 ## Phoenix API
 ___

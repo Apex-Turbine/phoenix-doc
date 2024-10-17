@@ -1,5 +1,5 @@
 ## SQLite Input
-### Settings
+## Settings
 - SQLite Path
 	- Accessible path to the SQLite file
 	- No default, **Must** be present or component will take no action

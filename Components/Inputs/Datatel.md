@@ -1,10 +1,10 @@
 ## Datatel
-### Settings
+## Settings
 - Address
   - IP address of the DS instance
   - Default, 192.168.50.53:80
 
-#### Functionality
+### Functionality
 - Datatel Setup
   - This button can be pressed to launch Datatel Setup in your default internet browser
 - Pull Setup

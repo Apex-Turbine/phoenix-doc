@@ -1,5 +1,5 @@
 ## Order FFT
-### Settings
+## Settings
 - Block Size
 	- Angle-Domain Block Size
 	- Default, 1024

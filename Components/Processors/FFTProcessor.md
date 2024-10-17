@@ -1,5 +1,5 @@
 ## FFT Processor
-### Settings
+## Settings
 
 - Block Size
 	- How many samples to use in each FFT pass

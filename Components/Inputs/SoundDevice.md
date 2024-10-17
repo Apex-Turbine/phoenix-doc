@@ -1,5 +1,5 @@
 ## Sound Device
-### Settings
+## Settings
 ___
 ## Phoenix API
 ___
