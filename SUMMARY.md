@@ -1,3 +1,5 @@
+# Table of contents
+
 ## Table of contents
 
 * [APEX Phoenix Components](README.md)
@@ -15,8 +17,8 @@
     * [VTI DSA Device](Components/Inputs/VTIDSADevice.md)
   * [Outputs](Components/Outputs/README.md)
     * [DX+ Publisher](Components/Outputs/DX+Publisher.md)
-    * [PSQL Database](Components/Outputs/PSQLDatabase.md)
-    * [SQLite Database](Components/Outputs/SQLiteDatabase.md)
+    * [PSQL Database](table-of-contents/readme/outputs/psql-database.md)
+    * [SQLite Database](table-of-contents/readme/outputs/sqlite-database.md)
     * [Sound Output](Components/Outputs/SoundOutput.md)
     * [Viewer](Components/Outputs/Viewer.md)
   * [Processors](Components/Processors/README.md)

@@ -1,28 +1,50 @@
-## Data Simulator
-### Settings
-- Configuration File
-  - Accessible path to the configuration JSON file
-  - No default, **Must** be present or component will take no action
-___
-## Phoenix API
-___
-### Description
+---
+layout:
+  title:
+    visible: false
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+---
+
+# Data Simulator
+
+### Data Simulator
+
+#### Settings
+
+* Configuration File
+  * Accessible path to the configuration JSON file
+  * No default, **Must** be present or component will take no action
+
+***
+
+### Phoenix API
+
+***
+
+#### Description
 
 Simulates data streams for testing and development purposes.
 
-### I/O
+#### I/O
 
 Receives configuration parameters for simulation.
 
 Produces simulated numeric vector data.
 
-### JSON Setup Keys
+#### JSON Setup Keys
 
 Component specific global keys:
-- config_file
-  - The File containing the JSON configuration for the sim
-  - No default, **Must** be present or component will take no action
 
-- output_rate
-  - The rate in Hz at which the simulator will output data
-  - Default, 10
+* config\_file
+  * The File containing the JSON configuration for the sim
+  * No default, **Must** be present or component will take no action
+* output\_rate
+  * The rate in Hz at which the simulator will output data
+  * Default, 10
