@@ -1,10 +1,6 @@
-# Data Simulator
+## Data Simulator
 
-<figure><img src="https://apexturbine.com/wp-content/uploads/2024/08/test_measurement_icon.svg" alt=""><figcaption></figcaption></figure>
-
-### Data Simulator
-
-### Settings
+## Settings
 
 * Configuration File
   * Accessible path to the configuration JSON file
@@ -12,21 +8,21 @@
 
 ***
 
-### Phoenix API
+## Phoenix API
 
 ***
 
-#### Description
+### Description
 
 Simulates data streams for testing and development purposes.
 
-#### I/O
+### I/O
 
 Receives configuration parameters for simulation.
 
 Produces simulated numeric vector data.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 
