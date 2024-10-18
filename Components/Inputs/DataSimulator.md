@@ -1,10 +1,8 @@
 # Data Simulator
 
-![alt text](doc\Inputs\up.png)
-
-<img src="../../.gitbook/assets/home.png" alt="home.png">
-
 ### Data Simulator
+
+<figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure>
 
 ### Settings
 
