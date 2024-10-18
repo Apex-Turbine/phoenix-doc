@@ -1,6 +1,6 @@
 # Data Simulator
 
-![alt text](\_deps/boost-src/tools/auto\_index/doc/html/images/important.png)
+![alt text](\_deps/boost-src/tools/auto\_index/doc/html/images/home.png)
 
 <figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption></figcaption></figure>
 
