@@ -1,8 +1,12 @@
-![alt text](_deps\boost-src\tools\auto_index\doc\html\images\important.png)
+# Data Simulator
 
-## Data Simulator
+![alt text](\_deps/boost-src/tools/auto\_index/doc/html/images/important.png)
 
-## Settings
+<figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption></figcaption></figure>
+
+### Data Simulator
+
+### Settings
 
 * Configuration File
   * Accessible path to the configuration JSON file
@@ -10,21 +14,21 @@
 
 ***
 
-## Phoenix API
+### Phoenix API
 
 ***
 
-### Description
+#### Description
 
 Simulates data streams for testing and development purposes.
 
-### I/O
+#### I/O
 
 Receives configuration parameters for simulation.
 
 Produces simulated numeric vector data.
 
-### JSON Setup Keys
+#### JSON Setup Keys
 
 Component specific global keys:
 
