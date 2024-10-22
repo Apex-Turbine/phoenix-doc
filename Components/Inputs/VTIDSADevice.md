@@ -1,5 +1,3 @@
-# VTI DSA Device
-
 ### VTI DSA Device
 
 ### Settings
