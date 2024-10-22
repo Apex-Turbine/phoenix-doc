@@ -1,6 +1,6 @@
-### VTI DSA Device
+## VTI DSA Device
 
-### Settings
+## Settings
 
 * Address
   * IP address of the VTI hardware
@@ -9,14 +9,14 @@
   * Comma separated list of slot numbers (subset of all available slots)
   * Default, blank (All slots)
 
-#### Functionality
+### Functionality
 
 * SFP
   * This button can be pressed to launch VTI Setup in your default internet browser
 * Pull Setup
   * This button **must** be pressed to test the connection and pull setup information from the device
 
-#### Settings Continued
+### Settings Continued
 
 * Allow Invalid Cal
   * This is required to be checked to be able to connect and perform the measurement operation on the 4380 card
@@ -34,7 +34,7 @@
     * Shows a list of all channels in the Setup (Pull Setup to populate dropdown)
     * Allows you to change settings on a per channel basis or Apply All
 
-    #### Settings available when Channels are present
+    ### Settings available when Channels are present
 
     * Function
       * selection of IEPE enables a field for setting Excitation Current
@@ -54,21 +54,21 @@
 
 ***
 
-### Phoenix API
+## Phoenix API
 
 ***
 
-#### Description
+### Description
 
 Interfaces with VTI DSA devices to retrieve and process data.
 
-#### I/O
+### I/O
 
 Receives connection parameters and query configurations.
 
 Produces numeric vector data from VTI DSA devices.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 
@@ -109,7 +109,7 @@ Component specific global keys:
   * Enum: \[Overwrite, Stop, Wait]
   * Default: Stop
 
-#### Stream Settings
+### Stream Settings
 
 * stream\_function
   * Description: The stream function
