@@ -13,11 +13,11 @@ file(
 # Install phoenix-doc alongside the install directory under doc
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
-    DESTINATION ${PHOENIX_INSTALL_ROOT}/../doc/phoenix-doc
+    DESTINATION ${PHOENIX_INSTALL_ROOT}/doc/phoenix-doc
 )
 
 # Install assets alongside the install directory under doc/phoenix-doc/Images
 install(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/.gitbook/assets/
-    DESTINATION ${PHOENIX_INSTALL_ROOT}/../doc/phoenix-doc/Components/Images
+    DESTINATION ${PHOENIX_INSTALL_ROOT}/doc/phoenix-doc/Components/Images
 )
