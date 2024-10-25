@@ -1,10 +1,8 @@
-# Data Simulator
-
-### Data Simulator
+## Data Simulator
 
 <figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure>
 
-### Settings
+## Settings
 
 * Configuration File
   * Accessible path to the configuration JSON file
@@ -12,21 +10,23 @@
 
 ***
 
-### Phoenix API
+## Phoenix API
 
 ***
 
-#### Description
+<figure><img src="../../.gitbook/assets/up.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure>
+
+### Description
 
 Simulates data streams for testing and development purposes.
 
-#### I/O
+### I/O
 
 Receives configuration parameters for simulation.
 
 Produces simulated numeric vector data.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 
