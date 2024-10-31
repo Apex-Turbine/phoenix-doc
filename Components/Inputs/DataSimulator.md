@@ -1,6 +1,6 @@
 ## Data Simulator
 
-<figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure>
+<!-- <figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure> -->
 
 ## Settings
 
@@ -14,7 +14,7 @@
 
 ***
 
-<figure><img src="../../.gitbook/assets/up.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure>
+<!-- <figure><img src="../../.gitbook/assets/up.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure> -->
 
 ### Description
 
