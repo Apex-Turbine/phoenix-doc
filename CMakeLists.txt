@@ -1,13 +1,13 @@
-# Copy phoenix-doc alongside the build directory under doc
+# Copy phoenix-doc to the build directory under doc
 file(
     COPY ${CMAKE_CURRENT_SOURCE_DIR}/
-    DESTINATION ${CMAKE_BINARY_DIR}/../doc/phoenix-doc
+    DESTINATION ${CMAKE_BINARY_DIR}/doc/phoenix-doc
 )
 
-# Copy assets alongside the build directory under doc/phoenix-doc/Images
+# Copy assets to the build directory under doc/phoenix-doc/Images
 file(
     COPY ${CMAKE_CURRENT_SOURCE_DIR}/.gitbook/assets/
-    DESTINATION ${CMAKE_BINARY_DIR}/../doc/phoenix-doc/Components/Images
+    DESTINATION ${CMAKE_BINARY_DIR}/doc/phoenix-doc/Components/Images
 )
 
 # Install phoenix-doc alongside the install directory under doc
