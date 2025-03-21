@@ -22,7 +22,7 @@ Receives subscription parameters and data packets from Cyrus Subscriber streams.
 
 Component specific global keys:
 - ip
-  - Description: Description: The IP address of the WebSocket Server
+  - Description: The IP address of the WebSocket Server
   - Type: string
   - Default: 127.0.0.1
 - port
