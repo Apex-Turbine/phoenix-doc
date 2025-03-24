@@ -25,17 +25,17 @@ Produces single precision vectors for both APEX signals. Parameters only used fo
 
 Component specific global keys:
 - filename
-	- Accessible path to find the rwx file at
-	- No default, **Must** be present or component will take no action
+	- Description: Accessible path to find the rwx file at
+	- Default: NONE, filename **must** be present or component will take no action
 - output_rate
 	- The rate at which to output the data in Hz
 	- Default, 10
 
 ### DAQ Mode Settings
 - playback
-	- Whether or not to play the file as fast as possible or at a slower rate
-	- Options, "1x", "10x", "100x", "1000x", "Max"
-	- Default, "1x"
+	- Description: Whether or not to play the file as fast as possible or at a slower rate
+	- Options: "1x", "10x", "100x", "1000x", "Max"
+	- Default: "1x"
 - loop
-	- Whether or not to loop the playback
-	- Default, false
+	- Description: Whether or not to loop the playback
+	- Default: false
