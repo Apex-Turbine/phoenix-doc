@@ -34,5 +34,5 @@ Component specific global keys:
   * Description: Target rate in Hz to run the device at
   * Default: 44100
 * devicename
-  * Name of the sound output device to use
+  * Description: Name of the sound output device to use
   * Default: system default device

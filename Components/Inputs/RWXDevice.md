@@ -45,9 +45,9 @@ Component specific global keys:
 #### DAQ Mode Settings
 
 * playback
-  * Whether or not to play the file as fast as possible or at a slower rate
+  * Description: Whether or not to play the file as fast as possible or at a slower rate
   * Options: "1x", "10x", "100x", "1000x", "Max"
   * Default: "1x"
 * loop
-  * Whether or not to loop the playback
+  * Description: Whether or not to loop the playback
   * Default: false
