@@ -24,11 +24,8 @@ Component specific global keys:
 - taskname
   - Description: Name of the task as shown in NIMax or similar NI software.
   - Type: string
-  - Default: NONE, taskname **Must** be present or component will take no action
+  - Default: NONE, taskname **must** be present or component will take no action
 - num_samples
   - Description: The number of samples to wait for and read
   - Type: integer
   - Default: 1000
-
-
-
