@@ -31,8 +31,8 @@ Produces simulated numeric vector data.
 Component specific global keys:
 
 * config\_file
-  * The File containing the JSON configuration for the sim
-  * No default, **Must** be present or component will take no action
+  * Description: The File containing the JSON configuration for the sim
+  * Default: NONE, config_file **Must** be present or component will take no action
 * output\_rate
-  * The rate in Hz at which the simulator will output data
-  * Default, 10
+  * Description: The rate in Hz at which the simulator will output data
+  * Default: 10
