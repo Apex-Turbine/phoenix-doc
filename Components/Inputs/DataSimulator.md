@@ -3,6 +3,7 @@
 <!-- <figure><img src="../../.gitbook/assets/home.png" alt=""><figcaption><p>gitbook caption</p></figcaption></figure> -->
 
 ## Settings
+
 * Configuration File
   * Accessible path to the configuration JSON file
   * No default, **Must** be present or component will take no action
