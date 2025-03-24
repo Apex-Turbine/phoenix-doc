@@ -26,11 +26,6 @@ Produces single precision vectors for each channel.
 
 ### JSON Setup Keys
 
-This component follows standard input keys:
-* name
-* units
-* size
-
 Component specific global keys:
 
 This component follows standard input keys:
@@ -39,29 +34,29 @@ This component follows standard input keys:
 * size
 
 - samplerate
-  - The sample rate of the data
-  - Default, 102400
+  - Description:The sample rate of the data
+  - Default: 102400
 
 - output_rate
-  - The frequency at which the component should output data in Hz
-  - Default, 10.0
+  - Description: The frequency at which the component should output data in Hz
+  - Default: 10.0
 
 - num_streams
-  - Specify the number of streams the component should output
-  - Default, 16
+  - Description: Specify the number of streams the component should output
+  - Default: 16
 
 - freq_step_size
-  - The frequency step size of the output data
-  - Default, 1
+  - Description: The frequency step size of the output data
+  - Default: 1
 
 ### Stream Settings
 - sim_scale
-  - The magnitude scale of the signal
-  - Default, 10.0
+  - Description: The magnitude scale of the signal
+  - Default: 10.0
 
 - sim_phase
-  - The phase of the simulated signal
-  - Default, 0.0
+  - Description: The phase of the simulated signal
+  - Default: 0.0
 
 - sim_mimics
-  - stream id's that this signal should mimic
+  - Description: stream id's that this signal should mimic
