@@ -27,5 +27,3 @@ Component specific global keys:
 - devicename
 	- Description: Name of the sound output device to use
 	- Default: system default device
-
-
