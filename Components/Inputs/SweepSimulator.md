@@ -35,12 +35,6 @@ Produces single precision vectors for each channel.
 
 #### JSON Setup Keys
 
-This component follows standard input keys:
-
-* name
-* units
-* size
-
 Component specific global keys:
 
 This component follows standard input keys:
