@@ -30,6 +30,14 @@ Produces double precision vectors.
 #### JSON Setup Keys
 
 Component specific global keys:
+- taskname
+  - Description: Name of the task as shown in NIMax or similar NI software.
+  - Type: string
+  - Default: NONE, taskname **must** be present or component will take no action
+- num_samples
+  - Description: The number of samples to wait for and read
+  - Type: integer
+  - Default: 1000
 
 * taskname
   * Description: Name of the task as shown in NIMax or similar NI software.

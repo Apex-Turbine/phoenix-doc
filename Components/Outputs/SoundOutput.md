@@ -26,13 +26,12 @@ This component follows standard input keys:
 * streamid
 
 Component specific global keys:
-
-* size
-  * Description: How many samples to send out at a time per channel
-  * Default: 1024
-* samplerate
-  * Description: Target rate in Hz to run the device at
-  * Default: 44100
-* devicename
-  * Description: Name of the sound output device to use
-  * Default: system default device
+- size
+    - Description: How many samples to send out at a time per channel
+    - Default: 1024
+- samplerate
+    - Description: Target rate in Hz to run the device at
+    - Default: 44100
+- devicename
+	- Description: Name of the sound output device to use
+	- Default: system default device

@@ -33,7 +33,7 @@ Produces a sweeping pseudo-sine wave on each channel for testing. Sine wave is m
 
 Produces single precision vectors for each channel.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 
@@ -42,26 +42,31 @@ This component follows standard input keys:
 * name
 * units
 * size
-* samplerate
-  * Description: The sample rate of the data
-  * Default: 102400
-* output\_rate
-  * Description: The frequency at which the component should output data in Hz
-  * Default: 10.0
-* num\_streams
-  * Specify the number of streams the component should output
-  * Default: 16
-* freq\_step\_size
-  * Description: The frequency step size of the output data
-  * Default: 1
 
-#### Stream Settings
+- samplerate
+  - Description:The sample rate of the data
+  - Default: 102400
 
-* sim\_scale
-  * Description: The magnitude scale of the signal
-  * Default: 10.0
-* sim\_phase
-  * Description: The phase of the simulated signal
-  * Default: 0.0
-* sim\_mimics
-  * Description:stream id's that this signal should mimic
+- output_rate
+  - Description: The frequency at which the component should output data in Hz
+  - Default: 10.0
+
+- num_streams
+  - Description: Specify the number of streams the component should output
+  - Default: 16
+
+- freq_step_size
+  - Description: The frequency step size of the output data
+  - Default: 1
+
+### Stream Settings
+- sim_scale
+  - Description: The magnitude scale of the signal
+  - Default: 10.0
+
+- sim_phase
+  - Description: The phase of the simulated signal
+  - Default: 0.0
+
+- sim_mimics
+  - Description: stream id's that this signal should mimic
