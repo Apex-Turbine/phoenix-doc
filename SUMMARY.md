@@ -23,7 +23,7 @@
     * [DX+ Publisher](Components/Outputs/DX+Publisher.md)
     * [APEX-H5 Output](Components/Outputs/HDF5Output.md)
     * [PSQL Database](Components/Outputs/PostgreSQLOutput.md)
-    * [SQLite Database](Components/Outputs/SQLiteOutput-1.md)
+    * [SQLite Database](Components/Outputs/SQLiteOutput.md)
     * [Sound Output](Components/Outputs/SoundOutput.md)
     * [Viewer](Components/Outputs/Viewer.md)
   * [Processors](Components/Processors/README.md)
