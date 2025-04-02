@@ -1,5 +1,6 @@
 ## Statistics
 ## Settings
+
 - Time
     - Length of time intervals used to calculate statistics
     - Default, 1.0 sec
@@ -11,7 +12,6 @@
     - Peak
     - Peak to Peak
     - Root Mean Square
-
 ___
 ## Phoenix API
 ___

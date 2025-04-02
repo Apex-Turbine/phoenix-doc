@@ -1,5 +1,6 @@
 ## Rev Resample
 ## Settings
+
 - Trigger Stream
     - Stream name for input channel providing trigger reference
     - No default, **Must** be present or component will take no action

@@ -1,5 +1,6 @@
 ## Scanivalve Device
 ## Settings
+
 - Device Type
     - Type of Scanivalve device product acquiring data
     - Default, DSA5000
@@ -8,6 +9,7 @@
     - No default, Must be present or component will take no action
 
 ### Functionality
+
 - Configure
   - Re-directs to Scanivalve website for setup
 - Pull Setup

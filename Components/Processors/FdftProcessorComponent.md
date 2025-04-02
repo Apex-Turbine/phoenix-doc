@@ -22,13 +22,9 @@
   * A window name to be applied
   * Options: None, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
   * Default, Blackman-Harris
-
-***
-
+___
 ## Phoenix API
-
-***
-
+___
 ### Description
 
 Performs buffering and windowing of input samples, and submits them to a floating-point FFT library.

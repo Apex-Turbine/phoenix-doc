@@ -1,5 +1,6 @@
 ## FIR Filter
 ## Settings
+
 - Delay
     - Duration of data collected in seconds before applying filter
     - Default, Auto

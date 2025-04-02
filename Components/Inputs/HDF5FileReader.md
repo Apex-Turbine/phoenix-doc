@@ -5,7 +5,7 @@
   * Accessible path to the CADDMAS file
   * No default, **Must** be present or component will take no action
 
-#### DAQ Mode Settings
+### DAQ Mode Settings
 
 * Playback
   * Playback speed of the file
@@ -13,22 +13,18 @@
 * Loop
   * Toggle playback looping
   * Default, Off
-
-***
-
-### Phoenix API
-
-***
-
-#### Description
+___
+## Phoenix API
+___
+### Description
 
 Opens an APEX CADDMAS file and reads in the packets.
 
-#### I/O
+### I/O
 
 Produces single precision vectors for both APEX signals. Parameters only used for time currently.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - filename

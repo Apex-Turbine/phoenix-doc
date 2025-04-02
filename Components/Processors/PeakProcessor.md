@@ -1,5 +1,6 @@
 ## Peak Processor
 ## Settings
+
 - Peaks
     - Number of peaks to collect
     - Default, 32 Peaks

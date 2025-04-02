@@ -2,30 +2,22 @@
 hidden: true
 ---
 
-# Sound Output
-
-### Sound Output
-
-### Settings
-
-***
-
-### Phoenix API
-
-***
-
-#### Description
+## Sound Output
+## Settings
+___
+## Phoenix API
+___
+### Description
 
 Opens a system sound output device to write samples to. Only available on Windows.
 
-#### I/O
+### I/O
 
 Receives 2 channels of numeric vectors.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 This component follows standard input keys:
-
 * sourcename
 * streamid
 

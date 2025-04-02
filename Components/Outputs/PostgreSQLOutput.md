@@ -1,5 +1,6 @@
 ## PSQL Database
 ## Settings
+
 - Host
 	- Hostname for PostgreSQL server output store
 	- Default, localhost

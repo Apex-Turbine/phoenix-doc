@@ -22,7 +22,6 @@
     * [Sound Output](Components/Outputs/SoundOutput.md)
     * [Viewer](Components/Outputs/Viewer.md)
   * [Processors](Components/Processors/README.md)
-    * [DFT Processor](Components/Processors/DFTProcessor.md)
     * [EU Scalar](<Components/Processors/EU Scalar.md>)
     * [FFT Processor](Components/Processors/FdftProcessorComponent.md)
     * [FIR Filter](Components/Processors/FIRFilter.md)

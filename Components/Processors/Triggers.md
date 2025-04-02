@@ -1,5 +1,6 @@
 ## Triggers
 ## Settings
+
 - Tachometer Level
     - Threshold at which input signal activates trigger
     - Default, 0.01

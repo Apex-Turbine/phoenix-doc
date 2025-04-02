@@ -11,13 +11,9 @@
 
 * Pull Setup
   * This button **must** be pressed to test the connection and pull setup information from the device
-
-***
-
+___
 ## Phoenix API
-
-***
-
+___
 ### Description
 
 Subscribes to Cyres Subscriber data streams and processes incoming data.
@@ -29,7 +25,6 @@ Receives subscription parameters and data packets from Cyrus Subscriber streams.
 ### JSON Setup Keys
 
 Component specific global keys:
-
 * host
   * Description: The IP address of the WebSocket Server
   * Type: string
