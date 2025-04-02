@@ -1,18 +1,18 @@
 # Table of contents
 
-## Table of contents
-
 * [APEX Phoenix Components](README.md)
   * [Inputs](Components/Inputs/README.md)
+    * [Audio Input](Components/Inputs/SoundDevice.md)
+    * [Cyres Subscriber](Components/Inputs/dx+subscriber.md)
     * [Data Simulator](Components/Inputs/DataSimulator.md)
     * [Datatel](Components/Inputs/Datatel.md)
     * [DS Receiver](Components/Inputs/DSReceiver.md)
-    * [DX+ Subscriber](Components/Inputs/DX+Subscriber.md)
+    * [DX+ Subscriber](Components/Inputs/dx+subscriber-1.md)
     * [MeCalc Device](Components/Inputs/MeCalcDevice.md)
     * [NI Device](Components/Inputs/NIDevice.md)
     * [RWX Reader](Components/Inputs/RWXDevice.md)
+    * [Scanivalve Device](Components/Inputs/sounddevice-1.md)
     * [SQLite Input](Components/Inputs/SQLiteInput.md)
-    * [Sound Device](Components/Inputs/SoundDevice.md)
     * [Sweep Simulator](Components/Inputs/SweepSimulator.md)
     * [VTI DSA Device](Components/Inputs/VTIDSADevice.md)
   * [Outputs](Components/Outputs/README.md)
@@ -24,7 +24,7 @@
   * [Processors](Components/Processors/README.md)
     * [DFT Processor](Components/Processors/DFTProcessor.md)
     * [EU Scalar](<Components/Processors/EU Scalar.md>)
-    * [FFT Processor](Components/Processors/FFTProcessor.md)
+    * [FFT Processor](Components/Processors/FdftProcessorComponent.md)
     * [FIR Filter](Components/Processors/FIRFilter.md)
     * [IIR Filter](Components/Processors/IIRFilter.md)
     * [Octave Band](Components/Processors/OctaveBand.md)

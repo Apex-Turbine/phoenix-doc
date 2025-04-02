@@ -1,11 +1,8 @@
-# RWX Reader
-
-### RWX Reader
-
-### Settings
+## CADDMAS Reader
+## Settings
 
 * Path
-  * Accessible path to the rwx file
+  * Accessible path to the CADDMAS file
   * No default, **Must** be present or component will take no action
 
 #### DAQ Mode Settings
@@ -25,7 +22,7 @@
 
 #### Description
 
-Opens an APEX rwx file and reads in the packets.
+Opens an APEX CADDMAS file and reads in the packets.
 
 #### I/O
 
@@ -35,7 +32,7 @@ Produces single precision vectors for both APEX signals. Parameters only used fo
 
 Component specific global keys:
 - filename
-	- Description: Accessible path to find the rwx file at
+	- Description: Accessible path to find the CADDMAS file at
 	- Default: NONE, filename **must** be present or component will take no action
 - output_rate
 	- The rate at which to output the data in Hz
