@@ -1,5 +1,18 @@
 ## Sound Device
 ## Settings
+- Settings
+    - Input Device
+        - Device recording audio frequency
+        - No default, Must be present or component will take no action
+    - Sample Rate
+        - Samples rate system supports
+        - Default, 4410
+    - Mode
+        - How many channels the system uses
+        - Default, Stereo
+- Functionality
+    - Pull Setup
+        - This button must be pressed to test the connection and pull setup information from the device
 ___
 ## Phoenix API
 ___
