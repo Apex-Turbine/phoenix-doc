@@ -24,7 +24,7 @@
   * [Processors](Components/Processors/README.md)
     * [DFT Processor](Components/Processors/DFTProcessor.md)
     * [EU Scalar](<Components/Processors/EU Scalar.md>)
-    * [FFT Processor](Components/Processors/FFTProcessor.md)
+    * [FFT Processor](Components/Processors/FdftProcessorComponent.md)
     * [FIR Filter](Components/Processors/FIRFilter.md)
     * [IIR Filter](Components/Processors/IIRFilter.md)
     * [Octave Band](Components/Processors/OctaveBand.md)
