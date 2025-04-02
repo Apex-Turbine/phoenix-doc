@@ -1,5 +1,6 @@
 ## DFT Processor
 ## Settings
+
 - Resolution
 	- DFT Resolution
 	- Default, 1.0 Hz
@@ -17,7 +18,6 @@
 	- A window name to be applied
 	- Options: None, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
 	- Default, Blackman-Harris
-
 ___
 ## Phoenix API
 ___

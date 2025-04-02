@@ -1,8 +1,5 @@
-# Sweep Simulator
-
-### Sweep Simulator
-
-### Settings
+## Sweep Simulator
+## Settings
 
 * Streams
   * Number of streams
@@ -18,18 +15,15 @@
 
 * Pull Setup
   * This button **must** be pressed to send the configuration settings to the device
+___
+## Phoenix API
+___
 
-***
-
-### Phoenix API
-
-***
-
-#### Description
+### Description
 
 Produces a sweeping pseudo-sine wave on each channel for testing. Sine wave is made of several parabolic segments.
 
-#### I/O
+### I/O
 
 Produces single precision vectors for each channel.
 
@@ -38,7 +32,6 @@ Produces single precision vectors for each channel.
 Component specific global keys:
 
 This component follows standard input keys:
-
 * name
 * units
 * size

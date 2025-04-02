@@ -1,5 +1,6 @@
 ## Octave Band
 ## Settings
+
 - Octave Ratio
     - Exponent base used to define octave ratio
     - Default, Base 10
@@ -47,7 +48,9 @@ This component follows standard input keys:
 - sourcename
 
 Component specific global keys:
+
 ### component_settings
+
 - octbank_ratio_base
   - Type: string
   - Description: Base octave ratio for generating ANSI Octaves
@@ -77,6 +80,7 @@ Component specific global keys:
   - Default: IIR
 
 ### component_stream_settings
+
 - octbank_stat_mode
   - Type: string
   - Description: Statistic that processor will compute

@@ -11,7 +11,7 @@
     - How many channels the system uses
     - Default, Stereo
 
-## Functionality
+### Functionality
 
 - Pull Setup
     - This button must be pressed to test the connection and pull setup information from the device
@@ -22,11 +22,11 @@ ___
 
 Opens a system sound input device to collect data from. Only available on Windows.
 
-#### I/O
+### I/O
 
 Produces 2 channels of 16-bit integer vectors.
 
-#### JSON Setup Keys
+### JSON Setup Keys
 
 Component specific global keys:
 - card_index

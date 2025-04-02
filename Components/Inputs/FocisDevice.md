@@ -14,6 +14,3 @@ Produces single precision vectors with custom header.
 ### JSON Setup Keys
 
 This Component takes no keys.
-
-
-
