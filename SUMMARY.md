@@ -29,7 +29,6 @@
     * [Octave Band](Components/Processors/OctaveBand.md)
     * [Order FFT](Components/Processors/OrderFFT.md)
     * [Peak Processor](Components/Processors/PeakProcessor.md)
-    * [Poly Processor](Components/Processors/PolyProcessor.md)
     * [Rev Resample](Components/Processors/RevResample.md)
     * [Statistics](Components/Processors/Statistics.md)
     * [Tach](Components/Processors/Tach.md)
