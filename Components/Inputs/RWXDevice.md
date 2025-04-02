@@ -1,18 +1,18 @@
 ## RWX Reader
 ## Settings
 
-* Path
-  * Accessible path to the rwx file
-  * No default, **Must** be present or component will take no action
+- Path
+  - Accessible path to the rwx file
+  - No default, **Must** be present or component will take no action
 
 ### DAQ Mode Settings
 
-* Playback
-  * Playback speed of the file
-  * Default, 1x
-* Loop
-  * Toggle playback looping
-  * Default, Off
+- Playback
+  - Playback speed of the file
+  - Default, 1x
+- Loop
+  - Toggle playback looping
+  - Default, Off
 ___
 ## Phoenix API
 ___

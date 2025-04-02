@@ -1,20 +1,20 @@
 ## Sweep Simulator
 ## Settings
 
-* Streams
-  * Number of streams
-  * Default, 16
-* Sample Rate
-  * Rate, in Hz, that the component should produce samples for each channel
-  * Default, 102.4kHz
-* Frequency Step
-  * Step size of frequency sweep
-  * Default, 1 Hz
+- Streams
+  - Number of streams
+  - Default, 16
+- Sample Rate
+  - Rate, in Hz, that the component should produce samples for each channel
+  - Default, 102.4kHz
+- Frequency Step
+  - Step size of frequency sweep
+  - Default, 1 Hz
 
 #### Functionality
 
-* Pull Setup
-  * This button **must** be pressed to send the configuration settings to the device
+- Pull Setup
+  - This button **must** be pressed to send the configuration settings to the device
 ___
 ## Phoenix API
 ___
@@ -32,9 +32,9 @@ Produces single precision vectors for each channel.
 Component specific global keys:
 
 This component follows standard input keys:
-* name
-* units
-* size
+- name
+- units
+- size
 
 - samplerate
   - Description:The sample rate of the data

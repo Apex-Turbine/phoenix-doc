@@ -1,14 +1,14 @@
 ## NI Device
 ## Settings
 
-* Task Name
-  * Name of NI MAX task to load
-  * No default, **Must** be present or component will take no action
+- Task Name
+  - Name of NI MAX task to load
+  - No default, **Must** be present or component will take no action
 
 ### Functionality
 
-* Pull Setup
-  * This button **must** be pressed to test the connection and pull setup information from the device
+- Pull Setup
+  - This button **must** be pressed to test the connection and pull setup information from the device
 ___
 ## Phoenix API
 ___
@@ -33,11 +33,11 @@ Component specific global keys:
   - Type: integer
   - Default: 1000
 
-* taskname
-  * Description: Name of the task as shown in NIMax or similar NI software.
-  * Type: string
-  * Default: NONE, taskname **must** be present or component will take no action
-* num\_samples
-  * Description: The number of samples to wait for and read
-  * Type: integer
-  * Default: 1000
+- taskname
+  - Description: Name of the task as shown in NIMax or similar NI software.
+  - Type: string
+  - Default: NONE, taskname **must** be present or component will take no action
+- num\_samples
+  - Description: The number of samples to wait for and read
+  - Type: integer
+  - Default: 1000
