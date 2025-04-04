@@ -7,13 +7,13 @@
 - PPR (Pulses per Revolution)
     - Number of pulses expected in a revolution
     - Default, 1.0
-- Tachometer Level
+- Tachometer Level (option available if Trigger Type is Analog)
     - Threshold at which input signal activates trigger
     - Default, 0.01
-- Max Speed
+- Max Speed (option available if Trigger Type is Analog)
     - Maximum speed the processor can operate at
     - Default, 29999.998575 RPM
-- Trigger Inverted
+- Trigger Inverted (option available if Trigger Type is Analog)
     - Toggle Trigger Inverted
     - Default, off
 ___
