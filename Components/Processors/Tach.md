@@ -7,6 +7,15 @@
 - PPR (Pulses per Revolution)
     - Number of pulses expected in a revolution
     - Default, 1.0
+- Tachometer Level
+    - Threshold at which input signal activates trigger
+    - Default, 0.01
+- Max Speed
+    - Maximum speed the processor can operate at
+    - Default, 29999.998575 RPM
+- Trigger Inverted
+    - Toggle Trigger Inverted
+    - Default, off
 ___
 ## Phoenix API
 ___
