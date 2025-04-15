@@ -28,7 +28,7 @@
     * [IIR Filter](Components/Processors/IIRFilter.md)
     * [Octave Band](Components/Processors/OctaveBand.md)
     * [Order FFT](Components/Processors/OrderFFT.md)
-    * [Peak Processor](Components/Processors/PeakProcessor.md)
+    * [Adv. DSP](Components/Processors/PeakProcessor.md)
     * [Rev Resample](Components/Processors/RevResample.md)
     * [Statistics](Components/Processors/Statistics.md)
     * [Tach](Components/Processors/Tach.md)

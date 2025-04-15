@@ -1,4 +1,4 @@
-## Peak Processor
+## Adv. DSP
 ## Settings
 
 - Peaks

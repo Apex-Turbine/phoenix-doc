@@ -1,14 +1,14 @@
-## HDF5 Output
+## APEX-H5 Output
 ## Settings
 
 - Store
-	- Accessible path to write the HDF5 file
+	- Accessible path to write the APEX-H5 file
 	- No default, **Must** be present or component will take no action
 - Commit Time
     - Updates per second
     - Default, 1
 - Enable Monitoring
-    - Toggles monitoring for the HDF5 connection
+    - Toggles monitoring for the APEX-H5 connection
     - Default, disabled
 - Record at Start
     - Toggles recording at start
@@ -18,13 +18,13 @@ ___
 ___
 ### Description
 
-Writes processed data to HDF5 databases.
+Writes processed data to APEX-H5 databases.
 
 ### I/O
 
 Receives numeric vector data and database connection parameters.
 
-Produces database entries in HDF5.
+Produces database entries in APEX-H5.
 
 ### JSON Setup Keys
 
