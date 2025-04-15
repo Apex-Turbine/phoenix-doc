@@ -1,4 +1,4 @@
-## DX+ Publisher
+## DX+ Transmit
 ## Settings
 
 - Port

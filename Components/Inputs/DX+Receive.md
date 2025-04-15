@@ -1,8 +1,8 @@
-## DX+ Subscriber
+## DX+ Receive
 ## Settings
 
 - Address
-  - IP address of the DX+ Publisher instance
+  - IP address of the DX+ Transmit instance
   - Default, 127.0.0.1:27026
 
 ### Functionality
