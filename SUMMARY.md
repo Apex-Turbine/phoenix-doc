@@ -19,6 +19,7 @@
     * [DX+ Transmit](Components/Outputs/DX+Transmit.md)
     * [PSQL Database](Components/Outputs/PostgreSQLOutput.md)
     * [SQLite Database](Components/Outputs/SQLiteOutput.md)
+    * [APEX-H5](readme/outputs/apex-h5.md)
     * [Sound Output](Components/Outputs/SoundOutput.md)
     * [Viewer](Components/Outputs/Viewer.md)
   * [Processors](Components/Processors/README.md)

@@ -1,4 +1,4 @@
 # Outputs
 
-<figure><img src="../../.gitbook/assets/DX+Outputs(363x92).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/DX+Outputs 2025.15.png" alt=""><figcaption></figcaption></figure>
 
