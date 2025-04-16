@@ -1,6 +1,6 @@
 # APEX Phoenix Components
 
-<figure><img src=".gitbook/assets/DX+elements(926x91).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/DX+Processors2025.15.png" alt=""><figcaption></figcaption></figure>
 
 ## Description
 
