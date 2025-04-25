@@ -1,7 +1,7 @@
 ## Tach
 ## Settings
 
--Trigger Type
+- Trigger Type
     - Type of trigger used to initiate data collection
     - Default, Digital
 - PPR (Pulses per Revolution)
