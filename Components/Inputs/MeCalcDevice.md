@@ -1,4 +1,4 @@
-## MeCalc Device
+## Mecalc Device
 ## Settings
 
 - Address
@@ -16,19 +16,19 @@ ___
 ___
 ### Description
 
-Interfaces with MeCalc devices to retrieve and process data.
+Interfaces with Mecalc devices to retrieve and process data.
 
 ### I/O
 
 Receives connection parameters and query configurations.
 
-Produces numeric vector data from MeCalc devices.
+Produces numeric vector data from Mecalc devices.
 
 ### JSON Setup Keys
 
 Component specific global keys:
 - ip
-  - Description: The IP address of the MeCalc device
+  - Description: The IP address of the Mecalc device
   - Type: string
   - Default: 192.168.0.92
 - port
