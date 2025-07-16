@@ -8,7 +8,7 @@
     * [Datatel](Components/Inputs/Datatel.md)
     * [DS Receiver](Components/Inputs/DSReceiver.md)
     * [DX+ Receive](Components/Inputs/DX+Receive.md)
-    * [MeCalc Device](Components/Inputs/MeCalcDevice.md)
+    * [Mecalc Device](Components/Inputs/MeCalcDevice.md)
     * [NI Device](Components/Inputs/NIDevice.md)
     * [RWX Reader](Components/Inputs/RWXDevice.md)
     * [Scanivalve Device](Components/Inputs/ScanivalveDevice.md)
