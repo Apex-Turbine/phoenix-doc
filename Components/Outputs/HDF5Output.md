@@ -36,7 +36,7 @@ Component specific global keys:
   - Description: The rate at which to commit data to the database
   - Type: number
   - Default: 1.0
-- datapointmode
+- eventmode
   - Type: boolean
   - Description: Only write when datapoint recording is active
   - Default: false

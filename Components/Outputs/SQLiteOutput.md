@@ -72,7 +72,7 @@ Component specific global keys:
   - Description: The max number of threads to be used for a prepared statement. Please reference SQLite Documentation.
   - Type: integer
   - Default: -1
-- datapointmode
+- eventmode
   - Description: Only write when datapoint recording is active
   - Type: boolean
   - Default: false

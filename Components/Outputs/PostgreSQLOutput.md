@@ -83,7 +83,7 @@ Component specific global keys:
   - Type: string
   - Enum: [Standard, Pipeline, Copy]
   - Default: Standard
-- datapointmode
+- eventmode
   - Description: Only write when datapoint recording is active
   - Type: boolean
   - Default: false
