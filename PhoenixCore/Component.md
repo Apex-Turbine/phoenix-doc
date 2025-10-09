@@ -554,3 +554,43 @@ void CustomScalar::process(const Message& msg){
 ```
 
 ## Making the Adapter
+Every Component needs to define an adapter. The purpose of the adapter is to provide information about the component and a method to create an instance of the component. An example of the adapter should look something similar to the following:
+
+```c++
+class MyCustomScalarAdapter : public ComponentAdapter {
+public:
+    MyCustomComponentAdapter() {}
+    ~MyCustomComponentAdapter() {}
+    std::shared_ptr<Component> create(const std::string& name) override {
+        return std::make_shared<CustomScalar>(name);
+    }
+    std::string getName() const override {
+        return "Custom Scalar";
+    }
+    JSON getInfo() const override {
+        return info;
+    }
+    std::string getUUID() const override {
+        return info["uuid"].get<std::string>();
+    }
+}
+```
+
+## Creating the Library
+The Library provides the main export function for the DLL and provides access to the collection adapters contained in the library. By doing this, the user can provide a full collection of components contained in a single DLL load. This will use the "ComponentLibrary" class. 
+
+```c++
+ComponentLibrary* GetComponents() { //Main DLL Entry
+    static ComponentLibrary* rtn = nullptr; //Make static to prevent rebuild for every call to getComponents
+    if(!rtn){
+        static std::vector<std::shared_ptr<ComponentAdapter>> items;
+        static const std::string libName = "MyCustomComponents";
+        items.push_back(std::make_shared<MyCustomComponentAdapter>());
+        rtn = new ComponentLibrary(libName, items);
+    }
+    return rtn;
+}
+```
+
+## Results
+After creating the component, the adapter, and the library, the ComponentLibraryManager will be able to discover the library placed in the components directory and load. This will make the components within the library usable by the higher application (DX+ or Phoenix Engine or PhoenixPy).
