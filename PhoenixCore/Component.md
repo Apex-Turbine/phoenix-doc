@@ -156,7 +156,7 @@ Now, lets go through the information and cover its meanings.
 
 First, we have the Name. This is simply the display name for the component. Next, is the UUID which is the unique identifier for the component type in the system. The vendor and description fields provides the information for who created it and describes what it is/does. 
 
-The class is either "source" meaning a producer of data as a means to bring external data into the data pipeline, "processor" meaning a processor of data, or "output" meaning a consumer of data as a means to export the data external to the data pipeline. The next field "class_type" further defines the specified class. For sources and outputs, this can be "device", "file", "store", or "stream". Others may be later added. For Processors, there is only "processor" as the class_type. 
+The class is either "source" meaning a producer of data as a means to bring external data into the data pipeline, "processor" meaning a processor of data, or "output" meaning a consumer of data as a means to export the data external to the data pipeline. The next field "class_type" further defines the specified class. For sources and outputs, this can be "device", "file", "store", "dbms", "web" or "stream". Others may be later added. For Processors, there is only "processor" as the class_type. 
 
 The feature field defines the feature type to be checked out in the Apex License system. If a feature is not defined, the component will not load. This must be "custom-processor" for a processor and will check out ANALYSIS tokens. Other features are "custom-reader", "custom-device", "custom-writer", or custom-network. 
 
@@ -252,6 +252,36 @@ The settings are:
 # Usage
 ```
 
+### Source Components for Post Processing
+When creating components to read stored data for processing, there are a few additional items needed for the information. First, as stated prior, the "class_type" of these can either be:
+
+1. file - indicating the data is from a flat file and contains in normal circumstances a single data record
+2. store - indicating the data is stored in a database file such as sqlite and can contain multiple records
+3. dbms - indicating the data is stored in a database management system and provides an interface for connection and data extraction. This can also contain multiple data records.
+4. web - indicating the data is accessed through a web api.
+
+For the file and store type, the information JSON must provide the extensions supported for them. For the tore, dbms, and web type, they must provide the query_type field indicating the expected query language that can be supported. an example with comments can be seen below:
+
+```json
+{
+    "name": "My File Reader",
+    "vendor": "Apex",
+    "uuid": "00000000-0000-0000-0000-000000000000",
+    "description": "file reader",
+    "class": "source",
+    "class_type": "file", //file, store, dbms, web
+    "extensions":[".abc","abcx","abcz"], //Required for file and store
+    "query_type": null, //Required for store, dbms, and web and is meant to indicate query language: sql, nosql, etc
+    "feature": "myfile-reader",
+    "version": "yyyy.mm.dd",
+    "attributes": "myFileReader_attrs.json",
+    "helpfile": "myFileReader_help.md",
+    "requests": ["progress"],
+    "commands": [],
+    "supported_inputs": null
+}
+```
+
 ## Implement Constructor and informationals
 Here we will implement the component constructor and the informational functions for the class. The Constructor will make use of the UUID we defined previously as comp_uuid and supply that to the base class.
 
@@ -286,9 +316,9 @@ graph TD
     n8 --> n10["checkDataTypes"]
     n8 --> n11["checkMsgTypes"]
 ```
-The normal process is to first call the import function and supply the GraphJson::SourceJson information of the parents of the component. For source components, the parents list would be empty. For processors and outputs, the parents list would be the list of components that are being connected to the processor/output. The purpose of import is to retrieve the streams list that should be expected as output from the component. After import is called, additional settings may be changed/added for the component and streams. Afterward, setup is called. Setup is called in the ComponentManager class which in turn calls the set-up function for each component. The setup function requres the passing of the GraphJson pointer and the reference of the SourceJson of the component. The setup function can use the graph as reference, but cannot modify. However, it is expected for the setup function to modify the SourceJson as needed. The base class implementation of setup will extract and validate the existance of the streams being input into the component, then call setupStreams that will loop through the the stream list and call setup stream. After the setup portion is done, the type checks occur. The setup function will call "validateStreams" which will first call checkDuplicateNames to ensure all names for the streams being output is unique, and then loop through the stream list and call validateStream. In the base class validate stream function, it will find the stream that is the input for the component that is the source for the output, extract the information for the input stream along with the "supported_inputs" JSON from the component's information JSON and supply these to the typeCheck function. This function will validate the units, message type, and data type for the data coming into the component. 
+The normal process is to first call the import function and supply the GraphJson::SourceJson information of the parents of the component. For source components, the parents list would be empty. For processors and outputs, the parents list would be the list of components that are being connected to the processor/output. The purpose of import is to retrieve the streams list that should be expected as output from the component. After import is called, additional settings may be changed/added for the component and streams. Afterward, setup is called. Setup is called in the ComponentManager class which in turn calls the set-up function for each component. The setup function requres the passing of the GraphJson pointer and the reference of the SourceJson of the component. The setup function can use the graph as reference, but cannot modify. However, it is expected for the setup function to modify the SourceJson as needed. The base class implementation of setup will extract and validate the existance of the streams being input into the component, then call setupStreams that will loop through the the stream list and call setup stream. After the setup portion is done, the type checks occur. The setup function will call "validateStreams" which will first call checkDuplicateNames on the sourceJson object to ensure all names for the streams being output is unique, and then loop through the stream list and call validateStream. In the base class validate stream function, it will find the stream that is the input for the component that is the source for the output, extract the information for the input stream along with the "supported_inputs" JSON from the component's information JSON and supply these to the typeCheck function. This function will validate the units, message type, and data type for the data coming into the component. 
 
-Given this, it is highly recommended that any overload of any of these functions should provide the specialized implementation and first and call the base class function last. This is recommended to keep the setup procedure aligned with the expected flow. 
+Given this, it is highly recommended that any overload of any of these functions should provide the specialized implementation and call the base class function. This is recommended to keep the setup procedure aligned with the expected flow. 
 
 ### C++ Implementation
 ```c++
@@ -348,3 +378,179 @@ bool CustomScalar::checkMsgTypes(const Message::msg_types_t& msgTypesInput, cons
 ```
 
 > Please note that out of these functions the one required to be implemented (with the exception of source type components) is setupStream. This function requires the implementer to create an instance of stream_info as a shared pointer to be saved in the base class's stream map. This is later used by the start, mapStreams, and process functions.
+
+For the Import and Setup function, these functions must set the status of the component to the following states. This will provide information to DX+ as to the state of the component configuration.
+
+```c++
+m_health["status"] = "importing"; //indicating import progress
+m_health["status"] = "configuring"; //indicating the component is being setup
+m_health["status"] = "ready"; //Successful setup and ready to start
+m_health["status"] = "error"; //indicating error state
+```
+
+### The Import Function
+The import function as previously mentioned is used to pull the available data streams and add them the passed SourceJson object. The GraphJson classes provide some helper funtions to assist in the requirements for this function. First, the SourceJson class provides the "importStreams" function which will take the passed parents as arguments and pull the streams from the parents into the SourceJson object. This function will attempt to match any existing streams defined in the SourceJson and re-apply their settings. Additionally, it will check for naming duplicates and defaultly rename the output. When this function is called, one of the arguments is the reference to the SourceJson object. It is recomended to save a temporary copy of this object specifically to save the streams list that may be already present. Then after the streams from the passed parents or through the device are imported into the SourceJson object, use the << operator to merge the temporary with the updated. This will find the matching streams and re-apply settings/names that may have been previously set.
+
+```c++
+bool CustomScalar::import(GraphJson::SourceJson& sj, std::vector<GraphJson::SourceJson> parents){
+    auto srcTmp = sj;
+    sj.importStreams(parents);
+    sj << srcTmp;
+    return true;
+}
+```
+
+### The SourceJson and StreamJson
+The import and setup functions should ensure the SourceJson and StreamsJson objects are up to date with their information. Please see the below example of a fully filled out SourceJson object that should be the result of this function with one stream.
+
+```json
+{
+    "name": "{000000-0000-0000-0000-000000000000}",
+    "type": "111111-1111-1111-1111-111111111111",
+    "logicalName": "MyComponent",
+    "enabled": true,
+    "settings": {
+        "setting1": "val1",
+        "setting2": 2,
+        "streams": [
+            {
+                "originName": "devcode0001",
+                "name": "Stream1",
+                "group": "group1",
+                "delta": 0.1,
+                "mtype": "vector",
+                "dtyoe": "number_32",
+                "enabled": true,
+                "type": "stream",
+                "streamclass": 3,
+                "vars": null,
+                "uniform": true,
+                "continuous": true,
+                "maxref": null,
+                "minref": null,
+                "limits": {
+                    "alert": 90,
+                    "warn": 70,
+                    "min": 0,
+                    "max": 100
+                },
+                "sources": [{
+                    "sourcename": "rootComponent",
+                    "streamName": "Stream1"
+                }],
+                "units": [
+                    {
+                        "domain": {
+                            "time": 1.0,
+                        },
+                        "name": "s"
+                    },
+                    {
+                        "domain":{
+                            "current":-1.0,
+                            "length": 2.0,
+                            "mass": 1.0,
+                            "time": -3.0
+                        },
+                        "name": "V",
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
+Now let's unpack the contents of the SourceJson and the StreamJson. 
+
+#### SourceJson
+The SourceJson object needs the name defined and is the primary identifier of the instance of the component. DX+ will normally assign the component a name of a UUID. The logical name is the user set name for the component and is used for display purposes. Next the SourceJson has an "enabled" flag to indicate if the component is enabled. Lastly, the SourceJson contains a "settings" object which defines the settings for the component AND contains the "streams" key to list the streams for the component. The settings object should contain the settings keys defined in the component's supplied attributes JSON file in the "component_settings" definition. The streams key will contain a StreamJson object for each stream being output by the component.
+
+#### StreamJson
+The StreamJson contains an "originName" key. This value is set by the source that creates the first instance of this data stream. This is normally a root component or a processor that creates new streams such as the StatProcessor or SignalMath components. The originName should not change between components. The Stream then defines the "name". This name is the user defined name for the stream and is used as the primary identifier of the stream between components. The group key specifies a means to group streams under a common identifier. The group can be treated as a path. Adding "/" will create sub group categories that can be used for further grouping of streams.
+The delta key defines the delta between data samples for the data in the stream. For time based data, this is normally seconds for time. For FFT results, this will be frequency. This required a uniform sample set in that each sample is an equal delta between the two. If the data is not uniform and delta is not valid, this value should be set to null or 0. For entry message types (Single Value), the delta can be the time duration of the message. mtype and dtype define the message and data types of the stream. These values were previously defined in this document, and should be set for the stream. The enabled key controls the enabled state of the stream for output from the component. The type key, defines the stream type. This defaults to "stream", but can be used to denote the data type of the stream such as speed, temperature, pressure, stat, etc. The type will be able to be used to detect appropriate visualization widgets for the stream. The streamclass key denotes the class of data stream and is used primarily for licensing device based tokens. The class is determined by sample rate. Class 0 is a statistic, class 1 is low rate of < 1KS/s, class 2 is medium rate and < 100KS/s, class 3 is < 800KS/s, and class 4 is >=800KS/s.  The vars key is meant for user/application variable data to be stored for the stream. The uniform key indicates that the samples contained in the result data are uniformly distributed and the delta describes the distribution value. This will be false for samples in the data that do not follow any set distribution, and therefore delta will be 0 or null. The continuous key indicates of the data is continuous (for example in time) OR if it is domain bound (for example FFT frequency or Degrees in angle domain). If the stream is designated as uniform and not continuos, then the streamJSON should define the minimum and maximum reference value. This is done with the maxref and minref keys. This will set the value specified for sample 0 and the value for the final sample in the data based on the defined delta. These can also be used for non-uniform data to provide the bounds for the first dimension of the stream defined in the units array. Next, there is the "limits" object. This object describes the min and max value for the 2nd dimension of the data defined in the units. Additionally, the limits object defines the alert percent value and warn percent value of the range designated by the min and max value. In this, if the min and max value do not cross 0, the alert is determined by the range and the midpoint. For example, if min is 0 and max is 20, the midpoint is 10 and the warn level will 7 offset from the midpoint and alert is 9 offset from the midpoint, resulting in warn occuring at >=17 and <=3 and alert occuring at >=19 and <=1. If the min and max is 0-crossing, the min and max percentages will be determined based on 0-max and 0-min. For example, with range being -5 and 10, the warn will occur at <=-3.5 and >=7 with the alert occuring at <=-4.5 and >=9. The sources array defines the streams from the parent that make the stream being output. Most of the time, this will be a single item. However, for the case of signal math, multiple input streams are to be received to create the output stream. For each source, the sourcename for the component in which it came from and the streamname of the stream from that source is set. Lastly, we have the units. The units array define the units for the data stream. This is always in X,Y,Z order (or more dimensions if required). The first unit defined should be the primary reference, and correlates to the set maxref and minref defined values. If the delta is defined, the first unit defines the unit of the delta, and subsequent units define the data contained in the samples. If delta is not defined, then the data will either be point2d, point3d, matrix, or tensor. For these, the first dimension should always be the primary reference. For example, Peak data is frequency, magnitude, and phase. Here, the primary reference dimension is frequency. The units should contain at the very least the "name" of the unit so that it can be found in the Units Table in Phoenix. The domain defines the unit in its base series of domains and their associated power. The unit definition will also normally supply the offset and scale of the unit from the base unit (For example km is 1000 m) and the primary unit system (Imperial, SI, etc);
+
+#### Source Components for Post Processing
+For post processing, the components that implement the readers of stored data are required to provide additional information. If this information is missing, the application will display an error to the user stating the component is missing information. The SourceJson and StreamJson should contain this data when the import function is called. 
+
+Inside the SourceJson, the reader must separate dat streams by record ID (This will normally always be 1 n file types), the event ID, and the source Index. This should be provided under a "metadate" key in the SourceJson. Below is an example:
+
+```json
+"metadata": {
+    "filename": "myFile",
+    "records": [
+        {
+            "record_start": 178930099887765, //Record Start Time in ns since epoch
+            "record_complete": 1790000000000,
+            "record_id": 1,
+            "graph": {}, //The graph JSON for the processing that was used when the recordwas created
+            "metadata": {}, //metadata for the record,
+            "sources": [0],
+            "events": [
+                {
+                    "event_id": 1,
+                    "event_flag": "s",
+                    "event_start": 17883837636336, //Event start timestamp
+                    "event_stop": 172627764644836, //Event stop timestamp
+                    "metadata": {} //metadata for the event
+                }
+            ]
+        }
+    ]
+}
+```
+
+Additionally, each stream must also provide a metadata key containing primarily, the record ID, the event ID, and the Source index for which the stream came from. It is also recommended to provide the first time and last time of the stream as it exists in the file. An example of this is seen below.
+
+```json
+"metadata": {
+    "record_id": 1,
+    "event_id": null,
+    "source_index": 0,
+    "firsttime": 17887777353738,
+    "lasttime": 17887367856735
+}
+```
+
+## Implementing the Processing
+After completing the setup, the component manager will find the component connections and create instances of ComponentSubscriptionHandlers. These handlers are of a single subscription connection between components. i.e. Component2 uses Stream 1 and Stream 2 from Component 1. There will be subscriptions created of stream 1 component 1 to be sent to component 2 and then another subscription of stream 2 component 1 to be sent to component 2. This is in a multithreaded environment. The subscription handler ensures that data is arriving to destinations serially per stream, however, data from each stream can arrive to the destibation component concurrently. The component processing implementation must handle data streams independently. If several streams are needed to provide a batch or combined operation, then locks must be used along with appropriate buffering to appropriately handle the data. For our example case, each stream will apply a scale factor to each stream independently. 
+
+When processing, it is also recommended to duplicate the message and contained data, otherwise data race conditions will occur on the data iteself for multiple processors or viewers receiving data from the same component.
+
+In addition to the process function the start and stop function must be implemented. The start and stop function must also set the status of the component to "starting", "running", "stopped", or "error" as needed. The Post processing input components will set the status to "complete" when reading the data is done.
+
+When the start function is called, this will build the channel reference map. This will map the incoming long ID of the Message to the list of output data streams that need it. It is recommended to call the base class start and stop functions to best handle this.
+
+```c++
+void CustomScalar::start(uint64_t ts){
+    Component::start(ts);
+}
+
+void CustomScalar::start(uint64_t ts){
+    Component::start(ts);
+}
+
+void CustomScalar::process(const Message& msg){
+    if(!msg.valid()) return;
+    if(!m_chanRef.contains(msg.getLongId())) return;
+    auto streamOuts = m_chanRef[msg.getLongId()];
+    auto fdata = msg.getF32Vector();
+    for(auto& so : streamOuts){
+        auto strmInfo = (customScalarStream_t*)m_streams[so].get();
+        Message outMsg = msg;
+        outMsg.setSrcIdx(m_index);
+        outMsg.setStreamIdx(strmInfo->idx);
+        outMsg.setMessageType(Message::MSG_VECTOR_DATA);
+        outMsg.setDataType(Message::DATA_FLOATS);
+        outMsg.setSize(sizeof(float)*fdata.size(),true);
+        auto data = outMsg.getPtr<float>();
+        int i=0;
+        for(auto& d : fdata){
+            data[i++] = d * strmInfo->scale + strmInfo->offset; 
+        }
+    }
+}
+
+```
+
+## Making the Adapter
