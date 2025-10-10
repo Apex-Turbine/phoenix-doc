@@ -1,4 +1,4 @@
-## Cyres Subscriber
+## Dewesoft
 ## Settings
 
 - Connection Type
@@ -15,8 +15,6 @@ ___
 ## Phoenix API
 ___
 ### Description
-
-## Dewesoft Net Component
 
 Connects to Dewesoft data acquisition systems for real-time data streaming.
 
