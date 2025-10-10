@@ -18,7 +18,7 @@
   - Default, 0.01
 - Inverted
   - Invert the trigger signal polarity
-  - Default, unchecked
+  - Default, off
 ___
 ## Phoenix API
 ___

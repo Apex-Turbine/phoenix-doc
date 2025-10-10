@@ -12,7 +12,7 @@
     - Default, 0.01
 - Max Speed (option available if Trigger Type is Analog)
     - Maximum speed the processor can operate at
-    - Default, 29999.998575 RPM
+    - Default, 6000.000 RPM
 - Trigger Inverted (option available if Trigger Type is Analog)
     - Toggle Trigger Inverted
     - Default, off
