@@ -31,35 +31,39 @@ Produces single precision vectors for each channel.
 
 Component specific global keys:
 
-This component follows standard input keys:
-- name
-- units
-- size
-
 - samplerate
   - Description:The sample rate of the data
+  - Type: integer
   - Default: 102400
 
 - output_rate
   - Description: The frequency at which the component should output data in Hz
+  - Type: number
   - Default: 10.0
 
 - num_streams
   - Description: Specify the number of streams the component should output
+  - Type: integer
   - Default: 16
 
 - freq_step_size
   - Description: The frequency step size of the output data
+  - Type: integer
   - Default: 1
 
 ### Stream Settings
 - sim_scale
+  - Type: number
   - Description: The magnitude scale of the signal
   - Default: 10.0
 
 - sim_phase
+  - Type: number
   - Description: The phase of the simulated signal
   - Default: 0.0
 
 - sim_mimics
+  - Type: array
+  - Items:
+    - Type: integers
   - Description: stream id's that this signal should mimic
