@@ -12,14 +12,14 @@
 	- Options: None, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
 	- Default, Blakman-Harris
 - Order Resolution
-	- Default, 0.500
+	- Default, 1.000
 - Orders
 	- List of orders to output
 	- Default, All (blank)
 - Max Order
     - **Read-only display**
     - Based on Block Size and Order Resolution
-    - Default, 256
+    - Default, 512
 ___
 ## Phoenix API
 ___
