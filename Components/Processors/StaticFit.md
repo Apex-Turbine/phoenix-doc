@@ -1,4 +1,4 @@
-## Signal Math
+## Static Fit
 ## Settings
 
 - File Path
