@@ -10,7 +10,7 @@
   - Default, 1024
 - Resolution (DFT mode)
   - The desired frequency resolution of the DFT
-  - Default, 1024
+  - Default, 100 Hz
 - Overlap
   - The ratio of FFT size to block size.
   - When the FFT size is greater than the base block size, multiple blocks are chained together to perform a higher resolution FFT. This increases overall signal FFT resolution and reduces averaging
