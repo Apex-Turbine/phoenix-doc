@@ -4,6 +4,9 @@
 - Task Name
   - Name of NI MAX task to load
   - No default, **Must** be present or component will take no action
+- Num Samples
+  - Number of samples to read from the NI task per acquisition
+  - Default, 1000
 
 ### Functionality
 
@@ -32,12 +35,4 @@ Component specific global keys:
   - Description: The number of samples to wait for and read
   - Type: integer
   - Default: 1000
-
-- taskname
-  - Description: Name of the task as shown in NIMax or similar NI software.
-  - Type: string
-  - Default: NONE, taskname **must** be present or component will take no action
-- num\_samples
-  - Description: The number of samples to wait for and read
-  - Type: integer
-  - Default: 1000
+  
