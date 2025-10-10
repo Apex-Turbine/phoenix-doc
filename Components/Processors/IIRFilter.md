@@ -10,10 +10,10 @@
     - Default, 30 (1000 Hz)
 - Frequency 1
     - Primary cutoff frequency for filter
-    - Default, 5000 Hz
-- Frequency 2 (option available for Bandpass & Notch filter types)
+    - Default, varies based on filter type
+- Frequency 2 (option available for Bandpass, Octave & Notch filter types)
     - Secondary cutoff frequency for band-type filters
-    - Default, 10000 Hz
+    - Default, varies based on filter type
 - Filter Prototype
     - Analog filter prototype
     - Options, Butterworth, Chebyshev, Inverse Chebyshev, Elliptic, Bessel
