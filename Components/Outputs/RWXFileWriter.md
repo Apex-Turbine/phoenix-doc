@@ -21,13 +21,13 @@ ___
 ___
 ### Description
 
-Writes processed data streams to DATX file format for storage and analysis.
+Writes processed data streams to RWX file format for storage and analysis.
 
 ### I/O
 
 Receives numeric vector data streams.
 
-Produces DATX files containing recorded data.
+Produces RWX files containing recorded data.
 
 ### JSON Setup Keys
 
