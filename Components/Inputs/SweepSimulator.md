@@ -6,7 +6,7 @@
   - Default, 16
 - Sample Rate
   - Rate, in Hz, that the component should produce samples for each channel
-  - Default, 102.4 Hz
+  - Default, 102.4 kHz
 - Frequency Step
   - Step size of frequency sweep
   - Default, 1 Hz

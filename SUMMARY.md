@@ -19,6 +19,7 @@
   * [Outputs](Components/Outputs/README.md)
     * [DATX File Writer](Components/Outputs/DATXFileWriter.md)
     * [DX+ Transmit](Components/Outputs/DX+Transmit.md)
+    * [Idds Output](Components/Outputs/IddsOutput.md)
     * [Model Transmit](Components/Outputs/ModelOutput.md)
     * [Model Viewer](Components/Outputs/ModelViewer.md)
     * [PSQL Database](Components/Outputs/PostgreSQLOutput.md)
