@@ -1,4 +1,4 @@
-## Model Transmit
+## iDDS Output
 ## Settings
 
 - Node ID: ApexDX+ 
