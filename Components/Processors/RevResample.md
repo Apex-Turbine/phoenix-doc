@@ -10,6 +10,15 @@
 - Angle Resolution
     - Resolution of resample with respect to angle domain
     - Default, 0.087890625
+- Max Speed (option available if Trigger Type is Analog)
+  - Maximum expected rotational speed in RPM
+  - Default, 30000.000
+- Trigger Level (option available if Trigger Type is Analog)
+  - Analog voltage threshold for trigger detection
+  - Default, 0.01
+- Inverted (option available if Trigger Type is Analog)
+  - Invert the trigger signal polarity
+  - Default, off
 ___
 ## Phoenix API
 ___

@@ -3,7 +3,7 @@
 
 - Port
     - ZMQ Port Number
-    - Default, 65424
+    - Default, Auto-assigned
 ___
 ## Phoenix API
 ___

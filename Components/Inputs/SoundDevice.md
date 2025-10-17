@@ -3,9 +3,9 @@
 
 - Input Device
     - Device recording audio frequency
-    - No default, Must be present or component will take no action
+    - No default, **Must** be present or component will take no action
 - Sample Rate
-    - Samples rate system supports
+    - Sample rate system supports
     - Default, 44100
 - Mode
     - How many channels the system uses
@@ -14,7 +14,7 @@
 ### Functionality
 
 - Pull Setup
-    - This button must be pressed to test the connection and pull setup information from the device
+    - This button **must** be pressed to test the connection and pull setup information from the device
 ___
 ## Phoenix API
 ___

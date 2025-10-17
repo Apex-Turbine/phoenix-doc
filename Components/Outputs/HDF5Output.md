@@ -1,18 +1,18 @@
 ## APEX-H5 Output
 ## Settings
 
-- Store
+- H5 File Path
 	- Accessible path to write the APEX-H5 file
 	- No default, **Must** be present or component will take no action
-- Commit Time
-    - Updates per second
-    - Default, 1
-- Enable Monitoring
-    - Toggles monitoring for the APEX-H5 connection
-    - Default, disabled
-- Record at Start
-    - Toggles recording at start
-    - Default, enabled
+- Write Interval
+  - Updates per second to commit data to file
+  - Default, 1
+- Data Point Mode
+  - Only write when datapoint recording is active
+  - Default, disabled
+- Auto Start
+  - Toggles recording at start
+  - Default, enabled
 ___
 ## Phoenix API
 ___
