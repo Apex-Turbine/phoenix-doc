@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Component.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="overview">Overview</h1>
+<p>The Component folder provides the base classes required to create and use components. This consists of the following files and classes. Please see the class API documentations for further detail of individual functions.</p>
+<h2 id="component">Component</h2>
+<p>This file contains the &quot;Component&quot; base class. This class is used to provide an interface for each component and must be inherited and implemented.</p>
+<h2 id="componentcallback">ComponentCallback</h2>
+<p>This file contains the base class for implementing a callback object for the component. This provides the &quot;ComponentCallbackItem&quot; base class which provides virtual functions for sending messages, propogating commands or requests, and retrieving the available commands and requests. This file also provides the &quot;ComponentFunctionalCallbackItem&quot; convienance class that allows providing lambdas as the callback.</p>
+<p>The callback item is used by the component to allow communication from the component to the object managing it.</p>
+<h2 id="componentmanager">ComponentManager</h2>
+<p>This file provides the implementation of the &quot;ComponentManager&quot; class. This class is responsible for registering available components, creating component instances, connecting data between components, and parsing a JSON Graph object into a data pipeline with the components requested in the graph.</p>
+<p>The ComponentManager creates and manages a threadpool. This threadpool is used to perform component tasks and queue results for the next component task.</p>
+<p>The ComponentManager class will use the ComponentLibraryManager to load available components and register them into its memory. Custom implementations can also create components and register them directly with the manager. Given a JSON, the manager will parse the JSON, find the requested components based on the type UUID and create their instances. Next, it will determine the data connections between the components and connect them using a ComponentCallbackItem and a ComponentSubscriptionHandler.</p>
+<p>The ComponentManager will also allow the initialization of a ComponentRemoteManager. The ComponentRemoteManager allows a networked device to control and activate the functions of the ComponentManager.</p>
+<h2 id="componentremotemanager">ComponentRemoteManager</h2>
+<p>This file provides the ComponentRemoteManager class. The remote manager allows remote control of the ComponentManager. This is performed using a ZMQ request/reply socket pattern. The class requires an instance of a ComponentManager.</p>
+<h2 id="componentsubscriptionhandler">ComponentSubscriptionHandler</h2>
+<p>This file contains the implementation for the ComponentSubscriptionHandler class. This class is used by the ComponentManager to connect data between components. This works by the class creating a data queue. When items on the data queu are pushed on, the class will queue the attached component to process the data as a task on the thread pool. This class restricts the work such that the current working task must complete and the data be popped off the queue before it enqueus another processing task for the next data item on the data queue. This class requires a Component and a threadpool object. Additionally, the subscription handler is designed to handle a single data stream. Therefore, it is not advisable to create a single subscription handler to process multiple data streams input from the sending component. This ensures data integrity in a multi-threaded environment.</p>
+<h2 id="componentlibrary">ComponentLibrary</h2>
+<p>This file contains the class definitions for ComponentLibrary, ComponentAdapter, and the ComponentLibraryManager.</p>
+<h3 id="componentadapter">ComponentAdapter</h3>
+<p>The ComponentAdapter class contains the name of the component as a standard display name, the UUID for the component, a JSON object that describes the component, and a creation function to create an instance of the component. The adapter is used to register the component into the system and provide the means to create a component instance.</p>
+<h3 id="componentlibrary">ComponentLibrary</h3>
+<p>The ComponentLibrary class is a simple container class that contains a list of component adapters. A single DLL should contain a single ComponentLibrary Class This class simply contains the name to identify the library and a function to retrieve the available component adapters.</p>
+<h3 id="componentlibrarymanager">ComponentLibraryManager</h3>
+<p>This class provides the means to load DLL's from provided paths and load the component library contained in each DLL. There is also a global function &quot;getComponentLibraryManager&quot; that creates a static instance of a ComponentLibraryManager for common use throughout the application.</p>
+<h3 id="dll-structure">DLL Structure</h3>
+<p>A created DLL should export a single function &quot;GetComponents&quot; that returns a pointer to a ComponentLibrary object. The ComponentLibrary object is then used to load the ComponentAdapters within the library. The ComponentAdapters can then be used in the system to create and use components.</p>
+<h1 id="creating-components">Creating Components</h1>
+<p>Components can be created in C++ natively or in Python and C# using the SWIG wrapped API. To best explain the process of creating a component, we will walk through a simple example. This example will create a component as a processor that performs a simple scaling operation on the incoming data. While this is an example of a processor, it should be noted that there are 3 classes of components:</p>
+<ol>
+<li>Source: This is defined as a root component that is a producer of data for the system</li>
+<li>Processor: This component type receives data from other components, performs a task, and then sends new data to the next node in the data pipeline.</li>
+<li>Ouput: This component type is defined as a receiver of data from other components and outputs the data external to the data pipeline. This can be a network streamer or file writer as examples.</li>
+</ol>
+<p>This walkthrough will detail these further as we go through and provide information for how they are defined.</p>
+<h2 id="defining-the-class">Defining the Class</h2>
+<p>In this example, we will create a comonent class: &quot;CustomScalar&quot;. This class will inherit from the base Component class and implement required functions. We will provide a full example here, and will override all the available virtual functions to provide a full context for this example. This will not be needed fully in most cases.</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;PhoenixCore/Component/Component.hpp&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomScalar</span> :</span> <span class="hljs-keyword">public</span> Component
+{
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">customScalarStream_t</span> :</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">stream_info_t</span>{
+        customScalarStream_t(GraphJson::StreamJson&amp; strm, <span class="hljs-keyword">uint64_t</span> index);
+        ~customScalarStream(){}
+        <span class="hljs-keyword">double</span> scale = <span class="hljs-number">1.0</span>;
+        <span class="hljs-keyword">double</span> offset = <span class="hljs-number">0.0</span>;
+    };
+<span class="hljs-keyword">public</span>:
+    CustomScalar(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; name);
+    ~CustomScalar();
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">import</span><span class="hljs-params">(GraphJson::SourceJson&amp; info, <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;GraphJson::SourceJson&gt;&amp; parents)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">setup</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">const</span> GraphJson&gt; graph, GraphJson::SourceJson&amp; info)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">uint64_t</span>&amp; timestamp=<span class="hljs-number">0</span>)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">stop</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reset</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">setupStreams</span><span class="hljs-params">(GraphJson::SourceJson&amp; sj)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">setupStream</span><span class="hljs-params">(GraphJson::StreamJson&amp; strm, <span class="hljs-keyword">uint64_t</span> idx)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">validateStreams</span><span class="hljs-params">(<span class="hljs-keyword">const</span> GraphJson::SourceJson&amp; sj)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">validateStream</span><span class="hljs-params">(<span class="hljs-keyword">const</span> GraphJson::StreamJson&amp; sj)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">checkUnits</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Unit&gt;&amp; unitsInput, <span class="hljs-keyword">const</span> JSON&amp; unitsSupported)</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">checkDataTypes</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Message::<span class="hljs-keyword">data_types_t</span>&amp; dataTypesInput, <span class="hljs-keyword">const</span> JSON&amp; dataTypesSupported)</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">checkMsgTypes</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Message::<span class="hljs-keyword">msg_types_t</span>&amp; msgTypesInput, <span class="hljs-keyword">const</span> JSON&amp; msgTypesSupported)</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">mapStreams</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">typeCheck</span><span class="hljs-params">(<span class="hljs-keyword">const</span> JSON&amp; info, <span class="hljs-keyword">const</span> GraphJson::StreamJson&amp; strm)</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span></span>;
+
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> <span class="hljs-title">selfTest</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Message &amp;msg)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">const</span> JSON <span class="hljs-title">info</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>;
+
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">commands</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">requests</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function">JSON <span class="hljs-title">command</span><span class="hljs-params">(<span class="hljs-keyword">const</span> JSON &amp;)</span> <span class="hljs-keyword">override</span></span>;
+    <span class="hljs-function">JSON <span class="hljs-title">request</span><span class="hljs-params">(<span class="hljs-keyword">const</span> JSON&amp;)</span> <span class="hljs-keyword">override</span></span>;
+
+};
+
+</div></code></pre>
+<p>The above class definition provides all virtual overrides available for the component except for the Automations. The Automations will be described in another document. Next, we will go through the class implementation and describe what is being done.</p>
+<h2 id="defining-the-component">Defining the Component</h2>
+<p>The component is defined by a few informational objects. These define the component type ID, general information about the component, and available settings for the component.</p>
+<h3 id="component-uuid">Component UUID</h3>
+<p>The component should contain a non-changing UUID as a string that represents the type. UUID's are used to avoid clashes with other defined components. While the API technically allows any string to represent the component type, a UUID is highly recommended. The best method is to use http://uuidgenerator.net to generate a UUID and copy it to your source implementation. This should be Version 4 and without braces as normal usage. In our example, we will define this in the class as a static const std::string variable in our implementation file.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> comp_uuid = <span class="hljs-string">"39d09444-da10-426c-a8d1-40e605008c15"</span>;
+</div></code></pre>
+<h3 id="component-info">Component Info</h3>
+<p>Next, we need to define the ComponentInfo. This is a JSON object and Phoenix uses nlohmann::json as the JSON parser/library. (https://json.nlohmann.me/). There are a few methods to define the JSON such as having it as a string in an included text file, but we will define it directly within the c++ using the syntax defined by nlohmann JSON.</p>
+<p>Every item in the information object must be defined and is used in some way. Additionally, every component MUST support the following commands and requests:</p>
+<ol>
+<li>Requests:
+<ol>
+<li>status</li>
+</ol>
+</li>
+<li>Commands:
+<ol>
+<li>start</li>
+<li>stop</li>
+<li>reset</li>
+</ol>
+</li>
+</ol>
+<p>These are normally handled in the base class by default. They are mentioned here due to potential overrides. The DX+ Platform requires these in order to provide informational displays to the user during operation. For file based inputs, an additional request of &quot;progress&quot; is needed as a percentage to provide progress feedback. This is not required, but is helpful in this case.</p>
+<p>An example JSON of the informational can be seen below. in C++ we will recreate this as a static const object in the implementation file.</p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Custom Scalar"</span>,
+    <span class="hljs-attr">"uuid"</span>: <span class="hljs-string">"39d09444-da10-426c-a8d1-40e605008c15"</span>,
+    <span class="hljs-attr">"vendor"</span>: <span class="hljs-string">"APEX"</span>,
+    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"A custom scalar processor"</span>,
+    <span class="hljs-attr">"class"</span>: <span class="hljs-string">"processor"</span>,
+    <span class="hljs-attr">"class_type"</span>: <span class="hljs-string">"processor"</span>,
+    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"2025.9.9"</span>,
+    <span class="hljs-attr">"feature"</span>: <span class="hljs-string">"custom-processor"</span>,
+    <span class="hljs-attr">"attrbutes"</span>: <span class="hljs-string">"CustomScalar_attrs.json"</span>,
+    <span class="hljs-attr">"helpfile"</span>: <span class="hljs-string">"CustomScalar.md"</span>,
+    <span class="hljs-attr">"requests"</span>: [<span class="hljs-string">"status"</span>],
+    <span class="hljs-attr">"commands"</span>: [<span class="hljs-string">"start"</span>, <span class="hljs-string">"stop"</span>, <span class="hljs-string">"reset"</span>],
+    <span class="hljs-attr">"supported_inputs"</span>: {
+        <span class="hljs-attr">"data_types"</span>: [<span class="hljs-string">"integer"</span>, <span class="hljs-string">"number"</span>],
+        <span class="hljs-attr">"message_types"</span>: [<span class="hljs-string">"vector"</span>, <span class="hljs-string">"entry"</span>],
+        <span class="hljs-attr">"units"</span>: [
+            {<span class="hljs-attr">"domain"</span>: <span class="hljs-string">"time"</span>, <span class="hljs-attr">"name"</span>: <span class="hljs-literal">null</span>},
+            {<span class="hljs-attr">"domain"</span>: <span class="hljs-literal">null</span>, <span class="hljs-attr">"name"</span>: <span class="hljs-literal">null</span>}
+        ]
+    }
+}
+</div></code></pre>
+<p>Now, lets go through the information and cover its meanings.</p>
+<p>First, we have the Name. This is simply the display name for the component. Next, is the UUID which is the unique identifier for the component type in the system. The vendor and description fields provides the information for who created it and describes what it is/does.</p>
+<p>The class is either &quot;source&quot; meaning a producer of data as a means to bring external data into the data pipeline, &quot;processor&quot; meaning a processor of data, or &quot;output&quot; meaning a consumer of data as a means to export the data external to the data pipeline. The next field &quot;class_type&quot; further defines the specified class. For sources and outputs, this can be &quot;device&quot;, &quot;file&quot;, &quot;store&quot;, &quot;dbms&quot;, &quot;web&quot; or &quot;stream&quot;. Others may be later added. For Processors, there is only &quot;processor&quot; as the class_type.</p>
+<p>The feature field defines the feature type to be checked out in the Apex License system. If a feature is not defined, the component will not load. This must be &quot;custom-processor&quot; for a processor and will check out ANALYSIS tokens. Other features are &quot;custom-reader&quot;, &quot;custom-device&quot;, &quot;custom-writer&quot;, or custom-network.</p>
+<p>The attributes and helpfile fields provide the file name for the attribute definitions and the help document for the component. The attributes define the settings for the component, and DX+ will display these to the user in the system; the helpfile is the markdown file for the component. These will be detailed in the next section. The requests and commands are the available requests and commands that the component supports.</p>
+<p>Lastly, we have the component's defined supported inputs. This provides information that the component only allows specific data types and units to be allowed. a designation of &quot;any&quot;, null, or &quot;*&quot; provides that anything is allowed of that type. This is meant to be generic. The actual checks occur in the type check functions which can be overloaded. By default, the base class will check the stream JSNO information that is being set as an input and ensure the inputs match what is described here.</p>
+<p>Current Data Types:</p>
+<ol>
+<li>boolean</li>
+<li>integer</li>
+<li>number</li>
+<li>complex</li>
+<li>string</li>
+<li>struct</li>
+<li>message</li>
+</ol>
+<p>Current Message Types:</p>
+<ol>
+<li>entry</li>
+<li>vector</li>
+<li>matrix</li>
+<li>tensor</li>
+<li>point2d</li>
+<li>pont3d</li>
+<li>video</li>
+<li>json</li>
+<li>bson</li>
+</ol>
+<p>The units must be specified with the unit domain and the specific unit name. In this example, we have 2 units given in the array. The first unit is always the reference dimension. For time series data, this is time and normally seconds would be the unit name. Then we have the data unit type. In this example we use null in both domain and name to signal that data of any unit domain and name is accepted, but must be in reference to the time domain. As we add units to this list, we increase the number of data dimensions we are expecting. For example, here we can accept volt data that is in reference to time. Likewise we could add a second dimension of angle, and that would require input of 2 dimensional data (volts+angle) in reference to time.</p>
+<h3 id="component-attributes">Component Attributes</h3>
+<p>The component attributes is a JSON Schema document that details the settings for the component. This should follow the JSON-Schema syntax provided by http://json-schema.org. Below is an example schema:</p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-attr">"$schema"</span>: <span class="hljs-string">"http://json-schema.org/draft-05/schema#"</span>,
+    <span class="hljs-attr">"definitions"</span>: {
+        <span class="hljs-attr">"component_settings"</span>: {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"object"</span>,
+            <span class="hljs-attr">"description"</span>: <span class="hljs-string">"The Settings for the Component"</span>,
+            <span class="hljs-attr">"properties"</span>: {
+                <span class="hljs-attr">"cs_overall_scalar"</span>: {
+                    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Scalar"</span>,
+                    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"number"</span>,
+                    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"The scalar to apply to the incoming data"</span>,
+                    <span class="hljs-attr">"$require_import"</span>: <span class="hljs-literal">false</span>
+                },
+                <span class="hljs-attr">"cs_overall_offset"</span>: {
+                    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Offset"</span>,
+                    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"number"</span>,
+                    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"The offset to apply to the data"</span>,
+                    <span class="hljs-attr">"$require_import"</span>: <span class="hljs-literal">false</span>
+                }
+            }
+        },
+        <span class="hljs-attr">"component_stream_settings"</span>: {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"object"</span>,
+            <span class="hljs-attr">"description"</span>: <span class="hljs-string">"The settings for each stream individually"</span>,
+            <span class="hljs-attr">"properties"</span>: {
+                <span class="hljs-attr">"cs_stream_scalar"</span>: {
+                    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Stream Scalar"</span>,
+                    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"number"</span>,
+                    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"The scalar to apply to the incoming data for individual stream"</span>,
+                    <span class="hljs-attr">"$require_import"</span>: <span class="hljs-literal">false</span>
+                },
+                <span class="hljs-attr">"cs_stream_offset"</span>: {
+                    <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Stream Offset"</span>,
+                    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"number"</span>,
+                    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"The offset to apply to the data for individual stream"</span>,
+                    <span class="hljs-attr">"$require_import"</span>: <span class="hljs-literal">false</span>
+                }
+            }
+        }
+    }
+}
+</div></code></pre>
+<p>The attributes JSON defines properties in 2 areas. The first is the compoennt_settings and the second is the component_stream_settings. As the name suggests, the former defines settings/properties that are meant to be applied to the component as a whole, while the latter defines settings/properties that can be applied individually to each stream. This file must be placed or referenced from the &quot;schemas&quot; directory in the Phoenix installation location. i.e. &quot;Phoenix/bin/components/schemas&quot;.</p>
+<p>For each property, the standard JSON-Schema attributes are required such as the type, a description, and preferrably a title. Lastly, there is a custom flag in this denoted as &quot;$require_import&quot;. This is a flag that requires the import function to be called whenever a change occurs for the specified property.</p>
+<h3 id="component-help">Component Help</h3>
+<p>The help file specified is a file containing markdown style help information. This will allow the DX+ application to display the help along side the settings of the component. This file should be placed or referenced from the doc directory in the Phoenix install location specific to its class type. i.e. Phoenix/doc/phoenix-doc/Components/Processors.</p>
+<pre class="hljs"><code><div><span class="hljs-section"># Intro</span>
+This is the component.
+
+<span class="hljs-section"># Settings</span>
+The settings are:
+<span class="hljs-bullet">1. </span>scalar
+<span class="hljs-bullet">2. </span>offset
+
+<span class="hljs-section"># Usage</span>
+</div></code></pre>
+<h3 id="source-components-for-post-processing">Source Components for Post Processing</h3>
+<p>When creating components to read stored data for processing, there are a few additional items needed for the information. First, as stated prior, the &quot;class_type&quot; of these can either be:</p>
+<ol>
+<li>file - indicating the data is from a flat file and contains in normal circumstances a single data record</li>
+<li>store - indicating the data is stored in a database file such as sqlite and can contain multiple records</li>
+<li>dbms - indicating the data is stored in a database management system and provides an interface for connection and data extraction. This can also contain multiple data records.</li>
+<li>web - indicating the data is accessed through a web api.</li>
+</ol>
+<p>For the file and store type, the information JSON must provide the extensions supported for them. For the tore, dbms, and web type, they must provide the query_type field indicating the expected query language that can be supported. an example with comments can be seen below:</p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"My File Reader"</span>,
+    <span class="hljs-attr">"vendor"</span>: <span class="hljs-string">"Apex"</span>,
+    <span class="hljs-attr">"uuid"</span>: <span class="hljs-string">"00000000-0000-0000-0000-000000000000"</span>,
+    <span class="hljs-attr">"description"</span>: <span class="hljs-string">"file reader"</span>,
+    <span class="hljs-attr">"class"</span>: <span class="hljs-string">"source"</span>,
+    <span class="hljs-attr">"class_type"</span>: <span class="hljs-string">"file"</span>, <span class="hljs-comment">//file, store, dbms, web</span>
+    <span class="hljs-attr">"extensions"</span>:[<span class="hljs-string">".abc"</span>,<span class="hljs-string">"abcx"</span>,<span class="hljs-string">"abcz"</span>], <span class="hljs-comment">//Required for file and store</span>
+    <span class="hljs-attr">"query_type"</span>: <span class="hljs-literal">null</span>, <span class="hljs-comment">//Required for store, dbms, and web and is meant to indicate query language: sql, nosql, etc</span>
+    <span class="hljs-attr">"feature"</span>: <span class="hljs-string">"myfile-reader"</span>,
+    <span class="hljs-attr">"version"</span>: <span class="hljs-string">"yyyy.mm.dd"</span>,
+    <span class="hljs-attr">"attributes"</span>: <span class="hljs-string">"myFileReader_attrs.json"</span>,
+    <span class="hljs-attr">"helpfile"</span>: <span class="hljs-string">"myFileReader_help.md"</span>,
+    <span class="hljs-attr">"requests"</span>: [<span class="hljs-string">"progress"</span>],
+    <span class="hljs-attr">"commands"</span>: [],
+    <span class="hljs-attr">"supported_inputs"</span>: <span class="hljs-literal">null</span>
+}
+</div></code></pre>
+<h2 id="implement-constructor-and-informationals">Implement Constructor and informationals</h2>
+<p>Here we will implement the component constructor and the informational functions for the class. The Constructor will make use of the UUID we defined previously as comp_uuid and supply that to the base class.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> JSON info = JSON::parse(json_string);
+
+CustomScalar::CustomScalar(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; name) : Component(name, comp_uuid) {
+    <span class="hljs-comment">//Nothing to initialize here</span>
+}
+CustomScalar::~CustomScalar() { reset(); }
+<span class="hljs-function"><span class="hljs-keyword">const</span> JSON <span class="hljs-title">CustomScalar::info</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> info; }
+<span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">commands</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> {<span class="hljs-string">"start"</span>, <span class="hljs-string">"stop"</span>, <span class="hljs-string">"reset"</span>}; }
+<span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">requests</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> {<span class="hljs-string">"status"</span>}; }
+
+</div></code></pre>
+<h2 id="implement-setup-information">Implement Setup information</h2>
+<p>The import and setup function implement the core piece for component operation. Due to this, the procedure is multi-steppd. The below chart depicts the procedure.</p>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    n1["DX+"] --> n2["import"]
+    n2 --> n1
+    n1 --> n3["setup"]
+    n3 --> n4["setupStreams"]
+    n4 --> n5["setupStream"]
+    n3 --> n6["validateStreams"]
+    n6 --> n12["checkDuplicateNames"]
+    n6 --> n7["validateStream"]
+    n7 --> n8["typeCheck"]
+    n8 --> n9["checkUnits"]
+    n8 --> n10["checkDataTypes"]
+    n8 --> n11["checkMsgTypes"]
+</div></code></pre>
+<p>The normal process is to first call the import function and supply the GraphJson::SourceJson information of the parents of the component. For source components, the parents list would be empty. For processors and outputs, the parents list would be the list of components that are being connected to the processor/output. The purpose of import is to retrieve the streams list that should be expected as output from the component. After import is called, additional settings may be changed/added for the component and streams. Afterward, setup is called. Setup is called in the ComponentManager class which in turn calls the set-up function for each component. The setup function requres the passing of the GraphJson pointer and the reference of the SourceJson of the component. The setup function can use the graph as reference, but cannot modify. However, it is expected for the setup function to modify the SourceJson as needed. The base class implementation of setup will extract and validate the existance of the streams being input into the component, then call setupStreams that will loop through the the stream list and call setup stream. After the setup portion is done, the type checks occur. The setup function will call &quot;validateStreams&quot; which will first call checkDuplicateNames on the sourceJson object to ensure all names for the streams being output is unique, and then loop through the stream list and call validateStream. In the base class validate stream function, it will find the stream that is the input for the component that is the source for the output, extract the information for the input stream along with the &quot;supported_inputs&quot; JSON from the component's information JSON and supply these to the typeCheck function. This function will validate the units, message type, and data type for the data coming into the component.</p>
+<p>Given this, it is highly recommended that any overload of any of these functions should provide the specialized implementation and call the base class function. This is recommended to keep the setup procedure aligned with the expected flow.</p>
+<h3 id="c-implementation">C++ Implementation</h3>
+<pre class="hljs"><code><div>customScalarStream_t::customScalarStream_t(GraphJson::StreamJson&amp; strm, <span class="hljs-keyword">uint64_t</span> index) : <span class="hljs-keyword">stream_info_t</span>(strm,index){
+    <span class="hljs-comment">//This allows extraction and saving of stream specific settings</span>
+    <span class="hljs-keyword">this</span>-&gt;scale = PhoenixJson::getDouble(strm.settings()[<span class="hljs-string">"cs_stream_scalar"</span>],<span class="hljs-number">1.0</span>);
+    <span class="hljs-keyword">this</span>-&gt;offset = PhoenixJson::getDouble(strm.settings()[<span class="hljs-string">"cs_stream_offset"</span>], <span class="hljs-number">0.0</span>);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::import</span><span class="hljs-params">(GraphJson::SourceJson&amp; sj, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;GraphJson::SourceJson&gt; parents)</span></span>{
+    <span class="hljs-comment">//Base class implementation will set streamlist on sj as any supported data, message, unit types from parent</span>
+    <span class="hljs-comment">//Specialize based on need</span>
+    <span class="hljs-keyword">return</span> Component::<span class="hljs-keyword">import</span>(sj, parents);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::setup</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">const</span> GraphJson&gt; grph, GraphJson::SourceJson&amp; sj)</span></span>{
+    <span class="hljs-comment">//First extract settings</span>
+    <span class="hljs-keyword">auto</span>&amp; settings = sj.generalSettings();
+    <span class="hljs-comment">//Use PhoenixJson helpers to get the settings</span>
+    <span class="hljs-keyword">this</span>-&gt;m_globalScalar = PhoenixJson::getDouble(settings[<span class="hljs-string">"cs_overall_scalar"</span>],<span class="hljs-number">1.0</span>);
+    <span class="hljs-keyword">this</span>-&gt;m_globalOffset = PhoenixJson::getDouble(settings[<span class="hljs-string">"cs_overall_offset"</span>], <span class="hljs-number">0.0</span>);
+    <span class="hljs-keyword">return</span> Component::<span class="hljs-built_in">setup</span>(grph,sj);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::setupStreams</span><span class="hljs-params">(GraphJson::SourceJson&amp; sj)</span></span>{
+    <span class="hljs-keyword">return</span> Component::setupStreams(sj);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::setupStream</span><span class="hljs-params">(GraphJson::StreamJson&amp; strm, <span class="hljs-keyword">uint64_t</span> index)</span></span>{
+    <span class="hljs-comment">//Here we have created a specialized stream info class to hold settings specific to streams in this component</span>
+    <span class="hljs-comment">//We call base class first to fill out stream info from parent and ensure parent stream's existance</span>
+    <span class="hljs-comment">//This provides a stream json copy from parent merged and overriden with the stream json in this component</span>
+    <span class="hljs-keyword">if</span>(!Component::setupStream(strm,sidx)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    <span class="hljs-comment">//Now we create the stream info object and save it to our internal stream list (variable in base class)</span>
+    <span class="hljs-comment">//If the stream is disabled we set a nullptr for the stream in the stream list</span>
+    <span class="hljs-comment">//For the component to work, This function MUST be implemented!</span>
+    m_streams[strm.name()] = strm.isEnabled() ? <span class="hljs-built_in">std</span>::make_shared&lt;customScalarStream_t&gt;(strm,index) : <span class="hljs-literal">nullptr</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::validateStreams</span><span class="hljs-params">(<span class="hljs-keyword">const</span> GraphJson::SourceJson&amp; sj)</span></span>{
+    <span class="hljs-keyword">return</span> Component::validateStreams(sj);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::validateStream</span><span class="hljs-params">(<span class="hljs-keyword">const</span> GraphJson::StreamJson&amp; strm)</span></span>{
+    <span class="hljs-keyword">return</span> Component::validateStream(strm);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::typeCheck</span><span class="hljs-params">(<span class="hljs-keyword">const</span> JSON&amp; info, <span class="hljs-keyword">const</span> GraphJson::StreamJson&amp; strm)</span> <span class="hljs-keyword">const</span></span>{
+    <span class="hljs-keyword">return</span> Component::typeCheck(info,strm);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::checkDuplicateNames</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;GraphJson::StreamJson&gt;&amp; streams)</span> <span class="hljs-keyword">const</span></span>{
+    <span class="hljs-keyword">return</span> Component::checkDuplicateNames(streams);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::checkUnits</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Unit&gt;&amp; unitsInput, <span class="hljs-keyword">const</span> JSON&amp; unitsSupported)</span> <span class="hljs-keyword">const</span></span>{
+    <span class="hljs-keyword">return</span> Component::checkUnits(unitsInput, unitsSupported);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::checkDataTypes</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Message::<span class="hljs-keyword">data_types_t</span>&amp; dataTypesInput, <span class="hljs-keyword">const</span> JSON&amp; datatypesSupported)</span> <span class="hljs-keyword">const</span></span>{
+    <span class="hljs-keyword">return</span> Component::checkDataTypes(dataTypesInput, dataTypesSupported);
+}
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::checkMsgTypes</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Message::<span class="hljs-keyword">msg_types_t</span>&amp; msgTypesInput, <span class="hljs-keyword">const</span> JSON&amp; msgTypesSupported)</span> <span class="hljs-keyword">const</span></span>{
+    <span class="hljs-keyword">return</span> Component::checkMsgTypes(msgTypesInput, msgTypesSupported);
+}
+</div></code></pre>
+<blockquote>
+<p>Please note that out of these functions the one required to be implemented (with the exception of source type components) is setupStream. This function requires the implementer to create an instance of stream_info as a shared pointer to be saved in the base class's stream map. This is later used by the start, mapStreams, and process functions.</p>
+</blockquote>
+<p>For the Import and Setup function, these functions must set the status of the component to the following states. This will provide information to DX+ as to the state of the component configuration.</p>
+<pre class="hljs"><code><div>m_health[<span class="hljs-string">"status"</span>] = <span class="hljs-string">"importing"</span>; <span class="hljs-comment">//indicating import progress</span>
+m_health[<span class="hljs-string">"status"</span>] = <span class="hljs-string">"configuring"</span>; <span class="hljs-comment">//indicating the component is being setup</span>
+m_health[<span class="hljs-string">"status"</span>] = <span class="hljs-string">"ready"</span>; <span class="hljs-comment">//Successful setup and ready to start</span>
+m_health[<span class="hljs-string">"status"</span>] = <span class="hljs-string">"error"</span>; <span class="hljs-comment">//indicating error state</span>
+</div></code></pre>
+<h3 id="the-import-function">The Import Function</h3>
+<p>The import function as previously mentioned is used to pull the available data streams and add them the passed SourceJson object. The GraphJson classes provide some helper funtions to assist in the requirements for this function. First, the SourceJson class provides the &quot;importStreams&quot; function which will take the passed parents as arguments and pull the streams from the parents into the SourceJson object. This function will attempt to match any existing streams defined in the SourceJson and re-apply their settings. Additionally, it will check for naming duplicates and defaultly rename the output. When this function is called, one of the arguments is the reference to the SourceJson object. It is recomended to save a temporary copy of this object specifically to save the streams list that may be already present. Then after the streams from the passed parents or through the device are imported into the SourceJson object, use the &lt;&lt; operator to merge the temporary with the updated. This will find the matching streams and re-apply settings/names that may have been previously set.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::import</span><span class="hljs-params">(GraphJson::SourceJson&amp; sj, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;GraphJson::SourceJson&gt; parents)</span></span>{
+    <span class="hljs-keyword">auto</span> srcTmp = sj;
+    sj.importStreams(parents);
+    sj &lt;&lt; srcTmp;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+}
+</div></code></pre>
+<h3 id="the-sourcejson-and-streamjson">The SourceJson and StreamJson</h3>
+<p>The import and setup functions should ensure the SourceJson and StreamsJson objects are up to date with their information. Please see the below example of a fully filled out SourceJson object that should be the result of this function with one stream.</p>
+<pre class="hljs"><code><div>{
+    <span class="hljs-attr">"name"</span>: <span class="hljs-string">"{000000-0000-0000-0000-000000000000}"</span>,
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"111111-1111-1111-1111-111111111111"</span>,
+    <span class="hljs-attr">"logicalName"</span>: <span class="hljs-string">"MyComponent"</span>,
+    <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"settings"</span>: {
+        <span class="hljs-attr">"setting1"</span>: <span class="hljs-string">"val1"</span>,
+        <span class="hljs-attr">"setting2"</span>: <span class="hljs-number">2</span>,
+        <span class="hljs-attr">"streams"</span>: [
+            {
+                <span class="hljs-attr">"name"</span>: <span class="hljs-string">"devcode0001"</span>,
+                <span class="hljs-attr">"logicalName"</span>: <span class="hljs-string">"Stream1"</span>,
+                <span class="hljs-attr">"group"</span>: <span class="hljs-string">"group1"</span>,
+                <span class="hljs-attr">"delta"</span>: <span class="hljs-number">0.1</span>,
+                <span class="hljs-attr">"mtype"</span>: <span class="hljs-string">"vector"</span>,
+                <span class="hljs-attr">"dtyoe"</span>: <span class="hljs-string">"number_32"</span>,
+                <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">"type"</span>: <span class="hljs-string">"stream"</span>,
+                <span class="hljs-attr">"streamclass"</span>: <span class="hljs-number">3</span>,
+                <span class="hljs-attr">"vars"</span>: <span class="hljs-literal">null</span>,
+                <span class="hljs-attr">"uniform"</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">"continuous"</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">"maxref"</span>: <span class="hljs-literal">null</span>,
+                <span class="hljs-attr">"minref"</span>: <span class="hljs-literal">null</span>,
+                <span class="hljs-attr">"limits"</span>: {
+                    <span class="hljs-attr">"alert"</span>: <span class="hljs-number">90</span>,
+                    <span class="hljs-attr">"warn"</span>: <span class="hljs-number">70</span>,
+                    <span class="hljs-attr">"min"</span>: <span class="hljs-number">0</span>,
+                    <span class="hljs-attr">"max"</span>: <span class="hljs-number">100</span>
+                },
+                <span class="hljs-attr">"sources"</span>: [{
+                    <span class="hljs-attr">"sourcename"</span>: <span class="hljs-string">"rootComponent"</span>,
+                    <span class="hljs-attr">"streamname"</span>: <span class="hljs-string">"rootComponent::Stream1"</span>,
+                    <span class="hljs-attr">"streamlogicalname"</span>: <span class="hljs-string">"Stream1"</span>
+                }],
+                <span class="hljs-attr">"units"</span>: [
+                    {
+                        <span class="hljs-attr">"domain"</span>: {
+                            <span class="hljs-attr">"time"</span>: <span class="hljs-number">1.0</span>,
+                        },
+                        <span class="hljs-attr">"name"</span>: <span class="hljs-string">"s"</span>
+                    },
+                    {
+                        <span class="hljs-attr">"domain"</span>:{
+                            <span class="hljs-attr">"current"</span>:<span class="hljs-number">-1.0</span>,
+                            <span class="hljs-attr">"length"</span>: <span class="hljs-number">2.0</span>,
+                            <span class="hljs-attr">"mass"</span>: <span class="hljs-number">1.0</span>,
+                            <span class="hljs-attr">"time"</span>: <span class="hljs-number">-3.0</span>
+                        },
+                        <span class="hljs-attr">"name"</span>: <span class="hljs-string">"V"</span>,
+                    }
+                ]
+            }
+        ]
+    }
+}
+</div></code></pre>
+<p>Now let's unpack the contents of the SourceJson and the StreamJson.</p>
+<h4 id="sourcejson">SourceJson</h4>
+<p>The SourceJson object needs the name defined and is the primary identifier of the instance of the component. DX+ will normally assign the component a name of a UUID. The logical name is the user set name for the component and is used for display purposes. Next the SourceJson has an &quot;enabled&quot; flag to indicate if the component is enabled. Lastly, the SourceJson contains a &quot;settings&quot; object which defines the settings for the component AND contains the &quot;streams&quot; key to list the streams for the component. The settings object should contain the settings keys defined in the component's supplied attributes JSON file in the &quot;component_settings&quot; definition. The streams key will contain a StreamJson object for each stream being output by the component.</p>
+<h4 id="streamjson">StreamJson</h4>
+<p>The StreamJson contains the &quot;name&quot; key. This value is set by the source that creates the first instance of this data stream and is the primary identifier of the stream in the system. This is normally a root component or a processor that creates new streams such as the StatProcessor or SignalMath components. The name should not change between components. The Stream then defines the &quot;logicalName&quot;. This logicalName is the user defined name for the stream and is used as an additional identifier of the stream between components. The group key specifies a means to group streams under a common identifier. The group can be treated as a path. Adding &quot;/&quot; will create sub group categories that can be used for further grouping of streams.
+The delta key defines the delta between data samples for the data in the stream. For time based data, this is normally seconds for time. For FFT results, this will be frequency. This required a uniform sample set in that each sample is an equal delta between the two. If the data is not uniform and delta is not valid, this value should be set to null or 0. For entry message types (Single Value), the delta can be the time duration of the message. mtype and dtype define the message and data types of the stream. These values were previously defined in this document, and should be set for the stream. The enabled key controls the enabled state of the stream for output from the component. The type key, defines the stream type. This defaults to &quot;stream&quot;, but can be used to denote the data type of the stream such as speed, temperature, pressure, stat, etc. The type will be able to be used to detect appropriate visualization widgets for the stream. The streamclass key denotes the class of data stream and is used primarily for licensing device based tokens. The class is determined by sample rate. Class 0 is a statistic, class 1 is low rate of &lt; 1KS/s, class 2 is medium rate and &lt; 100KS/s, class 3 is &lt; 800KS/s, and class 4 is &gt;=800KS/s.  The vars key is meant for user/application variable data to be stored for the stream. The uniform key indicates that the samples contained in the result data are uniformly distributed and the delta describes the distribution value. This will be false for samples in the data that do not follow any set distribution, and therefore delta will be 0 or null. The continuous key indicates of the data is continuous (for example in time) OR if it is domain bound (for example FFT frequency or Degrees in angle domain). If the stream is designated as uniform and not continuos, then the streamJSON should define the minimum and maximum reference value. This is done with the maxref and minref keys. This will set the value specified for sample 0 and the value for the final sample in the data based on the defined delta. These can also be used for non-uniform data to provide the bounds for the first dimension of the stream defined in the units array. Next, there is the &quot;limits&quot; object. This object describes the min and max value for the 2nd dimension of the data defined in the units. Additionally, the limits object defines the alert percent value and warn percent value of the range designated by the min and max value. In this, if the min and max value do not cross 0, the alert is determined by the range and the midpoint. For example, if min is 0 and max is 20, the midpoint is 10 and the warn level will 7 offset from the midpoint and alert is 9 offset from the midpoint, resulting in warn occuring at &gt;=17 and &lt;=3 and alert occuring at &gt;=19 and &lt;=1. If the min and max is 0-crossing, the min and max percentages will be determined based on 0-max and 0-min. For example, with range being -5 and 10, the warn will occur at &lt;=-3.5 and &gt;=7 with the alert occuring at &lt;=-4.5 and &gt;=9. The sources array defines the streams from the parent that make the stream being output. Most of the time, this will be a single item. However, for the case of signal math, multiple input streams are to be received to create the output stream. For each source, the sourcename for the component in which it came from and the streamname of the stream from that source is set. Lastly, we have the units. The units array define the units for the data stream. This is always in X,Y,Z order (or more dimensions if required). The first unit defined should be the primary reference, and correlates to the set maxref and minref defined values. If the delta is defined, the first unit defines the unit of the delta, and subsequent units define the data contained in the samples. If delta is not defined, then the data will either be point2d, point3d, matrix, or tensor. For these, the first dimension should always be the primary reference. For example, Peak data is frequency, magnitude, and phase. Here, the primary reference dimension is frequency. The units should contain at the very least the &quot;name&quot; of the unit so that it can be found in the Units Table in Phoenix. The domain defines the unit in its base series of domains and their associated power. The unit definition will also normally supply the offset and scale of the unit from the base unit (For example km is 1000 m) and the primary unit system (Imperial, SI, etc);</p>
+<h5 id="the-defined-sources-for-the-stream-and-the-import-function">The Defined Sources for the Stream and the Import Function</h5>
+<p>When the import function is performed, the streams import from the parent streams must define the sources list defining where the streams came from. To do this, each source must define the source name, stream name, and the stream logical name. On any change to these 3 items from the parent, the import must be re-performed. When import is run, the function will attempt to match the streams and re-apply existing settings when import is re-performed. If the logical name changes between the two imports, the imported logical name is applied. Otherwise the current logical name is applied.</p>
+<h4 id="source-components-for-post-processing">Source Components for Post Processing</h4>
+<p>For post processing, the components that implement the readers of stored data are required to provide additional information. If this information is missing, the application will display an error to the user stating the component is missing information. The SourceJson and StreamJson should contain this data when the import function is called.</p>
+<p>Inside the SourceJson, the reader must separate dat streams by record ID (This will normally always be 1 n file types), the event ID, and the source Index. This should be provided under a &quot;metadate&quot; key in the SourceJson. Below is an example:</p>
+<pre class="hljs"><code><div><span class="hljs-string">"metadata"</span>: {
+    <span class="hljs-attr">"filename"</span>: <span class="hljs-string">"myFile"</span>,
+    <span class="hljs-attr">"records"</span>: [
+        {
+            <span class="hljs-attr">"record_start"</span>: <span class="hljs-number">178930099887765</span>, <span class="hljs-comment">//Record Start Time in ns since epoch</span>
+            <span class="hljs-attr">"record_complete"</span>: <span class="hljs-number">1790000000000</span>,
+            <span class="hljs-attr">"record_id"</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-attr">"graph"</span>: {}, <span class="hljs-comment">//The graph JSON for the processing that was used when the recordwas created</span>
+            <span class="hljs-attr">"metadata"</span>: {}, <span class="hljs-comment">//metadata for the record,</span>
+            <span class="hljs-attr">"sources"</span>: [<span class="hljs-number">0</span>],
+            <span class="hljs-attr">"events"</span>: [
+                {
+                    <span class="hljs-attr">"event_id"</span>: <span class="hljs-number">1</span>,
+                    <span class="hljs-attr">"event_flag"</span>: <span class="hljs-string">"s"</span>,
+                    <span class="hljs-attr">"event_start"</span>: <span class="hljs-number">17883837636336</span>, <span class="hljs-comment">//Event start timestamp</span>
+                    <span class="hljs-attr">"event_stop"</span>: <span class="hljs-number">172627764644836</span>, <span class="hljs-comment">//Event stop timestamp</span>
+                    <span class="hljs-attr">"metadata"</span>: {} <span class="hljs-comment">//metadata for the event</span>
+                }
+            ]
+        }
+    ]
+}
+</div></code></pre>
+<p>Additionally, each stream must also provide a metadata key containing primarily, the record ID, the event ID, and the Source index for which the stream came from. It is also recommended to provide the first time and last time of the stream as it exists in the file. An example of this is seen below.</p>
+<pre class="hljs"><code><div><span class="hljs-string">"metadata"</span>: {
+    <span class="hljs-attr">"record_id"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"event_id"</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">"source_index"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"firsttime"</span>: <span class="hljs-number">17887777353738</span>,
+    <span class="hljs-attr">"lasttime"</span>: <span class="hljs-number">17887367856735</span>
+}
+</div></code></pre>
+<h2 id="implementing-the-processing">Implementing the Processing</h2>
+<p>After completing the setup, the component manager will find the component connections and create instances of ComponentSubscriptionHandlers. These handlers are of a single subscription connection between components. i.e. Component2 uses Stream 1 and Stream 2 from Component 1. There will be subscriptions created of stream 1 component 1 to be sent to component 2 and then another subscription of stream 2 component 1 to be sent to component 2. This is in a multithreaded environment. The subscription handler ensures that data is arriving to destinations serially per stream, however, data from each stream can arrive to the destibation component concurrently. The component processing implementation must handle data streams independently. If several streams are needed to provide a batch or combined operation, then locks must be used along with appropriate buffering to appropriately handle the data. For our example case, each stream will apply a scale factor to each stream independently.</p>
+<p>When processing, it is also recommended to duplicate the message and contained data, otherwise data race conditions will occur on the data iteself for multiple processors or viewers receiving data from the same component.</p>
+<p>In addition to the process function the start and stop function must be implemented. The start and stop function must also set the status of the component to &quot;starting&quot;, &quot;running&quot;, &quot;stopped&quot;, or &quot;error&quot; as needed. The Post processing input components will set the status to &quot;complete&quot; when reading the data is done.</p>
+<p>When the start function is called, this will build the channel reference map. This will map the incoming long ID of the Message to the list of output data streams that need it. It is recommended to call the base class start and stop functions to best handle this.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CustomScalar::start</span><span class="hljs-params">(<span class="hljs-keyword">uint64_t</span> ts)</span></span>{
+    Component::start(ts);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CustomScalar::start</span><span class="hljs-params">(<span class="hljs-keyword">uint64_t</span> ts)</span></span>{
+    Component::start(ts);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CustomScalar::process</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Message&amp; msg)</span></span>{
+    <span class="hljs-keyword">if</span>(!msg.valid()) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">if</span>(!m_chanRef.contains(msg.getLongId())) <span class="hljs-keyword">return</span>;
+    <span class="hljs-keyword">auto</span> streamOuts = m_chanRef[msg.getLongId()];
+    <span class="hljs-keyword">auto</span> fdata = msg.getF32Vector();
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; so : streamOuts){
+        <span class="hljs-keyword">auto</span> strmInfo = (customScalarStream_t*)m_streams[so].<span class="hljs-built_in">get</span>();
+        Message outMsg = msg;
+        outMsg.setSrcIdx(m_index);
+        outMsg.setStreamIdx(strmInfo-&gt;idx);
+        outMsg.setMessageType(Message::MSG_VECTOR_DATA);
+        outMsg.setDataType(Message::DATA_FLOATS);
+        outMsg.setSize(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>)*fdata.<span class="hljs-built_in">size</span>(),<span class="hljs-literal">true</span>);
+        <span class="hljs-keyword">auto</span> data = outMsg.getPtr&lt;<span class="hljs-keyword">float</span>&gt;();
+        <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; d : fdata){
+            data[i++] = d * strmInfo-&gt;scale + strmInfo-&gt;offset; 
+        }
+    }
+}
+
+</div></code></pre>
+<h2 id="making-the-adapter">Making the Adapter</h2>
+<p>Every Component needs to define an adapter. The purpose of the adapter is to provide information about the component and a method to create an instance of the component. An example of the adapter should look something similar to the following:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyCustomScalarAdapter</span> :</span> <span class="hljs-keyword">public</span> ComponentAdapter {
+<span class="hljs-keyword">public</span>:
+    MyCustomComponentAdapter() {}
+    ~MyCustomComponentAdapter() {}
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Component&gt; <span class="hljs-title">create</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; name)</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_shared&lt;CustomScalar&gt;(name);
+    }
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> <span class="hljs-title">getName</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"Custom Scalar"</span>;
+    }
+    <span class="hljs-function">JSON <span class="hljs-title">getInfo</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> info;
+    }
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> <span class="hljs-title">getUUID</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">override</span> </span>{
+        <span class="hljs-keyword">return</span> info[<span class="hljs-string">"uuid"</span>].<span class="hljs-built_in">get</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt;();
+    }
+}
+</div></code></pre>
+<h2 id="creating-the-library">Creating the Library</h2>
+<p>The Library provides the main export function for the DLL and provides access to the collection adapters contained in the library. By doing this, the user can provide a full collection of components contained in a single DLL load. This will use the &quot;ComponentLibrary&quot; class.</p>
+<pre class="hljs"><code><div><span class="hljs-function">ComponentLibrary* <span class="hljs-title">GetComponents</span><span class="hljs-params">()</span> </span>{ <span class="hljs-comment">//Main DLL Entry</span>
+    <span class="hljs-keyword">static</span> ComponentLibrary* rtn = <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">//Make static to prevent rebuild for every call to getComponents</span>
+    <span class="hljs-keyword">if</span>(!rtn){
+        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;ComponentAdapter&gt;&gt; items;
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> libName = <span class="hljs-string">"MyCustomComponents"</span>;
+        items.push_back(<span class="hljs-built_in">std</span>::make_shared&lt;MyCustomComponentAdapter&gt;());
+        rtn = <span class="hljs-keyword">new</span> ComponentLibrary(libName, items);
+    }
+    <span class="hljs-keyword">return</span> rtn;
+}
+</div></code></pre>
+<h2 id="results">Results</h2>
+<p>After creating the component, the adapter, and the library, the ComponentLibraryManager will be able to discover the library placed in the components directory and load. This will make the components within the library usable by the higher application (DX+ or Phoenix Engine or PhoenixPy).</p>
+
+</body>
+</html>
