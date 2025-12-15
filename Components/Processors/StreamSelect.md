@@ -13,6 +13,15 @@
 - Primary Units:
   - The measurement units associated with the primary data
   - Deafault, g
+
+### Functionality
+
+- Add
+  - Allows the user to manually add a stream selection
+- Remove 
+  - Allows the user to delete a selected stream from the list
+- Load
+  - Allows the user to import a list of preexisting streams from a data file for selection.
 ___
 ## Phoenix API
 ___
