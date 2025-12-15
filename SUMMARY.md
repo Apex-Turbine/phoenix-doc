@@ -38,6 +38,7 @@
     * [Octave Band](Components/Processors/OctaveBand.md)
     * [Order FFT](Components/Processors/OrderFFT.md)
     * [Adv. DSP](Components/Processors/PeakProcessor.md)
+    * [Relative Phase](Components/Processors/RelativePhaseProcessor.md)
     * [Rev Resample](Components/Processors/RevResample.md)
     * [Signal Math](Components/Processors/SignalMathProcessor.md)
     * [Static Fit](Components/Processors/StaticFit.md)
