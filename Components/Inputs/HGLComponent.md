@@ -25,7 +25,7 @@ ___
 ___
 ### Description
 
-Provides an interface to HGL  devices for automated configuration, data acquisition, and real-time streaming of measurement data.
+Provides an interface to HGL devices for automated configuration, data acquisition, and real-time streaming of measurement data.
 
 ### I/O
 

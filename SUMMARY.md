@@ -9,7 +9,6 @@
     * [Dewesoft Net](Components/Inputs/DewesoftNetComponent.md)
     * [DS Receiver](Components/Inputs/DSReceiver.md)
     * [DX+ Receive](Components/Inputs/DX+Receive.md)
-    * [HGL Component](Components/Inputs/HGLComponent.md)
     * [Mecalc Device](Components/Inputs/MeCalcDevice.md)
     * [NI Device](Components/Inputs/NIDevice.md)
     * [RWX Reader](Components/Inputs/RWXDevice.md)

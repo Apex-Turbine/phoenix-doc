@@ -1,18 +1,12 @@
 ## Stream Selection
 ## Settings
 
-- Data Type:
+- Type:
   - Specifies the type of data contained in the stream
-  - Deafault, Number
-- Container Type:
-  - Indicates how the data is organized, such as a single value or a vector of values.
-  - Default, Vector
-- Reference Domain
-  - Defines the domain or axis the data is referenced to
-  - Default, Time
-- Primary Units:
-  - The measurement units associated with the primary data
-  - Deafault, g
+  - Default, Time Waveform
+- Units:
+  - The measurement units associated with the primary data type
+  - Default, g
 
 ### Functionality
 
@@ -21,13 +15,13 @@
 - Remove 
   - Allows the user to delete a selected stream from the list
 - Load
-  - Allows the user to import a list of preexisting streams from a data file for selection.
+  - Allows the user to import a list of preexisting streams from a database file.
 ___
 ## Phoenix API
 ___
 ### Description
 
-Selects and forwards specific data streams from based on user-defined criteria.
+Selects and forwards specific data streams based on user-defined criteria.
 
 ### I/O
 
@@ -57,4 +51,4 @@ Component specific global keys:
 - stream_mtype
   - Type: String
   - Description: The message type of the streams to be processed
-  - default": Vector
+  - Default: Vector
