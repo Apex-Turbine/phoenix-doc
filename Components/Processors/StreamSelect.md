@@ -7,6 +7,15 @@
 - Units:
   - The measurement units associated with the primary data type
   - Default, g
+- Data Type (option available if Type is Advanced)
+  - The format of individual data elements
+  - Default, Number
+- Container (option available if Type is Advanced)
+  - The organizational structure of data elements
+  - Default, Vector
+- Domain (option available if Type is Advanced)
+  - The physical measurement domain
+  - Default, Time
 
 ### Functionality
 
