@@ -651,7 +651,7 @@ CustomScalar::~CustomScalar() { reset(); }
 }
 <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">CustomScalar::setup</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">const</span> GraphJson&gt; grph, GraphJson::SourceJson&amp; sj)</span></span>{
     <span class="hljs-comment">//First extract settings</span>
-    <span class="hljs-keyword">auto</span>&amp; settings = sj.generalSettings();
+    <span class="hljs-keyword">auto</span>&amp; settings = sj.settings();
     <span class="hljs-comment">//Use PhoenixJson helpers to get the settings</span>
     <span class="hljs-keyword">this</span>-&gt;m_globalScalar = PhoenixJson::getDouble(settings[<span class="hljs-string">"cs_overall_scalar"</span>],<span class="hljs-number">1.0</span>);
     <span class="hljs-keyword">this</span>-&gt;m_globalOffset = PhoenixJson::getDouble(settings[<span class="hljs-string">"cs_overall_offset"</span>], <span class="hljs-number">0.0</span>);

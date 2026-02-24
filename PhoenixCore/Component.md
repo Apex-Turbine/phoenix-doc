@@ -333,7 +333,7 @@ bool CustomScalar::import(GraphJson::SourceJson& sj, std::vector<GraphJson::Sour
 }
 bool CustomScalar::setup(std::shared_ptr<const GraphJson> grph, GraphJson::SourceJson& sj){
     //First extract settings
-    auto& settings = sj.generalSettings();
+    auto& settings = sj.settings();
     //Use PhoenixJson helpers to get the settings
     this->m_globalScalar = PhoenixJson::getDouble(settings["cs_overall_scalar"],1.0);
     this->m_globalOffset = PhoenixJson::getDouble(settings["cs_overall_offset"], 0.0);
@@ -408,19 +408,26 @@ The import and setup functions should ensure the SourceJson and StreamsJson obje
     "type": "111111-1111-1111-1111-111111111111",
     "logicalName": "MyComponent",
     "enabled": true,
+    "metadata": {},
     "settings": {
         "setting1": "val1",
         "setting2": 2,
         "streams": [
             {
-                "name": "devcode0001",
+                "name": "rootComponent/Stream1",
                 "logicalName": "Stream1",
                 "group": "group1",
+                "originSource": "rootComponent",
                 "delta": 0.1,
                 "mtype": "vector",
                 "dtyoe": "number_32",
                 "enabled": true,
-                "type": "stream",
+                "type": "channel",
+                "classifiers": {
+                    "measurementtype":"voltage",
+                    "viewer":["operator","analyst"]
+                },
+                "metadata":{},
                 "streamclass": 3,
                 "vars": null,
                 "uniform": true,
@@ -435,7 +442,7 @@ The import and setup functions should ensure the SourceJson and StreamsJson obje
                 },
                 "sources": [{
                     "sourcename": "rootComponent",
-                    "streamname": "rootComponent::Stream1",
+                    "streamname": "rootComponent/Stream1",
                     "streamlogicalname": "Stream1"
                 }],
                 "units": [
@@ -464,14 +471,79 @@ The import and setup functions should ensure the SourceJson and StreamsJson obje
 Now let's unpack the contents of the SourceJson and the StreamJson. 
 
 #### SourceJson
-The SourceJson object needs the name defined and is the primary identifier of the instance of the component. DX+ will normally assign the component a name of a UUID. The logical name is the user set name for the component and is used for display purposes. Next the SourceJson has an "enabled" flag to indicate if the component is enabled. Lastly, the SourceJson contains a "settings" object which defines the settings for the component AND contains the "streams" key to list the streams for the component. The settings object should contain the settings keys defined in the component's supplied attributes JSON file in the "component_settings" definition. The streams key will contain a StreamJson object for each stream being output by the component.
+The SourceJson object needs the name defined and is the primary identifier of the instance of the component. DX+ will normally assign the component a name of a UUID. The logical name is the user set name for the component and is used for display purposes. Next the SourceJson has an "enabled" flag to indicate if the component is enabled. Lastly, the SourceJson contains a "settings" object which defines the settings for the component AND contains the "streams" key to list the streams for the component. The settings object should contain the settings keys defined in the component's supplied attributes JSON file in the "component_settings" definition. The streams key will contain a StreamJson object for each stream being output by the component. Lastly, there is a "metadata" key that contains a JSON object with the metadata assigned for the component.
+
+For hardware components, these components should provide a "HardwareSettings" key which contains an object specifying the settings for the device. When a setup is loaded, these settings should be able to be pushed back to the device for configuration. The JSON supplied in this section is specific to each device and does not follow any specific schema. The hardware driver should be able to parse this object and communicate settings to the device.
 
 #### StreamJson
-The StreamJson contains the "name" key. This value is set by the source that creates the first instance of this data stream and is the primary identifier of the stream in the system. This is normally a root component or a processor that creates new streams such as the StatProcessor or SignalMath components. The name should not change between components. The Stream then defines the "logicalName". This logicalName is the user defined name for the stream and is used as an additional identifier of the stream between components. The group key specifies a means to group streams under a common identifier. The group can be treated as a path. Adding "/" will create sub group categories that can be used for further grouping of streams.
-The delta key defines the delta between data samples for the data in the stream. For time based data, this is normally seconds for time. For FFT results, this will be frequency. This required a uniform sample set in that each sample is an equal delta between the two. If the data is not uniform and delta is not valid, this value should be set to null or 0. For entry message types (Single Value), the delta can be the time duration of the message. mtype and dtype define the message and data types of the stream. These values were previously defined in this document, and should be set for the stream. The enabled key controls the enabled state of the stream for output from the component. The type key, defines the stream type. This defaults to "stream", but can be used to denote the data type of the stream such as speed, temperature, pressure, stat, etc. The type will be able to be used to detect appropriate visualization widgets for the stream. The streamclass key denotes the class of data stream and is used primarily for licensing device based tokens. The class is determined by sample rate. Class 0 is a statistic, class 1 is low rate of < 1KS/s, class 2 is medium rate and < 100KS/s, class 3 is < 800KS/s, and class 4 is >=800KS/s.  The vars key is meant for user/application variable data to be stored for the stream. The uniform key indicates that the samples contained in the result data are uniformly distributed and the delta describes the distribution value. This will be false for samples in the data that do not follow any set distribution, and therefore delta will be 0 or null. The continuous key indicates of the data is continuous (for example in time) OR if it is domain bound (for example FFT frequency or Degrees in angle domain). If the stream is designated as uniform and not continuos, then the streamJSON should define the minimum and maximum reference value. This is done with the maxref and minref keys. This will set the value specified for sample 0 and the value for the final sample in the data based on the defined delta. These can also be used for non-uniform data to provide the bounds for the first dimension of the stream defined in the units array. Next, there is the "limits" object. This object describes the min and max value for the 2nd dimension of the data defined in the units. Additionally, the limits object defines the alert percent value and warn percent value of the range designated by the min and max value. In this, if the min and max value do not cross 0, the alert is determined by the range and the midpoint. For example, if min is 0 and max is 20, the midpoint is 10 and the warn level will 7 offset from the midpoint and alert is 9 offset from the midpoint, resulting in warn occuring at >=17 and <=3 and alert occuring at >=19 and <=1. If the min and max is 0-crossing, the min and max percentages will be determined based on 0-max and 0-min. For example, with range being -5 and 10, the warn will occur at <=-3.5 and >=7 with the alert occuring at <=-4.5 and >=9. The sources array defines the streams from the parent that make the stream being output. Most of the time, this will be a single item. However, for the case of signal math, multiple input streams are to be received to create the output stream. For each source, the sourcename for the component in which it came from and the streamname of the stream from that source is set. Lastly, we have the units. The units array define the units for the data stream. This is always in X,Y,Z order (or more dimensions if required). The first unit defined should be the primary reference, and correlates to the set maxref and minref defined values. If the delta is defined, the first unit defines the unit of the delta, and subsequent units define the data contained in the samples. If delta is not defined, then the data will either be point2d, point3d, matrix, or tensor. For these, the first dimension should always be the primary reference. For example, Peak data is frequency, magnitude, and phase. Here, the primary reference dimension is frequency. The units should contain at the very least the "name" of the unit so that it can be found in the Units Table in Phoenix. The domain defines the unit in its base series of domains and their associated power. The unit definition will also normally supply the offset and scale of the unit from the base unit (For example km is 1000 m) and the primary unit system (Imperial, SI, etc);
+
+The StreamJson object defines the properties and metadata for a single data stream. Below are the key fields organized by category:
+
+##### Identity and Display
+
+- **name**: The primary identifier of the stream set by the source component that creates it (normally a root component or processor like StatProcessor or SignalMath). This value should remain constant across components.
+- **logicalName**: User-defined name for the stream, used as an additional identifier between components.
+- **group**: Specifies a grouping identifier for streams. Can be treated as a path where "/" creates sub-group categories for hierarchical organization.
+- **enabled**: Controls whether the stream is enabled for output from the component.
+
+##### Data Characteristics
+
+- **mtype**: Message type of the stream (e.g., vector, entry, matrix) as defined earlier in this document.
+- **dtype**: Data type of the stream (e.g., integer, number, complex) as defined earlier in this document.
+- **type**: Stream type classification (defaults to "stream"). Can denote specific data types such as channel, health, statistic, computed, or solution.
+- **streamclass**: Licensing class based on sample rate:
+  - Class 0: Statistic
+  - Class 1: Low rate (< 1 KS/s)
+  - Class 2: Medium rate (< 100 KS/s)
+  - Class 3: < 800 KS/s
+  - Class 4: ≥ 800 KS/s
+
+##### Sampling and Distribution
+
+- **delta**: The spacing between data samples. For time-based data, this is typically in seconds; for FFT results, in frequency. Requires uniform sampling where each sample is equally spaced. Set to null or 0 for non-uniform data. For entry message types (single values), this can represent the time duration of the message.
+- **uniform**: Indicates whether samples are uniformly distributed (delta describes the distribution). False for non-uniform distributions (delta will be 0 or null).
+- **continuous**: Indicates if data is continuous (e.g., time domain) or domain-bound (e.g., FFT frequency or angular degrees).
+- **maxref** / **minref**: For uniform but non-continuous streams, defines the reference value for the first and last sample based on the defined delta. Also applicable for non-uniform data to specify bounds for the first dimension in the units array.
+
+##### Limits and Alerting
+
+- **limits**: Object defining operational bounds and alerting thresholds:
+  - **min** / **max**: Value range for the 2nd dimension of data in the units array
+  - **warn**: Warning threshold as a percentage of range
+  - **alert**: Alert threshold as a percentage of range
+  - For non-zero-crossing ranges (e.g., 0-20): Thresholds calculated from midpoint. With warn at 70% and alert at 90%, warnings occur at ≥17 or ≤3, alerts at ≥19 or ≤1.
+  - For zero-crossing ranges (e.g., -5 to 10): Percentages calculated separately for negative and positive portions. Warnings at ≤-3.5 or ≥7, alerts at ≤-4.5 or ≥9.
+
+##### Source Tracking
+
+- **sources**: Array defining parent streams that contribute to this output stream. Each source specifies:
+  - **sourcename**: Name of the component providing the stream
+  - **streamname**: Name of the stream from that source
+  - **streamlogicalname**: Logical name of the source stream
+  - Most streams have a single source; however, components like SignalMath may combine multiple input streams.
+
+##### Units Definition
+
+- **units**: Array defining units for each dimension of the data stream, always in X, Y, Z order (or more dimensions as needed):
+  - **First unit**: Primary reference dimension that correlates to maxref/minref values. This is also the unit defined for "delta" when uniform is true.
+  - **Subsequent units**: Define the data contained in samples
+  - For uniform data with delta defined: First unit defines the delta unit, subsequent units define sample data
+  - For non-uniform data (point2d, point3d, matrix, tensor): First dimension is always the primary reference (e.g., for peak data: frequency is the reference, followed by magnitude and phase)
+  - Each unit should specify at minimum the **name** to match against Phoenix's Units Table
+  - **domain**: Defines the unit in base domain dimensions and their powers
+  - May also include offset, scale (e.g., km is 1000 m), and unit system (Imperial, SI, etc.)
+
+##### Application Variables
+
+- **vars**: User/application-specific variable data for the stream.
+- **classifiers**: Object containing classification metadata such as measurement type and target audience. The classifiers key is meant to contain an object where the key is classifier type and the value is the list of specifiers. The list of specifiers should be a set (removing duplicates) 
+- **metadata**: The metadata object for the stream
 
 ##### The Defined Sources for the Stream and the Import Function
-When the import function is performed, the streams import from the parent streams must define the sources list defining where the streams came from. To do this, each source must define the source name, stream name, and the stream logical name. On any change to these 3 items from the parent, the import must be re-performed. When import is run, the function will attempt to match the streams and re-apply existing settings when import is re-performed. If the logical name changes between the two imports, the imported logical name is applied. Otherwise the current logical name is applied.
+When the import function is performed, the streams import from the parent. streams must define the sources list defining where the streams came from. To do this, each source must define the source name, stream name, and the stream logical name. On any change to these 3 items from the parent, the import must be re-performed. When import is run, the function will attempt to match the streams and re-apply existing settings when import is re-performed. If the logical name changes between the two imports, the imported logical name is applied. Otherwise the current logical name is applied.
+
+##### Stream Naming Convention
+When the stream is first created, the component should set on the stream it's "name" as the "originSource" key for the stream. This indicates the component that created the stream. This can be devices, files, or even signal math components where a new data stream is created. When the stream is created, its initial name must be the \<creator name> + "/" + \<unique name for the stream in the component>. Naming's are always in a "path" format. If import is called and 2 streams contain the same name, then the name of the parent component must be appended to the path portion of the name. For example: Dev1/Stream1 appears twice due to the stream being processed by 2 separate EU scalings and then merging to the same FFT processor. The name should be updated to "Dev1/EU-Scalar1/Stream1" and "Dev1/EU-Scalar2/Stream1". This naming update will be handled by the component that is the point of the merge, in this case, the FFT component.
 
 
 #### Source Components for Post Processing
