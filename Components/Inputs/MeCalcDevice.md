@@ -2,7 +2,7 @@
 ## Settings
 
 - Address
-  - IP address of the DS instance
+  - IP address of the Mecalc device
   - Default, 192.168.0.92:8080
 
 ### Functionality

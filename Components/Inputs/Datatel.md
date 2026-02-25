@@ -2,7 +2,7 @@
 ## Settings
 
 - Address
-  - IP address of the DS instance
+  - IP address of the Datatel Web GUI
   - Default, 192.168.50.53:80
 
 ### Functionality
