@@ -481,7 +481,7 @@ The StreamJson object defines the properties and metadata for a single data stre
 
 ##### Identity and Display
 
-- **name**: The primary identifier of the stream set by the source component that creates it (normally a root component or processor like StatProcessor or SignalMath). This value should remain constant across components.
+- **name**: The primary identifier of the stream set by the source component that creates it (normally a root component or processor like SignalMath). This value should remain constant across components.
 - **logicalName**: User-defined name for the stream, used as an additional identifier between components.
 - **group**: Specifies a grouping identifier for streams. Can be treated as a path where "/" creates sub-group categories for hierarchical organization.
 - **enabled**: Controls whether the stream is enabled for output from the component.
