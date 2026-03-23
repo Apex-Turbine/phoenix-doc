@@ -76,7 +76,7 @@ Component specific global keys:
   - Description: Only write when datapoint recording is active
   - Type: boolean
   - Default: false
-- immediatestart
-  - Description: Start recording immediately
+- optimize
+  - Description: Index the database when session completes for reading optimization
   - Type: boolean
-  - Default: true
+  - Default: false

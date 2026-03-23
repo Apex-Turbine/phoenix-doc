@@ -48,7 +48,3 @@ Component specific global keys:
   * Type: boolean
   * Description: Only write when datapoint recording is active
   * Default: false
-* immediatestart
-  * Type: boolean
-  * Description: Start recording immediately
-  * Default: true
