@@ -399,6 +399,34 @@ bool CustomScalar::import(GraphJson::SourceJson& sj, std::vector<GraphJson::Sour
 }
 ```
 
+#### skip_connect setting (device sources)
+Some device components support a boolean `skip_connect` setting. When `true`, import should not attempt to connect to hardware. Instead, it should build the output stream list from settings and return a valid SourceJson. This supports virtual devices and setup workflows where stream metadata is known before a device connection is possible.
+
+Where it is used:
+- setup flows may set `skip_connect` for virtual devices or devices that need configuration before connecting
+- conversion flows may set `skip_connect` for types that cannot connect until after settings are finalized
+- device imports should honor `skip_connect` by skipping I/O and synthesizing streams from settings
+
+Why it exists:
+- avoids connecting when required settings are not yet available (setup widgets)
+- allows UI/graph to show streams before any hardware I/O
+- enables a follow-up refresh via `refresh_streams` after configuration
+
+Recommended behavior:
+- use `stream_names` and `stream_logical_names` (if present) to create streams
+- if no names are provided, create at least one default stream
+- merge with the previous SourceJson (`sj << srcTmp`) and call `updateStreamMap()`
+
+Example settings:
+```json
+"settings": {
+    "skip_connect": true,
+    "stream_names": ["Chan1", "Chan2"],
+    "stream_logical_names": ["Chan1", "Chan2"],
+    "stream_count": 2
+}
+```
+
 ### The SourceJson and StreamJson
 The import and setup functions should ensure the SourceJson and StreamsJson objects are up to date with their information. Please see the below example of a fully filled out SourceJson object that should be the result of this function with one stream.
 
