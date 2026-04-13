@@ -71,7 +71,7 @@ public:
 public:
     bool import(GraphJson::SourceJson& info, const std::vector<GraphJson::SourceJson>& parents) override;
     bool setup(std::shared_ptr<const GraphJson> graph, GraphJson::SourceJson& info) override;
-    void start(const uint64_t& timestamp=0) override;
+    void start() override;
     void stop() override;
     void reset() override;
 public:
