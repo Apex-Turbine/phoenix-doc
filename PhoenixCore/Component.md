@@ -6,7 +6,7 @@ The Component folder provides the base classes required to create and use compon
 This file contains the "Component" base class. This class is used to provide an interface for each component and must be inherited and implemented.
 
 ## ComponentCallback
-This file contains the base class for implementing a callback object for the component. This provides the "ComponentCallbackItem" base class which provides virtual functions for sending messages, propogating commands or requests, and retrieving the available commands and requests. This file also provides the "ComponentFunctionalCallbackItem" convienance class that allows providing lambdas as the callback.
+This file contains the base class for implementing a callback object for the component. This provides the "ComponentCallbackItem" base class which provides virtual functions for sending messages, propagating commands or requests, and retrieving the available commands and requests. This file also provides the "ComponentFunctionalCallbackItem" convienance class that allows providing lambdas as the callback.
 
 The callback item is used by the component to allow communication from the component to the object managing it.
 
