@@ -7,9 +7,6 @@
 - Event Directory
   - Directory path for storing triggered event recordings
   - Default, /data/event
-- Record at Start
-  - Toggles recording at start
-  - Default, disabled
 - Events Only
   - Record only triggered events, not continuous data
   - Default, disabled

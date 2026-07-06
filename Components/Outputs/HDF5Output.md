@@ -10,9 +10,6 @@
 - Data Point Mode
   - Only write when datapoint recording is active
   - Default, disabled
-- Auto Start
-  - Toggles recording at start
-  - Default, enabled
 ___
 ## Phoenix API
 ___

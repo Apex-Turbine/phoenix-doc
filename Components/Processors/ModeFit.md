@@ -13,6 +13,9 @@
 - Freq Fit Weight
     - Weight coefficient for frequency alignment in fitness calculation
     - Default, 0.5000
+- Output Expected Signals
+    - Output expected signal peaks based on the estimated critical value. When enabled, select which expected signals to output from the list below.
+    - Default, off
 ___
 ## Phoenix API
 ___
@@ -33,6 +36,17 @@ Component specific global keys:
     - Type: string
     - Description: File path to JSON specifying limits
     - Default: ""
+    - $require_import: true
+- solfit_expected_signals_enabled
+    - Type: boolean
+    - Description: If true, the Mode Fit Processor will output expected signal peaks based on estimated critical value
+    - Default: false
+    - $require_import: true
+- solfit_expected_signals_list
+    - Type: array
+    - Items: string
+    - Description: List of expected signals to output if expected signals flag is enabled
+    - Default: []
     - $require_import: true
 - component_stream_settings
     - Type: object

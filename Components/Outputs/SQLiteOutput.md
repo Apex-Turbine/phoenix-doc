@@ -10,9 +10,9 @@
 - Enable Monitoring
     - Toggles monitoring for the SQLite connection
     - Default, enabled
-- Record at Start
-    - Toggles recording at start
-    - Default, enabled
+- Optimize
+    - Index the database when a session completes for reading optimization
+    - Default, off
 ___
 ## Phoenix API
 ___

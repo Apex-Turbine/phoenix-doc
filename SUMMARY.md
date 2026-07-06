@@ -13,7 +13,6 @@
     * [NI Device](Components/Inputs/NIDevice.md)
     * [RWX Reader](Components/Inputs/RWXDevice.md)
     * [Scanivalve Device](Components/Inputs/ScanivalveDevice.md)
-    * [SQLite Input](Components/Inputs/SQLiteInput.md)
     * [Sweep Simulator](Components/Inputs/SweepSimulator.md)
     * [VTI DSA Device](Components/Inputs/VTIDSADevice.md)
   * [Outputs](Components/Outputs/README.md)
@@ -46,3 +45,4 @@
     * [Tach](Components/Processors/Tach.md)
     * [Time Aligner](Components/Processors/TimeAligner.md)
     * [Triggers](Components/Processors/Triggers.md)
+    * [Wheatstone Bridge - Strain](Components/Processors/WSBStrainProcessor.md)

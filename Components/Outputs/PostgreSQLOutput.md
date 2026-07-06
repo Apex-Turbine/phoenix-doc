@@ -8,7 +8,8 @@
     - Port Number of PostgreSQL server output store
     - Default, 5432
 - Username
-	- Username for a user with access to server
+	  - Username for a user with access to server
+    - Default, postgres
 - Password
     - Password for given username
 - Database
@@ -25,12 +26,9 @@
     - Default, 1
 - Update Rate
 	- Rate of updates to database per second
-	- Default, 1
+	- Default, 1.00 s
 - Enable Monitoring
     - Toggles monitoring for PostgreSQL connection
-    - Default, enabled
-- Record at Start
-    - Toggles recording at start
     - Default, enabled
 ___
 ## Phoenix API

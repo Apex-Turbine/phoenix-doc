@@ -3,7 +3,7 @@
 
 - Device Type
     - Type of Scanivalve device product acquiring data
-    - Default, DSA5000 Series
+    - Default, DSA Series
 - Address
     - Address or hostname used to identify Scanivalve device
     - No default, **Must** be present or component will take no action
