@@ -30,7 +30,7 @@ Produces numeric vector data from SQLite databases.
 
 Component specific global keys:
 - uri
-  - Description: The uri or filename of the SQLite DB file to open
+  - Description: The uri or filename of the SQLite DB file to open (`.dxdb` or `.dxdb.index`)
   - Type: string
 - only_data_points
   - Description: Whether or not to load only data points

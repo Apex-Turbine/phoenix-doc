@@ -19,6 +19,7 @@ ___
 ### Description
 
 Writes processed data to SQLite databases.
+Index-backed shard groups (`.dxdb.index`) are generated transparently when rollover/splitting is enabled.
 
 ### I/O
 
@@ -76,6 +77,20 @@ Component specific global keys:
   - Description: Only write when datapoint recording is active
   - Type: boolean
   - Default: false
+- db_parts
+  - Description: table partitioning mode for tablesJSON generation
+  - Type: string
+  - Enum: [none, sources, streams]
+  - Default: none
+- db_split_condition
+  - Description: split trigger
+  - Type: string
+  - Enum: [none, size, time, event]
+  - Default: none
+- db_split_value
+  - Description: split threshold (seconds for time, bytes for size)
+  - Type: number
+  - Default: 0
 - optimize
   - Description: Index the database when session completes for reading optimization
   - Type: boolean
