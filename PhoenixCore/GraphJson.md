@@ -307,6 +307,99 @@ Defines alarm/warning thresholds:
 | `warn` | number | Warning threshold as percentage of range (0-100) |
 | `alert` | number | Alert threshold as percentage of range (0-100) |
 
+#### Hierarchical & Composite Streams (Child Streams)
+
+When analytical components branch an input channel into multiple output metrics (e.g. the **Statistics Processor** generating min, max, peak, peak-to-peak, RMS, mean, and crest factor for every channel), defining separate top-level streams causes subscription queue contention and buffer overruns in `ComponentSubscriptionHandler` under high channel counts.
+
+To eliminate this bottleneck, `StreamJson` supports **Hierarchical / Composite Streams** via nested `childStreams` arrays.
+
+```mermaid
+graph TD
+    subgraph "Hierarchical StreamJson Definition"
+        TOP["Container Stream: Chassis1/Chan01.Stats<br><i>(dtype: 'message', mtype: 'vector', delta: 0.0, uniform: false)</i>"]
+        C0["Child [0]: Chassis1/Chan01.Stats.Min<br><i>(logicalName: 'Min', dtype: 'number_32', mtype: 'entry')</i>"]
+        C1["Child [1]: Chassis1/Chan01.Stats.Max<br><i>(logicalName: 'Max', dtype: 'number_32', mtype: 'entry')</i>"]
+        C2["Child [2]: Chassis1/Chan01.Stats.Peak<br><i>(logicalName: 'Peak', dtype: 'number_32', mtype: 'entry')</i>"]
+        C3["Child [3]: Chassis1/Chan01.Stats.RMS<br><i>(logicalName: 'RMS', dtype: 'number_32', mtype: 'entry')</i>"]
+
+        TOP --> C0
+        TOP --> C1
+        TOP --> C2
+        TOP --> C3
+    end
+```
+
+##### Container Stream Rules:
+1. **`dtype`**: Set to `"message"` (`Message::DATA_MESSAGES`).
+2. **`mtype`**: Set to `"vector"` (for multiple child messages) or `"entry"` (for 1 wrapped message).
+3. **Sampling & Units**:
+   - `delta`: Must be `0.0`.
+   - `uniform`: Must be `false`.
+   - `continuous`: Must be `false`.
+   - `units`: Must be empty `[]`.
+4. **`childStreams`**: Array containing child `StreamJson` definitions (accessed via `sj.childStreams()`).
+
+##### Child / Leaf Stream Rules:
+1. **Concrete Types**: Defines the actual data payload type (`number_32`, `number_64`, `complex_32`, etc.) and message structure (`entry`, `vector`).
+2. **Units & Limits**: Specifies individual physical units, limits, and classifiers for each metric.
+3. **Recursive Nesting**: A child stream may itself have `dtype: "message"`, creating an N-ary tree structure.
+
+##### Naming Convention for Hierarchical Streams:
+- **Top-Level Stream Name (`name`)**: Follows standard origin path syntax: `<OriginSourceComponent>/<StreamName>` (e.g. `Chassis1/Chan01.Stats`).
+- **Child Stream Name (`name`)**: Uses **dot notation** appended to the parent's `name`:
+  - 1-level child: `<OriginSourceComponent>/<StreamName>.<stat>` (e.g. `Chassis1/Chan01.Stats.Min`, `Chassis1/Chan01.Stats.Max`, `Chassis1/Chan01.Stats.RMS`).
+  - Multi-level child: `<OriginSourceComponent>/<StreamName>.<level1>.<level2>` (e.g. `Chassis1/Chan01.Harmonics.H1`).
+- **Logical Name (`logicalName`)**: Maintains the concise, human-readable name of that specific level or leaf:
+  - Top-level: `"Channel 1"` or `"Channel 1 Statistics"`.
+  - Child level: `"Min"`, `"Max"`, `"RMS"`, `"myStat"`.
+  - Multi-level child: `"H1"`, `"Harmonic 1"`.
+
+##### Example Hierarchical StreamJson
+
+```json
+{
+  "name": "Chassis1/Chan01.Stats",
+  "logicalName": "Channel 1 Statistics",
+  "type": "stream",
+  "dtype": "message",
+  "mtype": "vector",
+  "enabled": true,
+  "uniform": false,
+  "continuous": false,
+  "delta": 0.0,
+  "units": [],
+  "childStreams": [
+    {
+      "name": "Chassis1/Chan01.Stats.Min",
+      "logicalName": "Min",
+      "type": "stream",
+      "dtype": "number_32",
+      "mtype": "entry",
+      "units": [{ "domain": "voltage", "unit": "volt" }],
+      "limits": { "min": -10.0, "max": 10.0, "warn": 70, "alert": 90 }
+    },
+    {
+      "name": "Chassis1/Chan01.Stats.Max",
+      "logicalName": "Max",
+      "type": "stream",
+      "dtype": "number_32",
+      "mtype": "entry",
+      "units": [{ "domain": "voltage", "unit": "volt" }],
+      "limits": { "min": -10.0, "max": 10.0, "warn": 70, "alert": 90 }
+    },
+    {
+      "name": "Chassis1/Chan01.Stats.RMS",
+      "logicalName": "RMS",
+      "type": "stream",
+      "dtype": "number_32",
+      "mtype": "entry",
+      "units": [{ "domain": "voltage", "unit": "volt" }],
+      "limits": { "min": 0.0, "max": 10.0, "warn": 70, "alert": 90 }
+    }
+  ]
+}
+```
+
 ---
 
 ### ConditionJson Structure
