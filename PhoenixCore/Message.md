@@ -288,19 +288,29 @@ Message createStatisticsCompositeMessage(uint16_t srcIdx, uint16_t streamIdx, ui
 
 ### 3. Reading and Unrolling Composite Messages
 
+Composite messages store an in-memory `MessageVectorContainer` (`std::vector<Message>`), eliminating payload copies and intermediate serializations during in-process message passing:
+
 ```cpp
 void processCompositeMessage(const Message& msg, size_t desiredSubStreamIndex)
 {
     if (!msg.valid()) return;
 
     if (msg.getDataType() == Message::DATA_MESSAGES) {
-        std::vector<Message> children = msg.getMessageVector();
-        if (desiredSubStreamIndex < children.size()) {
-            const Message& subMsg = children[desiredSubStreamIndex];
+        // Option A: Direct O(1) single child access (0 heap allocations, 0 copies)
+        if (desiredSubStreamIndex < msg.getChildMessageCount()) {
+            const Message& subMsg = msg.getChildMessage(desiredSubStreamIndex);
             float val = *subMsg.getPtr<float>();
             LimitState limit = subMsg.getHeaderPtr() ? subMsg.getHeaderPtr()->getLimitOverall() : LimitState::GOOD;
-            std::cout << "Sub-Stream [" << desiredSubStreamIndex << "]: Value=" << val 
+            std::cout << "Direct Child [" << desiredSubStreamIndex << "]: Value=" << val 
                       << ", Limit=" << (limit == LimitState::GOOD ? "GOOD" : "WARN/ALERT") << "\n";
+        }
+
+        // Option B: Zero-copy reference to all child messages
+        const std::vector<Message>& children = msg.getMessageVectorRef();
+        for (size_t i = 0; i < children.size(); ++i) {
+            const Message& child = children[i];
+            float val = *child.getPtr<float>();
+            std::cout << "Child [" << i << "]: " << val << "\n";
         }
     }
 }
@@ -342,10 +352,12 @@ def handle_composite_telemetry():
 
     # 3. Unroll and Read on Consumer Side
     if container.getDataType() == message.Message.DATA_MESSAGES:
-        sub_messages = container.getMessageVector()
-        print(f"Container holds {len(sub_messages)} sub-streams:")
-        for i, sub in enumerate(sub_messages):
-            val = sub.getF32Vector()[0]
+        # Direct indexed access
+        count = container.getChildMessageCount()
+        print(f"Container holds {count} sub-streams:")
+        for i in range(count):
+            child = container.getChildMessage(i)
+            val = child.getF32Vector()[0]
             print(f"  Sub-Stream [{i}]: Val={val}")
 
 if __name__ == "__main__":
