@@ -318,6 +318,86 @@ void processCompositeMessage(const Message& msg, size_t desiredSubStreamIndex)
 
 ---
 
+## JSON Message Architecture & In-Memory Container (`MSG_JSON`)
+
+High-rate pipeline components (such as the `FrequencyBinnerProcessor` and `LimitsMonitorStream`) frequently exchange structured JSON metadata, health metrics, and limits status definitions at block rate (50–100+ Hz). 
+
+Serializing (`dump()`) and parsing (`parse()`) JSON strings on every block in the hot loop introduces massive CPU overhead, memory allocations, thread contention, and buffer overruns in pipeline handlers.
+
+To eliminate this bottleneck, `Message` manages JSON objects via an **in-memory reference-counted container** (`MessageJsonContainer`) backed by `std::shared_ptr<std::string>` with a custom deleter:
+
+```mermaid
+graph LR
+    subgraph "Producer (e.g. FrequencyBinnerProcessor)"
+        J_PROD["nlohmann::json Object"]
+        SET_JSON["msg.setJson(jsonObj)"]
+        J_PROD --> SET_JSON
+    end
+
+    subgraph "In-Memory Envelope"
+        CTR["MessageJsonContainer (magic: 'MSGJ', json: jsonObj)"]
+        PTR["m_data: std::shared_ptr<std::string> (custom deleter)"]
+        SET_JSON --> CTR
+        CTR -. wrapped by .-> PTR
+    end
+
+    subgraph "Consumer (e.g. LimitsMonitorStream / PhoenixViewer)"
+        GET_JSON["const nlohmann::json& j = msg.getJsonRef()"]
+        PTR --> GET_JSON
+        ZERO_COPY["Zero string serialization / Zero parsing"]
+        GET_JSON --> ZERO_COPY
+    end
+
+    subgraph "Network / Storage Boundary (Only on Serialization)"
+        DUMP["msg.serialize() / msg.getString() -> json.dump()"]
+        PTR --> DUMP
+    end
+```
+
+### JSON Container Architecture & Rules
+
+1. **Zero-Copy In-Process Pass-Through**:
+   - `msg.setJson(const nlohmann::json& j)` wraps `j` inside an in-memory `MessageJsonContainer` with magic `0x4D53474A` (`MSGJ`) and sets `m_msgtype = MSG_JSON`.
+   - `m_data` holds a `std::shared_ptr<std::string>` that reinterprets the container pointer and cleans it up with a custom deleter upon destruction.
+   - Calling `msg.getJsonRef()` returns a direct `const nlohmann::json&` reference to the in-memory object in $O(1)$ time with **zero parsing and zero allocations**.
+
+2. **On-Demand Lazy Serialization & Deserialization**:
+   - **Serialization**: `msg.serialize()` and `msg.serializeData()` only call `json.dump()` when writing across network boundaries (ZeroMQ) or saving to disk/databases.
+   - **Deserialization**: When raw JSON strings are received over the network or loaded from disk, the payload is initially stored as raw string bytes. When `msg.getJsonRef()` or `msg.getJson()` is first invoked, the message **lazily parses** the string into the in-memory container and caches it for future reads.
+
+### C++ JSON Usage Example
+
+```cpp
+// 1. Producing a JSON Message (No dump())
+Message msg;
+nlohmann::json limitsStatus = {
+    {"overall_status", "GOOD"},
+    {"channels", {
+        {{"name", "Blade1"}, {"modal_status", 0}},
+        {{"name", "Blade2"}, {"modal_status", 1}}
+    }}
+};
+
+msg.setSrcIdx(1);
+msg.setStreamIdx(0);
+msg.setMessageType(Message::MSG_JSON);
+msg.setJson(limitsStatus); // Stored directly in-memory
+sendMsg(msg);
+
+// 2. Consuming a JSON Message (No parse())
+void process(const Message& msg) {
+    if (msg.getMessageType() == Message::MSG_JSON) {
+        const nlohmann::json& data = msg.getJsonRef(); // Direct O(1) access
+        std::string overall = data.value("overall_status", "UNKNOWN");
+        for (const auto& ch : data["channels"]) {
+            std::cout << ch["name"] << ": " << ch["modal_status"] << "\n";
+        }
+    }
+}
+```
+
+---
+
 ## Python Usage (`PhoenixPy`)
 
 ```python
