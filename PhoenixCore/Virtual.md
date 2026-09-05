@@ -262,7 +262,7 @@ extern "C" PHOENIXCORE_API_SYMBOL VirtualLibrary* GetVirtuals() {
 ## Python Usage (`PhoenixPy`)
 
 ```python
-from phoenixpy import dataTypes, phoenixLic
+from phoenixpy import virtualLibrary, dataTypes, phoenixLic
 
 def run_virtual_sensing_pipeline():
     # 1. License initialization
@@ -270,11 +270,16 @@ def run_virtual_sensing_pipeline():
     lic.setAppInfo("PyDigitalTwinApp", "PyDigitalTwinApp", "2026.1", "localhost", "127.0.0.1", 0)
     lic.connect()
 
-    # 2. Configure 3D Point Coordinates
+    # 2. Virtual library manager (auto-registered relative to PhoenixCore.dll)
+    virt_mgr = virtualLibrary.getVirtualLibraryManager()
+    adapters = virt_mgr.getAdapters()
+    print(f"Discovered {len(adapters)} virtual model adapters.")
+
+    # 3. Configure 3D Point Coordinates
     sensor_loc = dataTypes.Point3dDouble(0.15, 0.42, 0.05)
     print(f"Virtual Sensor Target Location: ({sensor_loc.x()}, {sensor_loc.y()}, {sensor_loc.z()})")
 
-    # 3. Process Solution Fit Data
+    # 4. Process Solution Fit Data (binary safe)
     fit = dataTypes.SolutionFitData()
     fit.solutionType = dataTypes.SolutionFitData.MODAL
     fit.partIdx = 0

@@ -294,7 +294,7 @@ extern "C" PHOENIXCORE_API_SYMBOL StreamLibrary* GetStreams() {
 ## Python Usage (`PhoenixPy`)
 
 ```python
-from phoenixpy import stream, phoenixLic
+from phoenixpy import streamLibrary, streamReceiver, streamTransmitter, phoenixLic
 
 def run_stream_receiver():
     # 1. Initialize license
@@ -302,12 +302,14 @@ def run_stream_receiver():
     lic.setAppInfo("PyStreamApp", "PyStreamApp", "2026.1", "localhost", "127.0.0.1", 0)
     lic.connect()
 
-    # 2. Discover stream transport plugins
-    stream_mgr = stream.getStreamLibraryManager()
-    stream_mgr.loadLibraries("plugins/stream")
+    # 2. Discover stream transport plugins (auto-registered relative to PhoenixCore.dll)
+    stream_mgr = streamLibrary.getStreamLibraryManager()
 
     # 3. Create Receiver
     adapters = stream_mgr.getAdapters()
+    if not adapters:
+        print("No stream transport adapters found.")
+        return
     receiver = adapters[0].createReceiver()
 
     # 4. Connect and Subscribe

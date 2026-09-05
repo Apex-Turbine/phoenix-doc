@@ -366,10 +366,10 @@ extern "C" PHOENIXCORE_API_SYMBOL DatabaseLibrary* GetDatabases() {
 
 ## Python Usage (`PhoenixPy`)
 
-Database operations can be performed directly from Python using `phoenixpy.database`:
+Database operations can be performed directly from Python using `phoenixpy.databaseLibrary` and `phoenixpy.dbQuery`. Note that `SWIG_PYTHON_STRICT_BYTE_CHAR` is active, ensuring that string and binary fields preserve raw `bytes`.
 
 ```python
-from phoenixpy import database, phoenixLic
+from phoenixpy import databaseLibrary, dbQuery, phoenixJson, phoenixLic
 
 def inspect_database_records():
     # 1. Initialize license
@@ -377,20 +377,26 @@ def inspect_database_records():
     lic.setAppInfo("PyDBApp", "PyDBApp", "2026.1", "localhost", "127.0.0.1", 0)
     lic.connect()
 
-    # 2. Get Database Library Manager & Load Drivers
-    db_mgr = database.getDatabaseLibraryManager()
-    db_mgr.loadLibraries("plugins/database")
+    # 2. Get Database Library Manager (default plugin directories are auto-registered)
+    db_mgr = databaseLibrary.getDatabaseLibraryManager()
 
-    # 3. Create Reader Instance
+    # 3. Create Reader Instance & inspect dynamic schema
     adapters = db_mgr.getAdapters()
     reader = None
     for adapter in adapters:
-        if "sqlite" in adapter.getReaderInfo().supportedProtocols:
+        if adapter.hasReader():
+            # Dynamic schema resolution from adapter attributes
+            reader_attrs = adapter.getReaderAttributes()
+            schema_json = phoenixJson.getJsonString(reader_attrs)
+            name = adapter.getReaderName()
+            if isinstance(name, (bytes, bytearray)):
+                name = name.decode("utf-8")
+            print(f"Discovered Adapter: {name}")
             reader = adapter.createReader()
             break
 
     if not reader:
-        print("No SQLite reader driver found!")
+        print("No reader driver found!")
         return
 
     # 4. Connect and Read Records
@@ -401,6 +407,15 @@ def inspect_database_records():
         for r in records:
             print(f"Record #{r.record_id}: Start={r.record_start}, End={r.record_complete}")
         
+        # 5. Direct SQL Execution via dbQuery
+        query = reader.createQuery("SELECT record_id, record_start FROM ds_records LIMIT 5")
+        if query and query.open():
+            while query.next():
+                rec_id = query.getColInt64(0)
+                rec_start = query.getColInt64(1)
+                print(f"Query row: Record {rec_id} starting at {rec_start}")
+            query.close()
+
         reader.disconnect()
 
 if __name__ == "__main__":

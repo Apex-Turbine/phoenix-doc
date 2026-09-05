@@ -3,7 +3,7 @@
 
 - Address
   - IP address of the DX+ Transmit instance
-  - Default, 127.0.0.1:27026
+  - Default, 127.0.0.1:27126
 
 ### Functionality
 
@@ -32,7 +32,7 @@ Component specific global keys:
 - port
   - Description: The port of the Message Queue
   - Type: integer
-  - Default: 27026
+  - Default: 27126
 - output_rate
   - Description: The output rate of the component in Hz
   - Type: integer

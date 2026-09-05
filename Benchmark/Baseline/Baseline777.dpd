@@ -1,0 +1,35 @@
+{
+  "name": "Speed Test",
+  "datasources": [
+    {
+      "name": "Raw1",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 777,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      } 
+    },
+    {
+      "name": "Raw2",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 777,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      } 
+    }
+  ]
+}

@@ -400,6 +400,12 @@ void process(const Message& msg) {
 
 ## Python Usage (`PhoenixPy`)
 
+Under `phoenixpy`, `Message` is available via `phoenixpy.message`.
+
+> [!IMPORTANT]
+> **Strict Byte Handling (`SWIG_PYTHON_STRICT_BYTE_CHAR`)**:
+> In `phoenixpy`, `std::string` is mapped to Python `bytes`. When working with binary payload buffers, packed structs, or serialization formats packed into `Message`, the buffers remain raw `bytes` in Python without UTF-8 decoding corruption. If reading human-readable text properties, explicitly decode via `.decode('utf-8', errors='replace')`.
+
 ```python
 from phoenixpy import message
 import time

@@ -1,0 +1,54 @@
+{
+  "name": "Speed Test",
+  "datasources": [
+    {
+      "name": "Raw1",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 1024,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      }
+    },
+    {
+      "name": "Raw2",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 1024,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      }
+    },
+    {
+      "name": "out",
+      "type": "SQLiteStoreOutput",
+      "settings": {
+        "storename": "SQLite1024.db",
+        "autostreams": [
+          {
+            "sourcename": "Raw1",
+            "start": 0,
+            "stop": 31
+          },
+          {
+            "sourcename": "Raw2",
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      }
+    }
+  ]
+}

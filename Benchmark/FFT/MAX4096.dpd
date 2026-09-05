@@ -1,0 +1,111 @@
+{
+  "name": "Speed Test",
+  "datasources": [
+    {
+      "name": "Raw1",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 4096,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      } 
+    },
+    {
+      "name": "Raw2",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 4096,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      } 
+    },
+    {
+      "name": "FFT1",
+      "type": "FFTProcessor",
+      "settings": {
+        "defaultsettings": {
+          "fft_window": "Blackman-Harris",
+          "fft_scaling": "Peak",
+          "fft_size": 4096,
+          "fft_skips": 4096
+        },
+        "autostreams": [
+          {
+            "sourcename": "Raw1",
+            "start": 0,
+            "stop": 15
+          }
+        ]
+      } 
+    },
+    {
+      "name": "FFT2",
+      "type": "FFTProcessor",
+      "settings": {
+        "defaultsettings": {
+          "fft_window": "Blackman-Harris",
+          "fft_scaling": "Peak",
+          "fft_size": 4096,
+          "fft_skips": 4096
+        },
+        "autostreams": [
+          {
+            "sourcename": "Raw1",
+            "start": 16,
+            "stop": 31
+          }
+        ]
+      } 
+    },
+    {
+      "name": "FFT3",
+      "type": "FFTProcessor",
+      "settings": {
+        "defaultsettings": {
+          "fft_window": "Blackman-Harris",
+          "fft_scaling": "Peak",
+          "fft_size": 4096,
+          "fft_skips": 4096
+        },
+        "autostreams": [
+          {
+            "sourcename": "Raw2",
+            "start": 0,
+            "stop": 15
+          }
+        ]
+      } 
+    },
+    {
+      "name": "FFT4",
+      "type": "FFTProcessor",
+      "settings": {
+        "defaultsettings": {
+          "fft_window": "Blackman-Harris",
+          "fft_scaling": "Peak",
+          "fft_size": 4096,
+          "fft_skips": 4096
+        },
+        "autostreams": [
+          {
+            "sourcename": "Raw2",
+            "start": 16,
+            "stop": 31
+          }
+        ]
+      } 
+    }
+  ]
+}

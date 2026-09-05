@@ -282,6 +282,9 @@ protected:
 class CustomCSVAdapter : public FileAdapter
 {
 public:
+    bool hasReader() const override { return true; }
+    bool hasWriter() const override { return false; }
+
     std::shared_ptr<FileReader> createReader() override {
         return std::make_shared<CustomCSVReader>();
     }
@@ -310,8 +313,10 @@ extern "C" PHOENIXCORE_API_SYMBOL FileLibrary* GetFiles() {
 
 ## Python Usage (`PhoenixPy`)
 
+Phoenix file drivers are accessible directly from Python via `phoenixpy.fileLibrary`. Note that `SWIG_PYTHON_STRICT_BYTE_CHAR` is active, ensuring binary data fields remain untouched `bytes`.
+
 ```python
-from phoenixpy import file, phoenixLic
+from phoenixpy import fileLibrary, fileReader, phoenixJson, phoenixLic
 
 def read_custom_telemetry_file():
     # 1. Initialize license
@@ -319,13 +324,27 @@ def read_custom_telemetry_file():
     lic.setAppInfo("PyFileApp", "PyFileApp", "2026.1", "localhost", "127.0.0.1", 0)
     lic.connect()
 
-    # 2. Discover file plugins
-    file_mgr = file.getFileLibraryManager()
-    file_mgr.loadLibraries("plugins/file")
+    # 2. Discover file plugins (default directories relative to PhoenixCore.dll are auto-registered)
+    file_mgr = fileLibrary.getFileLibraryManager()
 
-    # 3. Create reader by extension
+    # 3. Inspect adapters and check hasReader() / hasWriter()
     adapters = file_mgr.getAdapters()
-    csv_reader = adapters[0].createReader()
+    csv_reader = None
+    for adapter in adapters:
+        if adapter.hasReader():
+            # Dynamic schema resolution from adapter attributes
+            reader_attrs = adapter.getReaderAttributes()
+            schema_json = phoenixJson.getJsonString(reader_attrs)
+            name = adapter.getReaderName()
+            if isinstance(name, (bytes, bytearray)):
+                name = name.decode("utf-8")
+            print(f"Discovered Reader: {name}")
+            csv_reader = adapter.createReader()
+            break
+
+    if not csv_reader:
+        print("No compatible file reader adapter found.")
+        return
 
     # 4. Open and stream messages
     rec_info = csv_reader.open("C:/data/flight_test_01.csv")

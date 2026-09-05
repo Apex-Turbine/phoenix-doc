@@ -1,0 +1,60 @@
+{
+  "name": "Speed Test",
+  "datasources": [
+    {
+      "name": "Raw1",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 4096,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      }
+    },
+    {
+      "name": "Raw2",
+      "type": "APEXSimDevice",
+      "settings": {
+        "num_streams": 32,
+        "samplerate": 102400000.0,
+        "size": 4096,
+        "autostreams": [
+          {
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      }
+    },
+    {
+      "name": "out",
+      "type": "PsqlStoreOutput",
+      "settings": {
+        "port": 5432,
+        "host": "192.168.1.134",
+        "executiontype": "Copy",
+        "username": "postgres",
+        "password": "apex",
+        "dbname": "postgres",
+        "datatable": "APEX_SPEEDTEST",
+        "autostreams": [
+          {
+            "sourcename": "Raw1",
+            "start": 0,
+            "stop": 31
+          },
+          {
+            "sourcename": "Raw2",
+            "start": 0,
+            "stop": 31
+          }
+        ]
+      }
+    }
+  ]
+}

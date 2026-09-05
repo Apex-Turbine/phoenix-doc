@@ -342,7 +342,7 @@ extern "C" PHOENIXCORE_API_SYMBOL DeviceLibrary* GetDevices() {
 ## Python Usage (`PhoenixPy`)
 
 ```python
-from phoenixpy import device, phoenixLic
+from phoenixpy import deviceLibrary, device, phoenixLic
 import time
 
 def capture_hardware_telemetry():
@@ -351,12 +351,14 @@ def capture_hardware_telemetry():
     lic.setAppInfo("PyDeviceApp", "PyDeviceApp", "2026.1", "localhost", "127.0.0.1", 0)
     lic.connect()
 
-    # 2. Load device drivers
-    dev_mgr = device.getDeviceLibraryManager()
-    dev_mgr.loadLibraries("plugins/devices")
+    # 2. Access device drivers (auto-registered relative to PhoenixCore.dll)
+    dev_mgr = deviceLibrary.getDeviceLibraryManager()
 
     # 3. Instantiate device
     adapters = dev_mgr.getAdapters()
+    if not adapters:
+        print("No device adapters found.")
+        return
     daq_device = adapters[0].createDevice()
 
     # 4. Connect and configure

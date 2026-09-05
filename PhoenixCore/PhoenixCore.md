@@ -136,7 +136,10 @@ int main()
 
 ## Python SDK (`PhoenixPy`)
 
-Phoenix provides comprehensive Python bindings generated via SWIG.
+Phoenix provides comprehensive Python bindings generated via SWIG. All modules export standardized lowercase names (`component`, `databaseLibrary`, `dbQuery`, `fileLibrary`, `streamLibrary`, etc.).
+
+> [!NOTE]
+> Under `-DSWIG_PYTHON_STRICT_BYTE_CHAR`, all `std::string` fields returned to Python are raw `bytes`. Use `.decode('utf-8')` when inspecting human-readable string values, ensuring binary messages and buffers remain intact without decoding corruption.
 
 ```python
 from phoenixpy import phoenixLic, component, graphJson
