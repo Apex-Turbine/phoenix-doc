@@ -30,7 +30,7 @@ Component specific global keys:
   - Type: string
   - Default: ""
 - dewesoftnet_type
-  - Description: The type of the DewesoftNet device
+  - Description: The type of the Dewesoft device
   - Type: string
   - Default: DCOM
 - dewesoftnet_setup
