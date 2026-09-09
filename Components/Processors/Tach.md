@@ -16,10 +16,13 @@ The following settings pertain to selecting a suitable trigger stream to provide
   - Whether to use an Analog signal or Digital trigger timestamps to provide trigger data. If Analog is selected,
     further configuration may be required to accurately interpret the trigger signal.
 
-- Trigger Reference Stream
-  - Input stream containing trigger data. If an Analog trigger signal is selected, further configuration may be required
-    to accurately interpret the signal. If a Digital stream is selected, the stream should provide nanosecond timestamps
-    corresponding to trigger times.
+- Tach Streams (`tach_streams`)
+  - The list of streams from connected sources to tach process. Each entry contains `sourcename`, `streamname`,
+    `sourcelogicalname`, and `streamlogicalname`.
+
+- Output Computed Triggers (`output_triggers`)
+  - Whether or not to output the computed triggers additionally (.trigger auxiliary streams, Analog mode only).
+  - Default: false
 
 #### Analog Trigger Signal Settings
 The following settings configure how an analog trigger signal should be interpreted.
@@ -136,6 +139,28 @@ This component follows standard input keys:
 The following settings are still included in component settings, but are specific to trigger signal interpretation.
 
 ```
+    "tach_streams": {
+        "description": "The list of streams from connected sources to tach process",
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "sourcename": { "type": "string" },
+                "streamname": { "type": "string" },
+                "sourcelogicalname": { "type": "string" },
+                "streamlogicalname": { "type": "string" }
+            },
+            "required": ["sourcename", "streamname"]
+        },
+        "default": [],
+        "$require_import": true
+    },
+    "output_triggers": {
+        "description": "Whether or not to output the computed triggers additionally",
+        "type": "boolean",
+        "default": false,
+        "$require_import": true
+    },
     "trigRef": {
         "description": "The trigger reference stream",
         "type": "string",
