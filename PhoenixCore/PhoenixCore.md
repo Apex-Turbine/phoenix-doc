@@ -65,7 +65,7 @@ graph TD
 | **[`GraphJson.md`](GraphJson.md)** | **Component-Centric Pipeline Graph** | Directed Acyclic Graph (DAG) JSON schema, `SourceJson`, `StreamJson`, conditions, automations, and stream routing. |
 | **[`TableJson.md`](TableJson.md)** | **Stream-Centric Tabular Format** | Stream-centric spreadsheet setup format vs. DAG graph, and automatic compilation via `StreamTableManager`. |
 | **[`PhoenixJson.md`](PhoenixJson.md)** | **JSON Helper Utilities** | Exception-safe, typed JSON extraction helpers with fallback defaults (`getString`, `getDouble`, `getInt`, etc.). |
-| **[`PhoenixLic.md`](PhoenixLic.md)** | **Licensing Client & Features** | `PhoenixLic` singleton initialization, `ApexLM` client, token checkouts (`ANALYSIS`, `APEXDS_CHANNELS_`), and heartbeat monitoring. |
+| **[`PhoenixLic.md`](PhoenixLic.md)** | **Licensing Client & Features** | `PhoenixLic` singleton initialization, `ApexLM` client, seat queries (`queryLicenseSeats`), feature checkouts (`ANALYSIS`, `APEXDS_CHANNELS_`), external hardware validation, and heartbeat monitoring. |
 | **[`Utilities.md`](Utilities.md)** | **Common Utilities** | `EventManager`, `ZMQClient`, `ZMQServer`, `PhoenixThreadPool`, `PhoenixUUID`, and `NamingConventionHelpers`. |
 
 ---
