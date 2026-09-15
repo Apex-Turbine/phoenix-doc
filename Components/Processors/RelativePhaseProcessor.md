@@ -1,14 +1,29 @@
 ## Relative Phase Processor
-## Settings
+The Relative Phase Processor can be used to convert an FFT spectrum such that
+the phase across spectral bins is made relative to the corresponding spectral
+bin in a designated reference FFT stream. Optionally, each spectrum can be
+phase-origin corrected using a designated digital trigger stream.
 
+Both of these operations preserve magnitudes and apply rotations to adjust the
+phase of each spectral bin relative to the reference or trigger.
+
+In all cases, the original FFT reference time is preserved.
+
+Trigger-based phase origin correction is also available in the FFT processor. It
+is not recommended to use perform trigger-based phase origin correction in both
+processors, as this may lead to over-correction of the phase. Both processors
+use the same internal mechanism for trigger-based phase origin correction and
+can be trusted to produce consistent results between them.
+
+## Settings
 - Trigger Stream: 
-  - Name of the trigger stream providing per-pulse timestamps
+  - Name of a digital trigger stream providing trigger timestamps
   - Default, None
-- PPR:
-  - Pulses per revolution; decimal allowed
-  - Default, 1.0
+- PPR (Pulses per Revolution)
+    - Number of pulses expected in a single revolution of the system
+    - Default: 1.0
 - Reference Stream:
-  - FFT stream to use as phase reference. Phases are aligned by frequency and subtracted
+  - FFT stream to use as phase reference
   - Default, None
 
 ___
@@ -22,7 +37,10 @@ The Relative Phase Processor adjusts FFT-derived phases relative to either a tri
 
 Receives FFT (complex vector) streams and optional trigger or reference streams.
 
-Outputs phase-adjusted FFT streams, aligned by trigger or reference.
+If both trigger-based-phase origin correction and reference-based phase
+adjustment are applied, the output contains phase-origin corrected FFT streams
+where the phase of each spectral bin is relative to the corresponding bin in a
+time-aligned reference stream spectrum.
 
 ### JSON Setup Keys
 

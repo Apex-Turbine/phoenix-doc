@@ -22,6 +22,23 @@
   - A window name to be applied
   - Options: None, Hamming, Nuttall, Blackman, Flat-Top, Blackman-Harris
   - Default, Blackman-Harris
+
+### Trigger-based Phase Origin Correction Settings
+If a digital trigger stream is provided as an additional input to the FDFT Processor, the outgoing spectra
+will use the trigger timestamps as an external time-basis. Trigger-based phase origin correction
+provides a coherent view into the phase evolution of the signal across time, and also enables accurate
+spectral comparison across signals sharing the same time basis.
+
+- Trigger Type
+  - Indicates the type of trigger required for trigger-based phase origin
+    correction. Only digital triggers are supported.
+  - Default, Digital
+- Trigger Stream:
+  - Name of a digital trigger stream providing trigger timestamps
+  - Default, None
+- PPR (Pulses per Revolution)
+    - Number of pulses expected in a single revolution of the system.
+    - Default: 1.0
 ___
 ## Phoenix API
 ___
@@ -82,3 +99,24 @@ Component specific input keys:
   - type: string
   - enum: ["P2P", "Peak", "RMS", "Average"]
   - description: The DFT/FFT Peak scaling method
+- trigRef
+  - description: The trigger reference stream
+  - type: string
+  - default: ""
+- trigType
+  - description: Trigger type. Must be digital for FFT.
+  - type: integer
+  - default: 1
+- trigRefEnabled
+  - description: Whether the trigger reference stream is enabled
+  - type: boolean
+  - default: false
+- trigPPR
+  - description: Pulses per revolution for the trigger reference
+  - type: number
+  - default: 1.0
+- timeReference
+  - description: Time reference point within the FFT block for phase alignment
+  - type: string
+  - enum: ["Middle", "Start"]
+  - default: "Middle"
