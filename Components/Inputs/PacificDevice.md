@@ -22,13 +22,22 @@ ___
 ___
 ### Description
 
-Connects to Pacific Instruments hardware, imports channel structure, and publishes channel and health streams.
+Connects to Pacific Instruments hardware, imports channel structure, and publishes channel and health streams. Streaming uses one receiver thread, a bounded owned-buffer queue, and one ordered processing worker.
+
+Normal stop drains queued transfers in order before callbacks are cleared. Classified stream faults stop delivery immediately and raise a component error event.
 
 ### I/O
 
 Receives controller connection and synchronization settings.
 
 Produces measurement streams from Pacific hardware channels.
+
+Streaming faults are surfaced immediately through component health with:
+- `status = "error"`
+- `pacific_stream_error_kind = "acquisition" | "parsing" | "delivery" | "overrun"`
+- `pacific_stream_error_message`
+
+The same classified fault is emitted through the component `EventManager` as a major error event so standard Graph / DX+DAQ error handling can react without polling device state.
 
 ### JSON Setup Keys
 
