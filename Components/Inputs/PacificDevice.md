@@ -50,3 +50,27 @@ Component specific global keys:
   - Type: string
   - Enum: ["HOST", "IRIG"]
   - Default: "HOST"
+
+### Channel Hardware Settings
+
+When connected to Pacific 6000/6700 systems, individual channel settings are dynamically populated based on card capabilities:
+
+- `coupling` / `ac_coupling`
+  - Input coupling for cards supporting AC coupling / ICP / IEPE (e.g. Model 6729, 6029, 6036, 6068, or cards with `Q42` feature `AC`).
+  - `coupling` values: `"DC"`, `"AC"`.
+  - `ac_coupling` values: `false` (DC), `true` (AC).
+  - Controlled via `C1 C1` (AC) and `C1 C0` (DC).
+  - *Note for 6729/6029*: In late firmware versions, excitation enabled with AC coupling disabled is prohibited; the hardware automatically maintains excitation and AC coupling in tandem.
+- `excitation_enable`
+  - Current/voltage excitation supply toggle (read/written via `C1 E0` [enable] / `E1` [disable]).
+- `output_selector`
+  - Wideband vs. Filtered output selector for cards supporting dual outputs (e.g. 6729/6029).
+  - Values: `"WIDEBAND"`, `"FILTERED"`.
+  - Read via `CE? 1` and set via `CE 1, 0` (wideband) or `CE 1, 1` (filtered).
+- `gain`
+  - Amplifier gain setting. Allowed discrete steps read from card calibration tables.
+- `filter`
+  - Anti-alias low-pass filter cutoff frequency in Hz.
+- `input_mode`
+  - Transducer/calibration input mode (`TR`, `VC`, `VA`, `VS`, `ZC`, `R1`, `R2`, `S1`).
+
