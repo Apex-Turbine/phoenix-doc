@@ -133,7 +133,7 @@ public:
     virtual ~StreamTransmitter();
 
     // Public NVI Methods
-    void connect(const std::string& uri, const std::vector<GraphJson::StreamJson>& streams, const JSON& options = JSON::object());
+    void connect(const std::string& uri, const JSON& options = JSON::object());
     void disconnect();
     bool isConnected() const;
     bool isRunning() const;
@@ -143,18 +143,25 @@ public:
     void stop();
     void publish(const std::string& topic, const std::string& payload);
     std::vector<GraphJson::StreamJson> getStreams() const;
+    void setStreams(const JSON& metadata, const SourceStreams_t& streams);
+    JSON getConnectionInfo() const;
+    GraphJson::SourceJson getSource(const std::string& sourceName) const;
+    std::vector<GraphJson::SourceJson> getSources() const;
     void announce(bool enabled);
     streamTransmitterInfo_t getTransmitterInfo() const;
     const boost::uuids::uuid& getUUID() const;
 
 protected:
     // Protected Virtual Hooks (p*)
-    virtual void pConnect(const std::string& uri, const std::vector<GraphJson::StreamJson>& streams, const JSON& options) = 0;
+    virtual void pConnect(const std::string& uri, const JSON& options = JSON::object()) = 0;
     virtual void pDisconnect() = 0;
     virtual void pRun() = 0;
     virtual void pStop() = 0;
     virtual void pPublish(const std::string& topic, const std::string& payload) = 0;
-    virtual std::vector<GraphJson::StreamJson> pGetStreams() const = 0;
+    virtual std::vector<GraphJson::StreamJson> pGetStreams() const;
+    virtual void pSetStreams(const JSON& metadata, const SourceStreams_t& streams);
+    virtual JSON pGetConnectionInfo() const;
+    virtual GraphJson::SourceJson pGetSource(const std::string& sourceName) const;
     virtual void pAnnounce(bool enabled);
     virtual streamTransmitterInfo_t pGetTransmitterInfo() const = 0;
 
