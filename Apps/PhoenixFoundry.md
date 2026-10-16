@@ -24,7 +24,7 @@ PhoenixFoundry provides test engineers, data scientists, and operators with a un
 +-----------------------------------------------------------------------------------+
 ```
 
-### Core Capabilities
+#### Core Capabilities
 1. **Inspection & Stream Cataloging**:
    - Auto-discovers physical datasources, signal channels, inter-sample intervals (`delta`), and engineering units (`psi`, `degC`, `V`, `g`, etc.).
    - Visualizes hierarchical partition tables (`APEX_DATA`, `DS_DATA`) and discrete event markers (`APEX_DATAPOINT`, `DS_EVENT`).
@@ -32,9 +32,10 @@ PhoenixFoundry provides test engineers, data scientists, and operators with a un
 2. **High-Performance Waveform Visualization**:
    - Two-pass memory-bounded min/max envelope decimation algorithm capable of rendering 10,000,000+ data points smoothly in `pyqtgraph`.
    - Interactive Region of Interest (ROI) selection with nanosecond-accurate bounds for targeted exports and analysis.
-3. **Strict Columnar CSV Export (BUG-3 & Timestamp Standard)**:
-   - Exports multi-channel datasets conforming strictly to standard columnar layout: single primary time column (`timestamp_irig` by default in IRIG standard format, `timestamp_utc`, or `timestamp_ns`) followed by channel sample values.
-   - Supports Full Rate and Downsampled output with statistical reductions (`Average`, `Min`, `Max`, `Peak-to-Peak`, `RMS`).
+3. **Strict Columnar CSV Export Engine**:
+   - **Unified Columnar Format**: Single primary time column (`timestamp_irig` by default, `timestamp_utc`, or `timestamp_ns`) followed by channel data columns.
+   - **Full Rate Multi-Rate Synchronization**: When exporting channels with different sample rates, the highest-rate channel (smallest inter-sample `delta`) drives the export timeline. Lower-rate channels maintain time synchronicity via sample-and-hold carry-forward across time gaps and rate intervals. Pre-start data outputs `0`.
+   - **Downsampled Statistics & Write-Queue Architecture**: Bins telemetry across user-defined time intervals with statistical reductions (`Average`, `Min`, `Max`, `Peak-to-Peak`, `RMS`). Uses a two-tier channel accumulator and write-queue architecture that prevents duplicate timestamps across database chunk boundaries and guarantees strictly monotonic output rows.
 4. **Binary Container Export & Conversion**:
    - Native export to DATX and RWX file containers with flexible partitioning (`Single File`, `Split by Stream`, `Split by Source`, `Split by Time`).
 5. **Database Engineering & Maintenance**:
@@ -48,21 +49,12 @@ PhoenixFoundry provides test engineers, data scientists, and operators with a un
 
 ## 2. Supported Adapters and Formats
 
-PhoenixFoundry uses native dynamic adapters identified by canonical UUIDs matching the Phoenix C++ Core registry:
-
-### 2.1 Database Adapters
-
 | Adapter | Native Identifier | Canonical UUID | Extensions | Role |
 | :--- | :--- | :--- | :--- | :--- |
 | **DXDB / SQLite Reader** | `DXDBReader` | `d80bbdaa-93c4-4282-bacf-d78c9f8299e3` | `.dxdb`, `.db`, `.sqlite` | Reads SQLite-backed Phoenix recordings. |
 | **DXDB / SQLite Writer** | `DXDBWriter` | `ce9112b6-d80f-466c-9562-9f1d9541c023` | `.dxdb`, `.db`, `.sqlite` | Creates or writes SQLite-backed Phoenix databases. |
 | **PostgreSQL Reader** | `PostgreSQL Database Reader` | `b233c946-c454-4628-8695-6c9eaca91f5e` | URI / Network | Connects to central enterprise PostgreSQL stores. |
 | **PostgreSQL Writer** | `PsqlDBWriter` | `8146bc04-cc35-4fa1-ab04-38ff17b7efdc` | URI / Network | Ingests records into enterprise PostgreSQL stores. |
-
-### 2.2 File Adapters
-
-| Adapter | Native Identifier | Canonical UUID | Extensions | Description |
-| :--- | :--- | :--- | :--- | :--- |
 | **RWX File Reader** | `RwxReader` | `36ccabd4-4c34-427e-950e-c3735bc0e5eb` | `.rwx` | High-throughput binary time-series file container. |
 | **RWX File Writer** | `RWXWriter` | `cda19df1-084a-476e-973a-46c4cf7f694b` | `.rwx` | Serializes records into single or multi-part RWX files. |
 | **DATX File Reader** | `DatxReader` | `8f3b2c1d-4e5a-4b6c-7d8e-9f0a1b2c3d4e` | `.datx` | Standard industrial binary container. |
@@ -110,33 +102,47 @@ Upon startup, the application verifies its license via `PhoenixLic` for the `FOU
 ---
 
 ### 3.4 Exporting to Columnar CSV
+
 1. Click **Export CSV** on the ribbon or inside the export menu.
 2. Select the **Target Record** and desired **Range Mode**:
    - **Full Record**: Exports the complete duration.
-   - **Event Range**: Clips data strictly to the selected event boundaries.
-   - **Time Range (ROI)**: Clips data strictly to the active plot selection.
+   - **Event Range**: Clips data strictly to the selected event boundaries (retaining exact nanosecond boundaries).
+   - **Time Range (ROI)**: Clips data strictly to the active plot selection with subsecond precision.
    - **Custom Time Range**: Specify manual UTC start/end date-times (defaulted to record boundaries).
 3. Select the **Time Format**:
-   - **IRIG** *(Default)*: Canonical Inter-Range Instrumentation Group format `YYYY:DDD:HH:MM:SS.fffffffff` (where `DDD` is 1-based day of year, 001–366).
-   - **IRIG (Day of Year)**: `DDD:HH:MM:SS.fffffffff` (day-of-year without leading year).
-   - **ISO 8601 (UTC)**: Human-readable calendar format `YYYY-MM-DD HH:MM:SS.fff`.
-   - **Unix Epoch (ns)**: Raw integer nanoseconds since 1970-01-01 00:00:00 UTC.
+   - **IRIG** *(Default)*: Canonical Inter-Range Instrumentation Group format `YYYY:DDD:HH:MM:SS.fffffffff` (where `DDD` is 1-based day of year, 001–366). Header: `timestamp_irig`.
+   - **IRIG (Day of Year)**: `DDD:HH:MM:SS.fffffffff` (day-of-year without leading year). Header: `timestamp_irig`.
+   - **ISO 8601 (UTC)**: Human-readable calendar format `YYYY-MM-DD HH:MM:SS.fffffffff`. Header: `timestamp_utc`.
+   - **Unix Epoch (ns)**: Raw integer nanoseconds since 1970-01-01 00:00:00 UTC. Header: `timestamp_ns`.
 4. Select the **Export Mode**:
-   - **Full Rate**: Outputs all raw samples at the original acquisition sample rate.
-   - **Downsampled**: Bins samples into fixed time increments (e.g. `0.1` seconds for 100 ms bins).
-5. When Downsampled is active, choose the **Statistic**:
-   - `Average` (arithmetic mean)
-   - `Min` (minimum value per bin)
-   - `Max` (maximum value per bin)
-   - `Peak-to-Peak` (difference between max and min)
-   - `RMS` (root mean square)
-6. Choose an export destination file path and click **Export**.
-7. **Columnar Output Guarantee (BUG-3)**: The resulting file always contains exactly one time column (matching the selected time format, e.g. `timestamp_irig`), followed by each channel and its data:
-   ```csv
-   timestamp_irig,"EngineSensors.CombustionChamberPressure","EngineSensors.Temperature"
-   2026:258:01:06:20.000000000,45.2,180.4
-   2026:258:01:06:20.010000000,45.8,180.6
-   ```
+   - **Full Rate**:
+     - Exports raw data at native acquisition rates.
+     - **Multi-Rate Handling**: If channels have different sample rates (e.g., 100 Hz vibration, 20 Hz pressure, 1 Hz temperature), the **highest-rate stream** automatically drives the export timeline.
+     - **Time Synchronicity**: Lower-rate channels maintain synchronicity via sample-and-hold carry-forward across time gaps and higher-rate intervals.
+     - **Initial Missing Data**: If a channel starts later than the master timeline, it outputs `0` until its first valid sample arrives. If a channel ends earlier, its last known value is carried forward through the end of the recording.
+     - **Fast Path with Auto-Fallback**: If all channels have identical sample rates and aligned start times, a high-throughput vectorized block writer is used. If chunk misalignments or time offsets are detected, the exporter automatically falls back to multi-rate synchronization.
+   - **Downsampled**:
+     - Bins telemetry across fixed temporal increments (e.g. `0.1` for 100 ms bins, `2.0` for 2-second bins).
+     - **Aggregation Statistics**:
+       - `Average` (arithmetic mean of samples in bin)
+       - `Min` (minimum sample value in bin)
+       - `Max` (maximum sample value in bin)
+       - `Peak-to-Peak` (difference between maximum and minimum: $\max - \min$)
+       - `RMS` (root mean square: $\sqrt{\frac{1}{N}\sum x_i^2}$)
+     - **Multi-Tier Buffering & Write Queue**:
+       - Buffers raw data into channel-specific accumulators across database chunk boundaries.
+       - Aggregated bin results are queued in a row write queue. Once all channels for a bin timestamp are present, the row is written to disk.
+       - If more than 2 rows are queued awaiting delayed channel data, the earliest row is flushed using carry-forward values (or `0` if no prior sample exists).
+       - **Unique Timestamp Guarantee**: Every row has a strictly unique, monotonically advancing timestamp. Duplicate rows for the same downsampled timestamp are completely eliminated.
+5. Choose an export destination file path and click **Export**.
+6. The export progress dialog displays live progress percentage, current timestamp being processed, and total rows written. Upon completion, a confirmation dialog reports the exact export file path.
+
+**Sample Output Structure**:
+```csv
+timestamp_irig,"EngineSensors.CombustionChamberPressure","EngineSensors.Temperature"
+2026:287:20:03:38.294312704,45.210450,180.400000
+2026:287:20:03:40.294312704,45.892110,180.650000
+```
 
 ---
 
@@ -146,7 +152,7 @@ Upon startup, the application verifies its license via `PhoenixLic` for the `FOU
    - Choose the file format adapter (`DATX File Writer` or `RWX File Writer`).
    - Select the **Partitioning Mode**:
      - `Single File`: Creates a unified container.
-     - `Split by Stream`: Generates separate files per signal stream.
+     - `Split by Stream`: Generates separate files per signal channel.
      - `Split by Source`: Generates separate files per physical datasource.
      - `Split by Time`: Chunks data into discrete time-windowed files.
 2. To export to another DXDB database:
@@ -187,9 +193,11 @@ PhoenixFoundry includes a comprehensive automated test suite validating all core
 pytest apps/PhoenixFoundry/tests -v
 ```
 
-Tests run offline using synthetic temporary DXDB databases and verify:
-- Adapter canonical UUID resolution (BUG-2).
-- Columnar CSV formatting and downsampling reductions (BUG-3).
-- Fast aligned and slow cursor stream synchronization.
-- Binary file export (DATX, RWX, DXDB).
-- Database bounds sync, offset operations, cascade deletions, and license enforcement.
+All 55 tests run offline using synthetic temporary DXDB databases and verify:
+- **Adapter Canonical UUID Resolution**: Dynamic discovery and UUID registry validation.
+- **Strict Columnar CSV Formatting**: Validating `timestamp_irig`, `timestamp_utc`, and `timestamp_ns` headers and row layouts.
+- **Downsampled Multi-Chunk Unique Timestamps**: Verification that downsampling across multi-chunk databases produces strictly unique, non-duplicating timestamps and correct statistical aggregations (Average, Min, Max, Peak-to-Peak, RMS).
+- **Multi-Rate Full Rate Synchronization**: Verification that the highest-rate channel drives the timeline, with sample-and-hold across time gaps, early stream endings, and `0` fill for delayed stream starts.
+- **Stream Alignment & Fast-Path Fallback**: Automatic detection of timestamp offsets and smooth fallback to multi-rate synchronization.
+- **Binary File & DB Conversion**: DATX, RWX, and DXDB cloning and partitioning.
+- **Database Engineering Tools**: Bounds synchronization, offset operations, cascade deletions, and license checkout/checkin lifecycle.
