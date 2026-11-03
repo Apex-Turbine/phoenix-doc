@@ -10,15 +10,17 @@ The component subsystem consists of the following primary classes:
 - **[`componentInfo_t`](#component-metadata--information-json)**: Strongly-typed metadata structure declaring component properties, vendor, class types, licensing requirements, commands, requests, and supported input constraints.
 - **[`ComponentCallbackItem`](#component-callbacks)**: Callback interface allowing components to emit telemetry messages, logs, errors, and commands back to the managing engine.
 - **[`ComponentSubscriptionHandler`](#subscription-and-data-dispatch)**: High-performance, single-stream FIFO queue and thread-pool dispatcher ensuring ordered data delivery across thread boundaries.
-- **[`ComponentManager`](#componentmanager-pipeline-engine)**: Orchestration engine responsible for instantiating components, building subscription routes from [`GraphJson`](GraphJson.md), managing execution thread pools, and monitoring throughput.
+- **[`ComponentManager`](#componentmanager--stream-routing)**: Orchestration engine responsible for instantiating components, building subscription routes from [`GraphJson`](GraphJson.md), managing execution thread pools, and monitoring throughput.
+- **[`OfflineQueryComponentManager`](#offlinequerycomponentmanager-offline-resolution--query-sdk)**: Specialized offline execution and resolution manager that maps generic `StreamSelect` designs to historical database records, resolves multi-matched streams and processor reference perturbations, and compiles isolated subgraphs on demand.
 - **[`ComponentRemoteManager`](#remote-control--monitoring)**: ZeroMQ-based RPC server enabling remote networked inspection, control, and automation of a running `ComponentManager`.
 - **[`StreamTableManager`](#streamtablemanager-stream-centric-configuration)**: Specialized `ComponentManager` that converts stream-centric tabular configurations ([`TableJson`](TableJson.md)) into executable pipeline DAGs ([`GraphJson`](GraphJson.md)).
-- **[`ComponentLibrary` & `ComponentAdapter`](#dynamic-plugin-architecture)**: Dynamic plugin architecture enabling runtime discovery and instantiation of component DLLs via the exported `GetComponents` symbol.
+- **[`ComponentLibrary` & `ComponentAdapter`](#step-4-implement-the-component-adapter--export-symbol)**: Dynamic plugin architecture enabling runtime discovery and instantiation of component DLLs via the exported `GetComponents` symbol.
 
 ```mermaid
 graph TD
     subgraph "Application Layer / Graph Configuration"
         GJ["GraphJson / TableJson"] --> CM["ComponentManager"]
+        GJ --> OQCM["OfflineQueryComponentManager"]
         CRM["ComponentRemoteManager (ZMQ)"] <--> CM
     end
 
@@ -30,6 +32,7 @@ graph TD
 
     subgraph "Component Execution Engine"
         CM -->|Instantiates| C
+        OQCM -->|Lazy Subgraph Compilation| CM
         C -->|setCallbackManager| CB["ComponentCallbackItem"]
         CM -->|Wires Stream Routing| SH["ComponentSubscriptionHandler"]
         TP["PhoenixThreadPool"] -->|Executes Tasks| SH
@@ -544,6 +547,32 @@ sequenceDiagram
 1. **Independent Channel Streams**: Each stream subscription handler maintains its own FIFO queue. Tasks for different streams execute concurrently across the thread pool.
 2. **Serial Execution Per Stream**: A single `ComponentSubscriptionHandler` guarantees that data items for the *same* stream are processed strictly in order.
 3. **Thread Safety in `process()`**: If a component combines multiple streams (e.g. `SignalMath` adding Channel A and Channel B), it **must** synchronize internal buffers using `std::mutex` or lock-free data structures.
+
+---
+
+## `OfflineQueryComponentManager` (Offline Resolution & Query SDK)
+
+For post-processing and offline analysis workflows, `OfflineQueryComponentManager` (`PhoenixCore/Component/OfflineQueryComponentManager.hpp`) manages per-record graph resolution, multi-matched stream disambiguation, reference perturbation expansion, and on-demand subgraph execution.
+
+### 1. Per-Record Stream Matching & Disambiguation
+When an offline analysis graph uses `StreamSelect` to specify desired streams by logical name:
+- **Topological Import (`ensureDesignStreamsImported`)**: If downstream processors have not yet imported streams from `StreamSelect`, `OfflineQueryComponentManager` runs `Component::import` in topological order across all graph sources.
+- **Record Stream Matching (`buildResolvedRecordGraph`)**: Matches each `StreamSelect` stream against each selected database record's streams by **logical name**, **domain**, **units**, **message type**, and **data type**:
+  - **Missing Streams**: Streams absent from a record are pruned from that record's `resolvedGraph` and reported via warnings (`getRecordUnavailableStreams(recordNumber)`), allowing available streams to proceed.
+  - **Multi-Matched Streams**: When a stream matches multiple sources in a database record (e.g. `CH1` recorded under both `RAW` and `Scaled` sources), `inspectRecordResolution()` identifies the candidate sources (`multiMatchedSources`) and per-channel match details (`multiMatchedStreamDetails` of type `streamSelectMatchDetail_t`). `buildResolvedRecordGraph()` clones the stream per matched source using a disambiguated path `<streamSelectUuid>/<dbSourceUuid>/<streamName>` while preserving its user-visible `logicalName`. Sources checked in `selectedSources` are enabled for primary processing and DataViewer display, whereas unchecked sources are retained with `isEnabled() = false` and `settings()["reference_only_stream"] = true` so they remain selectable as independent processor references.
+
+### 2. Processor Reference & Channel Selection
+When a processor references secondary or multi-channel streams that match multiple database sources, `inspectRecordResolution()` discovers the multi-matched reference/input channels and `buildResolvedRecordGraph()` resolves each channel or reference to the user's selected source in `resolvedGraph`:
+- **`Signal Math` (`SignalMathProcessorComponent`)**: Emits per-channel `referencePromptItem_t` prompts (`<compUuid>|signal_math|<outputStream>|<channelName>`) when an input channel has multiple candidate upstream streams, resolves each channel to the single selected source, sets `originSource = mathSource.name()`, and attaches `processor_path_label` (e.g., `"C1: RAW, C6: Scaled"`).
+- **`FDFT` (`FdftProcessorComponent`)**: Resolves multi-matched digital `trigRef` streams to the single selected trigger source, storing `resolved_trig_ref_json` on each output stream.
+- **`Rev Resample` (`RevResample`)**: Filters out digital trigger timestamp streams from primary channel imports and resolves analog/digital `trigRef` streams to the single selected trigger source, storing `resolved_trig_ref_str`.
+- **`Relative Phase` (`RelativePhaseProcessor`)**: Resolves `phase_ref_stream` and `ref_trigger_stream` to the single selected reference sources, storing `resolved_phase_ref_stream`, `resolved_phase_ref_source`, `resolved_ref_trigger_stream`, and `resolved_ref_trigger_source`.
+
+### 3. On-Demand Subgraph Compilation (`requestDataForStream`)
+Rather than compiling all subgraphs at submission time, `OfflineQueryComponentManager::setup()` registers lightweight descriptors in under $10\text{ ms}$. When a plot trace requests data via `requestDataForStream(query)`:
+1. `ensurePipelineCompiled()` builds the minimal subgraph required for that specific output stream from the record's `resolvedGraph`.
+2. `buildPipelineSource()` injects any per-stream `resolved_*` reference overrides into the compiled processor node's settings.
+3. Upstream `StreamSelect` nodes receive `stream_sources` mapping the exact `(source_index, stream_index)` database coordinates to query via targeted SQL disjunctions.
 
 ---
 

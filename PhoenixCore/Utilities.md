@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `PhoenixCore/Utilities` module provides foundational infrastructure services shared across all Phoenix subsystems, including event logging and diagnostics (`EventManager`), high-speed ZeroMQ messaging (`ZMQClient` and `ZMQServer`), multithreaded task scheduling (`PhoenixThreadPool`), UUID generators (`PhoenixUUID`), and stream naming helpers (`NamingConventionHelpers`).
+The `PhoenixCore/Utilities` module provides foundational infrastructure services shared across all Phoenix subsystems, including event logging and diagnostics (`EventManager`), high-speed ZeroMQ messaging (`ZMQClient` and `ZMQServer`), multithreaded task scheduling (`PhoenixThreadPool`), UUID generators (`PhoenixUUID`), stream naming helpers (`NamingConventionHelpers`), and stream matching utilities (`GraphJsonUtils`).
 
 ```mermaid
 graph TD
@@ -12,6 +12,7 @@ graph TD
         TP["PhoenixThreadPool"]
         UUID["PhoenixUUID"]
         NC["NamingConventionHelpers"]
+        GJU["GraphJsonUtils (StreamNameMatcher)"]
     end
 
     subgraph "Consumer Subsystems"
@@ -20,7 +21,8 @@ graph TD
         ZMQ --> CRM["ComponentRemoteManager"]
         ZMQ --> STRM["Stream Subsystem"]
         TP --> SH["ComponentSubscriptionHandler"]
-        NC --> STM["StreamTableManager"]
+        NC --> STM["StreamTableManager & OfflineQueryComponentManager"]
+        GJU --> COMP
     end
 ```
 
@@ -198,23 +200,26 @@ void executeConcurrentTasks()
 
 ---
 
-## NamingConventionHelpers
+## NamingConventionHelpers & GraphJsonUtils
 
-`NamingConventionHelpers` (`PhoenixCore/Utilities/NamingConventionHelpers.hpp`) standardizes path-style naming conventions for streams across multi-component pipeline graphs:
+`NamingConventionHelpers` (`PhoenixCore/Utilities/NamingConventionHelpers.hpp`) and `GraphJsonUtils` (`PhoenixCore/Utilities/GraphJsonUtils.hpp`) standardize path-style naming and stream matching across multi-component pipeline graphs and multi-source offline records:
 
-- **Format**: `<originSource>/<intermediateProcessor>/.../<streamIdentifier>`
-- **`StreamNameBuilder`**: Parses and constructs path-based names:
+- **Path Format**: `<originSource>/<intermediateProcessor>/.../<streamIdentifier>`
+- **`PhoenixNameConventions::StreamName` & `StreamNameBuilder`**: Parses and constructs path-based stream names, extracting `originSource()`, intermediate processor segments, and leaf `streamNameComponent()` without manual string splitting.
+- **`GraphJsonUtils::StreamNameMatcher`**: Generates candidate identifier combinations in `streamNamesToCheck()`—including `streamName`, `streamLogicalName`, `sourceName + "/" + streamName`, `sourceName + "/" + streamLogicalName`, `sourceLogicalName + "/" + streamName`, and `sourceLogicalName + "/" + streamLogicalName`—so processors can reliably match both standard streams and offline disambiguated multi-source streams (`<originSource>/<dbSourceUuid>/<streamName>`).
 
 ```cpp
 #include <PhoenixCore/Utilities/NamingConventionHelpers.hpp>
+#include <PhoenixCore/Utilities/GraphJsonUtils.hpp>
 
-void parseStreamNames()
+void parseAndMatchStreamNames(const GraphJson::SourceJson& src, const GraphJson::StreamJson& strm)
 {
-    PhoenixNameConventions::StreamNameBuilder builder;
-    builder.fromString("Chassis1_DAQ/ScalarProcessor/Channel_01");
+    PhoenixNameConventions::StreamName parsed("Chassis1_DAQ/ScalarProcessor/Channel_01");
+    std::string origin = parsed.originSource();       // "Chassis1_DAQ"
+    std::string leaf = parsed.streamNameComponent();  // "Channel_01"
 
-    std::string origin = builder.originSource();       // "Chassis1_DAQ"
-    std::string leaf = builder.streamNameComponent();  // "Channel_01"
+    GraphJsonUtils::StreamNameMatcher matcher(src, strm);
+    bool matches = matcher.matches("ScalarProcessor/Channel_01");
 }
 ```
 

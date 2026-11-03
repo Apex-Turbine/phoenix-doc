@@ -39,16 +39,19 @@ spectral comparison across signals sharing the same time basis.
 - PPR (Pulses per Revolution)
     - Number of pulses expected in a single revolution of the system.
     - Default: 1.0
+
+### Offline Multi-Matched Trigger Reference Selection
+When a digital Trigger Stream is configured in offline analysis and matches multiple sources in a database record, the pre-submit source and reference selection dialog allows the user to select which trigger reference source to use via a combo box under `Trigger Reference` for that channel. The selected trigger reference is bound into the compiled subgraph for that processor.
 ___
 ## Phoenix API
 ___
 ### Description
 
-Performs buffering and windowing of input samples, and submits them to a floating-point FFT library.
+Performs buffering and windowing of input samples, and submits them to a floating-point FFT library, with optional digital trigger-based phase origin correction.
 
 ### I/O
 
-Receives numeric vector compatible data.
+Receives numeric vector compatible data and optional digital trigger timestamp streams.
 
 Produces single precision complex vectors containing FFT result.
 
@@ -79,9 +82,9 @@ Component specific input keys:
   - description: The desired frequency resolution of the DFT
   - default: 100
 - overlap
-  - title": "DFT Overlap
+  - title: DFT Overlap
   - type: number
-  - description": The % Overlap for the DFT/FFT
+  - description: The % Overlap for the DFT/FFT
   - default: 0
 - zoom
   - title: DFT Zoom
@@ -94,21 +97,21 @@ Component specific input keys:
   - enum: ["None", "Hamming", "Blackman-Harris", "Nuttall", "Blackman", "Flat-Top"]
   - description: The window function applied to the DFT/FFT
   - default: Blackman-Harris
-*scaling
+- scaling
   - title: DFT/FFT Scaling
   - type: string
   - enum: ["P2P", "Peak", "RMS", "Average"]
   - description: The DFT/FFT Peak scaling method
 - trigRef
-  - description: The trigger reference stream
-  - type: string
+  - description: The trigger reference stream (string name or `{sourcename, streamname, streamlogicalname}` object)
+  - type: string or object
   - default: ""
 - trigType
   - description: Trigger type. Must be digital for FFT.
   - type: integer
   - default: 1
 - trigRefEnabled
-  - description: Whether the trigger reference stream is enabled
+  - description: Whether the trigger reference stream is enabled (automatically preserved across `import()` and `setup()` when `trigRef` is valid)
   - type: boolean
   - default: false
 - trigPPR
@@ -120,3 +123,6 @@ Component specific input keys:
   - type: string
   - enum: ["Middle", "Start"]
   - default: "Middle"
+- resolved_trig_ref_json
+  - description: Optional per-stream trigger reference override injected into the compiled subgraph during offline multi-match perturbation expansion
+  - type: object

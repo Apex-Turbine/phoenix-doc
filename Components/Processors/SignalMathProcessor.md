@@ -2,25 +2,40 @@
 ## Settings
 
 - Math Operations
-    - Array of polynomial coefficients to apply to input streams (array size determines polynomial order)
-    - Default, blank **must** have an operation present or component will take no action
+    - List of mathematical expressions combining one or more input streams to produce a named output stream (e.g., `TestStream = CH1 + CH6`)
+    - Default, blank — **must** have at least one valid operation present or the component will produce no output streams
+
+### Offline Multi-Matched Input Channel Selection
+
+When used in offline analysis with input channels that match multiple database sources in a record (for example, `CH1` and `CH6` available in both `RAW` and `Scaled` sources):
+- Prior to building the pipeline, the source and reference selection dialog displays the **Signal Math** processor as a tree node, with a child group node for each output stream (e.g., `TestStream`) and leaf rows for each multi-matched input channel (e.g., `CH1`, `CH6`) paired with a combo box (`RAW`, `Scaled`).
+- The selected source for each input channel is bound to that math expression and evaluated in its isolated pipeline.
+- In the DataViewer stream tree, the computed output stream (e.g., `TestStream`) appears directly under the **Signal Math** component (since Signal Math is its origin source).
 ___
 ## Phoenix API
 ___
 ### Description
 
-Applies polynomial mathematical operations to input data streams using configurable coefficients.
+Evaluates algebraic and mathematical expressions across one or more synchronized numeric vector input streams to synthesize new derived output streams. Each output stream sets its `originSource` to the `SignalMathProcessorComponent` instance name and records all referenced upstream channels in its `sources` dependency array.
 
 ### I/O
 
-Receives numeric vector data streams.
+Receives numeric vector data streams from one or more upstream components.
 
-Produces mathematically processed numeric vector data streams.
+Produces mathematically synthesized numeric vector data streams owned by the Signal Math component.
 
 ### JSON Setup Keys
 
 Component specific global keys:
-- math_ops
-    - Description: The array of polynomial coefficients used for applying to the specified stream. The array size determines order. i.e 1=0th order, 2=1st order, 3=2nd order
+- `math_ops`
+    - Description: Array of mathematical expression definitions. Each entry may be either a string expression (`"TestStream = CH1 + CH6"`) or an object containing an `"expression"` key (`{"expression": "TestStream = CH1 + CH6"}`).
     - Type: array
-    - $require_import: true
+    - `$require_import`: true
+
+Per-stream resolved settings (offline perturbation expansion):
+- `resolved_math_expression`
+    - Description: Optional per-stream expression override injected by `OfflineQueryComponentManager` when an expression is expanded across disambiguated multi-source input streams.
+    - Type: string
+- `processor_path_label`
+    - Description: Human-readable perturbation label describing the input source combination (e.g., `"CH1: RAW, CH6: Scaled"`).
+    - Type: string

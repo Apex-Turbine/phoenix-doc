@@ -32,7 +32,10 @@ The following settings pertain to selecting a suitable trigger stream to provide
 - Trigger Reference Stream
   - Input stream containing trigger data. If an Analog trigger signal is selected, further configuration may be required
     to accurately interpret the signal. If a Digital stream is selected, the stream should provide nanosecond timestamps
-    corresponding to trigger times.
+    corresponding to trigger times. Digital trigger timestamp streams are automatically excluded from being imported as primary resampled channels.
+
+- Offline Multi-Matched Trigger Reference Selection
+  - When the configured Trigger Reference Stream matches multiple sources in an offline database record (e.g., `CH6` available under both `RAW` and `Scaled` sources), the pre-submit source and reference selection dialog allows the user to choose which trigger reference source to use via a combo box under `Trigger Reference` for that channel.
 
 #### Analog Trigger Signal Settings
 The following settings configure how an analog trigger signal should be interpreted.
@@ -134,9 +137,9 @@ downstream processing like order tracking and phase analysis.
 
 ### I/O
 
-Receives numeric vector data and resampling parameters.
+Receives numeric vector data and resampling parameters (plus an analog or digital trigger reference stream). During `import()`, digital trigger timestamp streams (`TU::Helpers::streamSupportsDigitalSelection`) are automatically filtered out from primary channel imports so only time-domain signals are resampled.
 
-Produces resampled numeric vector data.
+Produces resampled numeric vector data in the angular (`Revolutions`) domain.
 
 ### JSON Setup Keys
 
@@ -169,6 +172,11 @@ The following settings are still included in component settings, but are specifi
         "type": "string",
         "default":"",
         "$require_import": true
+    },
+    "resolved_trig_ref_str": {
+        "description": "Optional per-stream disambiguated trigger reference stream path injected during offline perturbation compilation",
+        "type": "string",
+        "default": ""
     },
     "trigType": {
         "description": "The type of trigger",
