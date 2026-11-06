@@ -7,8 +7,11 @@
 - Commit Time
     - Updates per second
     - Default, 1
-- Enable Monitoring
-    - Toggles monitoring for the SQLite connection
+- All Data
+    - Records configured Store streams while recording is active, including outside events
+    - When disabled, writes data only during event recording
+    - Event-based file splitting uses event-only recording
+    - Does not start recording automatically or enable unselected streams
     - Default, enabled
 - Optimize
     - Index the database when a session completes for reading optimization
@@ -74,7 +77,7 @@ Component specific global keys:
   - Type: integer
   - Default: -1
 - eventmode
-  - Description: Only write when datapoint recording is active
+  - Description: Only write when event recording is active
   - Type: boolean
   - Default: false
 - db_parts

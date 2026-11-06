@@ -10,8 +10,8 @@
 - End Time
     - End date and time for the query
     - Default, disabled
-- Only Data Points
-    - Filtering for data points only
+- Only Events
+    - Filtering for events only
     - Default, disabled
 ___
 ## Phoenix API
@@ -33,7 +33,7 @@ Component specific global keys:
   - Description: The uri or filename of the SQLite DB file to open (`.dxdb` or `.dxdb.index`)
   - Type: string
 - only_data_points
-  - Description: Whether or not to load only data points
+  - Description: Whether or not to load only events
   - Type: boolean
   - Default: false
 - config

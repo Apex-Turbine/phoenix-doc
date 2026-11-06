@@ -46,5 +46,5 @@ Component specific global keys:
   * Default: 1.0
 * eventmode
   * Type: boolean
-  * Description: Only write when datapoint recording is active
+  * Description: Only write when event recording is active
   * Default: false

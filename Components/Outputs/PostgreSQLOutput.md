@@ -27,8 +27,10 @@
 - Update Rate
 	- Rate of updates to database per second
 	- Default, 1.00 s
-- Enable Monitoring
-    - Toggles monitoring for PostgreSQL connection
+- All Data
+    - Records configured Store streams while recording is active, including outside events
+    - When disabled, writes data only during event recording
+    - Does not start recording automatically or enable unselected streams
     - Default, enabled
 ___
 ## Phoenix API
@@ -82,7 +84,7 @@ Component specific global keys:
   - Enum: [Standard, Pipeline, Copy]
   - Default: Standard
 - eventmode
-  - Description: Only write when datapoint recording is active
+  - Description: Only write when event recording is active
   - Type: boolean
   - Default: false
 - commit_time

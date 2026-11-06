@@ -7,8 +7,8 @@
 - Write Interval
   - Updates per second to commit data to file
   - Default, 1
-- Data Point Mode
-  - Only write when datapoint recording is active
+- Event Mode
+  - Only write when event recording is active
   - Default, disabled
 ___
 ## Phoenix API
@@ -35,5 +35,5 @@ Component specific global keys:
   - Default: 1.0
 - eventmode
   - Type: boolean
-  - Description: Only write when datapoint recording is active
+  - Description: Only write when event recording is active
   - Default: false
