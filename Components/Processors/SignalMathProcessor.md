@@ -4,6 +4,7 @@
 - Math Operations
     - List of mathematical expressions combining one or more input streams to produce a named output stream (e.g., `TestStream = CH1 + CH6`)
     - Default, blank — **must** have at least one valid operation present or the component will produce no output streams
+    - Output Unit: **Automatic (same as input)** preserves the inherited value unit. Selecting a registered unit labels the expression's result without converting numeric values or validating physical dimensions. The reference (X-axis) unit is unchanged.
 
 ### Offline Multi-Matched Input Channel Selection
 
@@ -28,7 +29,7 @@ Produces mathematically synthesized numeric vector data streams owned by the Sig
 
 Component specific global keys:
 - `math_ops`
-    - Description: Array of mathematical expression definitions. Each entry may be either a string expression (`"TestStream = CH1 + CH6"`) or an object containing an `"expression"` key (`{"expression": "TestStream = CH1 + CH6"}`).
+    - Description: Array of operation objects, or JSON strings encoding those objects. Each operation has `"result"` and `"expr"` fields, for example `{"result": "TestStream", "expr": "{CH1} + {CH6}", "units": "Volts"}`. The optional `"units"` string selects a registered output value unit; omitted or empty means automatic. Unknown units are rejected during import.
     - Type: array
     - `$require_import`: true
 
