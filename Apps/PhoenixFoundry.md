@@ -1,203 +1,136 @@
-# PhoenixFoundry
+# PhoenixFoundry — DX+ DB Manager User Guide
 
-`PhoenixFoundry` is an enterprise desktop application for inspecting, visualizing, maintaining, and converting high-rate industrial telemetry databases and file recordings across the Phoenix Ecosystem.
+`DX+ DB Manager` (`PhoenixFoundry`, executable `dx+dbmanager.exe`) is the enterprise desktop application for inspecting, visualizing, maintaining, and converting high-rate industrial telemetry databases (`.dxdb`, SQLite, PostgreSQL) and file recordings (`.rwx`, `.datx`) across the Phoenix Ecosystem.
 
 ---
 
 ## 1. System Overview
 
-PhoenixFoundry provides test engineers, data scientists, and operators with a unified workbench for managing multi-gigabyte recordings captured by Phoenix DAQ systems:
-
-```
+```text
 +-----------------------------------------------------------------------------------+
-|                                  PhoenixFoundry                                   |
+|                            DX+ DB Manager (PhoenixFoundry)                        |
 |                                                                                   |
 |  [Database Adapters: DXDB / Postgres] <---> [PhoenixFacade] <---> [File Adapters] |
 |                                                    |                              |
 |           +----------------------------------------+                              |
 |           v                                        v                              |
-|  [PyQtGraph Decimator & ROI]              [Multi-Format Exporter]                 |
+|  [PyQtGraph Decimator & ROI]              [Multi-Format Exporter & Importer]      |
 |  - 32,768 Envelope Bins                   - Strict Columnar CSV (timestamp_irig)  |
-|  - Interactive Event Markers              - DATX & RWX Partitioning Containers   |
+|  - Interactive Event Markers              - DATX & RWX Partitioning Containers    |
 |  - Human-Readable UTC & IRIG Tooltips     - Database-to-Database Cloning          |
-|  - Microsecond Selection                  - Downsampled Statistics & Reductions   |
+|  - Subsecond ROI Event Creation           - Downsampled Statistics & Reductions   |
 +-----------------------------------------------------------------------------------+
 ```
 
-#### Core Capabilities
-1. **Inspection & Stream Cataloging**:
-   - Auto-discovers physical datasources, signal channels, inter-sample intervals (`delta`), and engineering units (`psi`, `degC`, `V`, `g`, etc.).
-   - Visualizes hierarchical partition tables (`APEX_DATA`, `DS_DATA`) and discrete event markers (`APEX_DATAPOINT`, `DS_EVENT`).
-   - Displays all record and event boundaries in human-readable UTC and IRIG date-time formats across the sidebar, info panel, and dialogs.
-2. **High-Performance Waveform Visualization**:
-   - Two-pass memory-bounded min/max envelope decimation algorithm capable of rendering 10,000,000+ data points smoothly in `pyqtgraph`.
-   - Interactive Region of Interest (ROI) selection with nanosecond-accurate bounds for targeted exports and analysis.
+### Core Capabilities
+1. **Inspection & Multi-Database Session Management**:
+   - Connect simultaneously to multiple `.dxdb` (SQLite) and enterprise PostgreSQL databases and switch between active connections using the top ribbon dropdown.
+   - Auto-discover physical datasources, signal channels, inter-sample intervals (`delta`), and engineering units (`psi`, `degC`, `V`, `g`, `RPM`, etc.).
+   - Inspect hierarchical partition tables (`APEX_DATA`, `DS_DATA`) and discrete event markers (`APEX_DATAPOINT`, `DS_EVENT`) with human-readable UTC and IRIG date-time formatting.
+2. **High-Performance Waveform Visualization & Event Tagging**:
+   - Two-pass memory-bounded min/max envelope decimation capable of rendering 10,000,000+ data points smoothly at 60 FPS in `pyqtgraph`.
+   - Interactive Region of Interest (ROI) selection with nanosecond precision for targeted exports and **Create Event from ROI**.
+   - Full Event creation, editing, and deletion with typed JSON key/value metadata table editing and automatic synchronization of `eventNumber`, `startTime`, `endTime`, and event `flags`.
 3. **Strict Columnar CSV Export Engine**:
-   - **Unified Columnar Format**: Single primary time column (`timestamp_irig` by default, `timestamp_utc`, or `timestamp_ns`) followed by channel data columns.
-   - **Full Rate Multi-Rate Synchronization**: When exporting channels with different sample rates, the highest-rate channel (smallest inter-sample `delta`) drives the export timeline. Lower-rate channels maintain time synchronicity via sample-and-hold carry-forward across time gaps and rate intervals. Pre-start data outputs `0`.
-   - **Downsampled Statistics & Write-Queue Architecture**: Bins telemetry across user-defined time intervals with statistical reductions (`Average`, `Min`, `Max`, `Peak-to-Peak`, `RMS`). Uses a two-tier channel accumulator and write-queue architecture that prevents duplicate timestamps across database chunk boundaries and guarantees strictly monotonic output rows.
-4. **Binary Container Export & Conversion**:
-   - Native export to DATX and RWX file containers with flexible partitioning (`Single File`, `Split by Stream`, `Split by Source`, `Split by Time`).
-5. **Database Engineering & Maintenance**:
-   - Apply global or channel-specific time offsets (Timezone offsets or custom second/millisecond adjustments).
-   - Sync record create/complete boundaries to actual raw sample extrema.
-   - Reduce recording data strictly to active event ranges, permanently reclaiming disk space.
-   - Consolidate and merge overlapping records within a database or across multiple physical database archives.
-   - Built-in SQL console for ad-hoc inspection and maintenance queries.
+   - **Unified Columnar Format**: Single primary time column (`timestamp_irig` by default, `timestamp_utc`, or `timestamp_ns`) followed by `"Source.Stream"` channel columns.
+   - **Full Rate Multi-Rate Synchronization**: When exporting channels with different sample rates, the highest-rate channel (smallest positive `delta`) drives the timeline. Slower channels maintain time synchronicity via sample-and-hold carry-forward across intervals and mid-stream gaps, outputting `0` prior to a delayed channel's first sample.
+   - **Downsampled Statistics**: Bins telemetry across fixed time intervals with statistical reductions (`Average`, `Min`, `Max`, `Peak-to-Peak`, `RMS`), guaranteeing strictly unique, monotonically increasing row timestamps across database chunks.
+4. **Binary Container Export, Database Cloning & File Import**:
+   - Export records, events, or time windows to `.datx` and `.rwx` containers (`Single File`, `Channels` / Split by Stream, `Sample Rate`, or Split by Source/Time) or to new/existing `.dxdb` databases (`Single`, `Per Source`, `Per Stream` partitions).
+   - Import `.rwx` and `.datx` recordings into an active database or synthesize a brand-new database and auto-connect it in-session.
+5. **Database Engineering & Maintenance Suite**:
+   - `Vacuum` and `Optimize` database storage.
+   - Apply timezone or custom second/millisecond/microsecond time offsets to a whole record, a specific datasource, or an individual stream.
+   - Synchronize record `create_time` / `complete_time` boundaries to raw sample extrema.
+   - Reduce recording data strictly to active event ranges to reclaim disk space.
+   - Consolidate and merge overlapping records within a single database or across multiple physical database archives.
+   - Execute ad-hoc diagnostic queries in the built-in **Query** SQL console.
 
 ---
 
-## 2. Supported Adapters and Formats
+## 2. Supported Adapters & Formats
 
-| Adapter | Native Identifier | Canonical UUID | Extensions | Role |
+| Adapter Display Name | Native Identifier | Canonical UUID | Extensions / Transport | Role |
 | :--- | :--- | :--- | :--- | :--- |
-| **DXDB / SQLite Reader** | `DXDBReader` | `d80bbdaa-93c4-4282-bacf-d78c9f8299e3` | `.dxdb`, `.db`, `.sqlite` | Reads SQLite-backed Phoenix recordings. |
-| **DXDB / SQLite Writer** | `DXDBWriter` | `ce9112b6-d80f-466c-9562-9f1d9541c023` | `.dxdb`, `.db`, `.sqlite` | Creates or writes SQLite-backed Phoenix databases. |
-| **PostgreSQL Reader** | `PostgreSQL Database Reader` | `b233c946-c454-4628-8695-6c9eaca91f5e` | URI / Network | Connects to central enterprise PostgreSQL stores. |
-| **PostgreSQL Writer** | `PsqlDBWriter` | `8146bc04-cc35-4fa1-ab04-38ff17b7efdc` | URI / Network | Ingests records into enterprise PostgreSQL stores. |
-| **RWX File Reader** | `RwxReader` | `36ccabd4-4c34-427e-950e-c3735bc0e5eb` | `.rwx` | High-throughput binary time-series file container. |
-| **RWX File Writer** | `RWXWriter` | `cda19df1-084a-476e-973a-46c4cf7f694b` | `.rwx` | Serializes records into single or multi-part RWX files. |
-| **DATX File Reader** | `DatxReader` | `8f3b2c1d-4e5a-4b6c-7d8e-9f0a1b2c3d4e` | `.datx` | Standard industrial binary container. |
-| **DATX File Writer** | `DatxWriter` | `2e9adef9-dc25-4d01-89e5-a8286a8a82e8` | `.datx` | Serializes records into single or multi-part DATX files. |
+| **DXDB / SQLite Reader** | `DXDBReader` | `d80bbdaa-93c4-4282-bacf-d78c9f8299e3` | `.dxdb`, `.db`, `.sqlite` | Reads SQLite-backed Phoenix recordings (including multi-part partitioned `.dxdb` archives). |
+| **DXDB / SQLite Writer** | `DXDBWriter` | `ce9112b6-d80f-466c-9562-9f1d9541c023` | `.dxdb`, `.db`, `.sqlite` | Creates or writes SQLite-backed Phoenix databases (`Single`, `Per Source`, `Per Stream`). |
+| **PostgreSQL Database Reader** | `PostgreSQL Database Reader` | `b233c946-c454-4628-8695-6c9eaca91f5e` | Network / URI | Reads from enterprise PostgreSQL telemetry stores. |
+| **PostgreSQL Database Writer** | `PsqlDBWriter` | `8146bc04-cc35-4fa1-ab04-38ff17b7efdc` | Network / URI | Writes records into enterprise PostgreSQL telemetry stores. |
+| **RWX File Reader** | `RwxReader` | `36ccabd4-4c34-427e-950e-c3735bc0e5eb` | `.rwx` | Reads high-throughput RWX binary time-series containers. |
+| **RWX File Writer** | `RWXWriter` | `cda19df1-084a-476e-973a-46c4cf7f694b` | `.rwx` | Exports records into single or multi-part RWX files. |
+| **DATX File Reader** | `DatxReader` | `8f3b2c1d-4e5a-4b6c-7d8e-9f0a1b2c3d4e` | `.datx`, `.datx_index` | Reads industrial DATX binary containers. |
+| **DATX File Writer** | `DatxWriter` | `2e9adef9-dc25-4d01-89e5-a8286a8a82e8` | `.datx` | Exports records into single or multi-part DATX files. |
 
 ---
 
-## 3. Operator Guide
+## 3. Step-by-Step Operator Guide
 
 ### 3.1 Launching the Application
-Launch PhoenixFoundry from the repository root:
 ```powershell
-python apps/PhoenixFoundry/src/main.py
+# Frozen executable
+dx+dbmanager.exe
+
+# From Python source
+py -3 apps/PhoenixFoundry/src/main.py
 ```
+Upon startup, `DX+ DB Manager` checks out the `FOUNDRY-APP` license feature via `PhoenixLic`, displays the splash screen, and opens the main ribbon workspace.
 
-Upon startup, the application verifies its license via `PhoenixLic` for the `FOUNDRY-APP` feature and initializes all native database and file adapters.
-
----
-
-### 3.2 Connecting to a Database
+### 3.2 Connecting to & Switching Between Databases
 1. Click **Connect DB** on the top ribbon.
 2. In the **Connect to Database** dialog:
-   - Choose the **Database Adapter** (e.g. `DXDB / SQLite Reader` or `PostgreSQL Database Reader`).
-   - For file databases, click **Browse...** to pick a `.dxdb` file.
-   - For DBMS databases, specify the connection URI and required authentication parameters (host, port, user, password, database).
+   - Choose the **Database Adapter** (`DXDB / SQLite Reader` or `PostgreSQL Database Reader`).
+   - For file-backed databases, click **Browse...** to select a `.dxdb` file.
+   - For network DBMS adapters, fill in the dynamically generated connection parameters (`host`, `port`, `user`, `password`, `database`).
 3. Click **Connect**.
-4. The database is added to the active session dropdown, and the sidebar populates with all discovered records.
+4. The connection is added to the **Active DB** selector on the ribbon, and the left sidebar tree populates with all discovered **Records** (`Record 1`, `Record 2`, ...) and their child **Events** (`Event 1`, ...).
+5. To switch between multiple open databases, select another connection from the ribbon dropdown. Click **Close DB** to disconnect the active database.
 
----
-
-### 3.3 Visualizing Time-Series Data & Interactive Range Selection
-1. Select a **Record** in the sidebar. The **Overview** panel displays high-level metadata (start/end timestamps, channel counts, active tables).
-2. Switch to the **Plot** view.
-3. In the top selection bar:
-   - Select the **Source** (e.g. `EngineSensors`).
-   - Select the **Stream** (e.g. `CombustionChamberPressure`).
-4. Click **Plot Stream**.
-5. PhoenixFoundry loads and renders the decimated envelope instantly.
-6. **Interacting with the Plot**:
-   - **Pan / Zoom**: Left-click and drag to pan; right-click and drag or mouse wheel to zoom.
-   - **Selection Window (ROI)**: Drag the highlighted region boundaries to select a specific time interval. The nanosecond start/end timestamps update automatically in the selection controls.
-   - **Event Markers**: Toggle **Show Events** to overlay vertical event markers with event labels (`E1>`, `<E1`).
-   - **Add Event**: Click **Create Event from ROI** to permanently tag the highlighted time window with a title and description.
-
----
+### 3.3 Inspecting Metadata, Plotting Waveforms & Managing Events
+1. **Overview View**:
+   - Select any **Record** or **Event** in the left sidebar.
+   - The **Overview** panel displays formatted UTC and IRIG start/end timestamps, duration, datasource/stream counts, partition tables, and metadata.
+   - Click **View Graph Schema** to inspect the raw and tree-structured `graph_json` and `tables_json` descriptors.
+2. **Plot View & Interactive ROI**:
+   - Switch to the **Plot** view on the ribbon.
+   - Choose a **Source** and **Stream** from the dropdown selectors and click **Plot Stream**.
+   - **Pan / Zoom**: Left-click and drag to pan; right-click and drag or use the mouse wheel to zoom.
+   - **Region of Interest (ROI)**: Drag the shaded ROI boundary handles on the plot (or edit the start/end time fields) to isolate a subsecond time window.
+   - **Event Markers**: Toggle **Show Events** to overlay vertical event boundaries (`E1>`, `<E1`).
+3. **Creating, Editing & Deleting Events**:
+   - **Create Event from ROI**: Adjust the plot ROI to the desired window and click **Create Event from ROI**. Enter an **Event Number**, comma-separated **Event Flags** (e.g. `burn,maxq`), and custom key/value metadata rows, then click **OK**.
+   - **Edit Event**: Select an event in the sidebar and click **Edit Event** to modify its event number, start/end timestamps, flags, or typed JSON metadata attributes.
+   - **Delete Event**: Select an event and click **Delete Event** (confirms before removal).
 
 ### 3.4 Exporting to Columnar CSV
+1. Click **Export CSV** on the ribbon.
+2. Select the **Target Record**, channels to include, and **Range Mode**:
+   - **Full Record**: Exports the complete record duration.
+   - **Event Range**: Clips strictly to the selected event's exact nanosecond start/end bounds.
+   - **Time Range (ROI)**: Clips strictly to the active plot ROI selection.
+   - **Custom Time Range**: Specify custom UTC start and end timestamps.
+3. Choose the **Time Format**:
+   - **IRIG** *(Default)*: `YYYY:DDD:HH:MM:SS.fffffffff` (header: `timestamp_irig`).
+   - **IRIG (Day of Year)**: `DDD:HH:MM:SS.fffffffff` (header: `timestamp_irig`).
+   - **ISO 8601 (UTC)**: `YYYY-MM-DD HH:MM:SS.fffffffff` (header: `timestamp_utc`).
+   - **Unix Epoch (ns)**: Raw integer nanoseconds (header: `timestamp_ns`).
+4. Choose the **Export Mode**:
+   - **Full Rate**: Highest-rate channel drives the timeline; slower channels use sample-and-hold carry-forward (and `0` before first sample).
+   - **Downsampled**: Enter a bin **Duration (s)** (e.g. `0.1` for 100 ms) and choose a statistic (`Average`, `Min`, `Max`, `Peak-to-Peak`, `RMS`).
+5. Pick an output `.csv` file path and click **Export**.
 
-1. Click **Export CSV** on the ribbon or inside the export menu.
-2. Select the **Target Record** and desired **Range Mode**:
-   - **Full Record**: Exports the complete duration.
-   - **Event Range**: Clips data strictly to the selected event boundaries (retaining exact nanosecond boundaries).
-   - **Time Range (ROI)**: Clips data strictly to the active plot selection with subsecond precision.
-   - **Custom Time Range**: Specify manual UTC start/end date-times (defaulted to record boundaries).
-3. Select the **Time Format**:
-   - **IRIG** *(Default)*: Canonical Inter-Range Instrumentation Group format `YYYY:DDD:HH:MM:SS.fffffffff` (where `DDD` is 1-based day of year, 001–366). Header: `timestamp_irig`.
-   - **IRIG (Day of Year)**: `DDD:HH:MM:SS.fffffffff` (day-of-year without leading year). Header: `timestamp_irig`.
-   - **ISO 8601 (UTC)**: Human-readable calendar format `YYYY-MM-DD HH:MM:SS.fffffffff`. Header: `timestamp_utc`.
-   - **Unix Epoch (ns)**: Raw integer nanoseconds since 1970-01-01 00:00:00 UTC. Header: `timestamp_ns`.
-4. Select the **Export Mode**:
-   - **Full Rate**:
-     - Exports raw data at native acquisition rates.
-     - **Multi-Rate Handling**: If channels have different sample rates (e.g., 100 Hz vibration, 20 Hz pressure, 1 Hz temperature), the **highest-rate stream** automatically drives the export timeline.
-     - **Time Synchronicity**: Lower-rate channels maintain synchronicity via sample-and-hold carry-forward across time gaps and higher-rate intervals.
-     - **Initial Missing Data**: If a channel starts later than the master timeline, it outputs `0` until its first valid sample arrives. If a channel ends earlier, its last known value is carried forward through the end of the recording.
-     - **Fast Path with Auto-Fallback**: If all channels have identical sample rates and aligned start times, a high-throughput vectorized block writer is used. If chunk misalignments or time offsets are detected, the exporter automatically falls back to multi-rate synchronization.
-   - **Downsampled**:
-     - Bins telemetry across fixed temporal increments (e.g. `0.1` for 100 ms bins, `2.0` for 2-second bins).
-     - **Aggregation Statistics**:
-       - `Average` (arithmetic mean of samples in bin)
-       - `Min` (minimum sample value in bin)
-       - `Max` (maximum sample value in bin)
-       - `Peak-to-Peak` (difference between maximum and minimum: $\max - \min$)
-       - `RMS` (root mean square: $\sqrt{\frac{1}{N}\sum x_i^2}$)
-     - **Multi-Tier Buffering & Write Queue**:
-       - Buffers raw data into channel-specific accumulators across database chunk boundaries.
-       - Aggregated bin results are queued in a row write queue. Once all channels for a bin timestamp are present, the row is written to disk.
-       - If more than 2 rows are queued awaiting delayed channel data, the earliest row is flushed using carry-forward values (or `0` if no prior sample exists).
-       - **Unique Timestamp Guarantee**: Every row has a strictly unique, monotonically advancing timestamp. Duplicate rows for the same downsampled timestamp are completely eliminated.
-5. Choose an export destination file path and click **Export**.
-6. The export progress dialog displays live progress percentage, current timestamp being processed, and total rows written. Upon completion, a confirmation dialog reports the exact export file path.
+### 3.5 Exporting & Importing Binary Files (`.datx`, `.rwx`, `.dxdb`)
+- **Export File (`.datx` / `.rwx`)**: Click **Export File**, select `DATX File Writer` or `RWX File Writer`, choose the range and layout mode (`Single File`, `Channels` / per-stream, or `Sample Rate` / per-source), and click **Export**.Part filenames automatically use `GraphJson` logical names.
+- **Export DXDB**: Click **Export DXDB**, select the destination database writer adapter, target `.dxdb` path, and SQLite partition mode (`Single`, `Per Source`, `Per Stream`), and click **Export**.
+- **Import File**: Click **Import File**, select `RWX File Reader` or `DATX File Reader`, choose the source `.rwx`/`.datx` file, and choose whether to import into the **Current Active DB** or create a **New Database** (which is automatically connected and loaded into the session upon completion).
 
-**Sample Output Structure**:
-```csv
-timestamp_irig,"EngineSensors.CombustionChamberPressure","EngineSensors.Temperature"
-2026:287:20:03:38.294312704,45.210450,180.400000
-2026:287:20:03:40.294312704,45.892110,180.650000
-```
-
----
-
-### 3.5 Exporting to Binary Formats (DATX, RWX, DXDB)
-1. To export to binary files (DATX / RWX):
-   - Click **Export File** on the ribbon.
-   - Choose the file format adapter (`DATX File Writer` or `RWX File Writer`).
-   - Select the **Partitioning Mode**:
-     - `Single File`: Creates a unified container.
-     - `Split by Stream`: Generates separate files per signal channel.
-     - `Split by Source`: Generates separate files per physical datasource.
-     - `Split by Time`: Chunks data into discrete time-windowed files.
-2. To export to another DXDB database:
-   - Click **Export DXDB** on the ribbon.
-   - Specify the target `.dxdb` file path, record ID, and partitioning mode.
-
----
-
-### 3.6 Database Management & Maintenance Tools
-Click **Database Tools** on the ribbon to open the maintenance suite:
-
-1. **Database Maintenance**:
-   - **Vacuum**: Rebuilds the database file, defragmenting pages and shrinking file size.
-   - **Optimize**: Analyzes indexes and updates query planner statistics for optimal read throughput.
-2. **Time Offset Adjustment**:
-   - Select **Timezone Offset** to shift all timestamps by a fixed UTC offset (e.g. UTC-05:00).
-   - Select **Custom Offset** to shift timestamps by exact seconds, milliseconds, or microseconds.
-   - Choose the scope: Whole record, specific source, or specific stream.
-3. **Record Bounds Synchronization**:
-   - Click **Sync Record Create/Complete Bounds** to scan the raw data vectors and update `create_time` and `complete_time` in `DS_INDEX` to exact sample minimum and maximum timestamps.
-4. **Data Reduction to Event Ranges**:
-   - Click **Reduce Data To Event Ranges** to purge all raw data samples occurring outside defined events. A safety confirmation dialog prompts before deletion.
-5. **Record Deletion**:
-   - Click **Delete Record + Related Data** to permanently delete a record, its index entry, event points, and table partitions. A safety confirmation dialog prompts before deletion.
-6. **Merging Records**:
-   - **Same-Database Merge**: Specify start/end times and click **Merge Matching Records** to combine overlapping records into a single consolidated record.
-   - **Cross-Database Merge**: Click **Select Source DBs...**, specify a new **Destination URI**, select the **Destination Writer**, and click **Merge Across Selected Databases** to synthesize a new consolidated master database.
-7. **Custom SQL Console**:
-   - Enter arbitrary SQL queries directly against the connected database to inspect custom tables or run diagnostic checks.
-
----
-
-## 4. Verification and Testing
-
-PhoenixFoundry includes a comprehensive automated test suite validating all core functions:
-
-```powershell
-pytest apps/PhoenixFoundry/tests -v
-```
-
-All 55 tests run offline using synthetic temporary DXDB databases and verify:
-- **Adapter Canonical UUID Resolution**: Dynamic discovery and UUID registry validation.
-- **Strict Columnar CSV Formatting**: Validating `timestamp_irig`, `timestamp_utc`, and `timestamp_ns` headers and row layouts.
-- **Downsampled Multi-Chunk Unique Timestamps**: Verification that downsampling across multi-chunk databases produces strictly unique, non-duplicating timestamps and correct statistical aggregations (Average, Min, Max, Peak-to-Peak, RMS).
-- **Multi-Rate Full Rate Synchronization**: Verification that the highest-rate channel drives the timeline, with sample-and-hold across time gaps, early stream endings, and `0` fill for delayed stream starts.
-- **Stream Alignment & Fast-Path Fallback**: Automatic detection of timestamp offsets and smooth fallback to multi-rate synchronization.
-- **Binary File & DB Conversion**: DATX, RWX, and DXDB cloning and partitioning.
-- **Database Engineering Tools**: Bounds synchronization, offset operations, cascade deletions, and license checkout/checkin lifecycle.
+### 3.6 Database Maintenance & Merging (`Database Tools`)
+Click **Database Tools** on the ribbon to open the engineering maintenance dialog:
+- **Vacuum / Optimize**: Defragment database pages and refresh query planner statistics.
+- **Time Offset**: Shift timestamps by a **Timezone Offset** or **Custom Offset** (seconds, milliseconds, microseconds) scoped to the entire record, a specific source, or a specific stream.
+- **Sync Record Bounds**: Update `create_time` and `complete_time` in `DS_INDEX` to match exact minimum/maximum sample timestamps in the data tables.
+- **Reduce Data to Event Ranges**: Permanently delete raw data samples outside defined event windows (requires confirmation).
+- **Delete Record + Related Data**: Cascade delete a record, its events, and its data partitions (requires confirmation).
+- **Merge Records**:
+  - **Same-Database Merge**: Consolidate all records overlapping a specified start/end time window into a single record.
+  - **Cross-Database Merge**: Select multiple source databases, choose a destination writer and URI, and synthesize a consolidated master database.
+- **SQL Query Console**: Switch to the **Query** view on the main ribbon to execute custom SQL queries and inspect tabular results.

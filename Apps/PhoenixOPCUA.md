@@ -1,100 +1,156 @@
-# PhoenixOPCUA
+# PhoenixOPCUA — DXNet Bridge (OPC UA) User Guide
 
-`PhoenixOPCUA` is a high-performance desktop application and bidirectional bridge between OPC UA industrial automation systems and Apex Phoenix DXPNet ZeroMQ telemetry streams.
+`DXNet Bridge (OPC UA)` (`PhoenixOPCUA`, executable `dx+opcua.exe`) is a high-performance desktop application and bidirectional bridge between industrial **OPC UA** automation servers/clients and **Apex Phoenix DXPNet** ZeroMQ telemetry streams.
 
 ---
 
 ## 1. System Overview
 
-PhoenixOPCUA bridges the gap between industrial SCADA/PLC systems (OPC UA) and Phoenix's high-speed stream processing architecture (DXPNet):
-
-```
-+-----------------------------------------------------------------------------------+
-|                                  PhoenixOPCUA                                     |
-|                                                                                   |
-|  [OPC UA Server(s)] <---> [OPC UA Client / Writer / Mirror] <---> [Mapping Engine]|
-|                                                                         ^         |
-|                                                                         |         |
-|  [DXPNet Receiver / Transmitter] <--------------------------------------+         |
-+-----------------------------------------------------------------------------------+
+```text
++---------------------------------------------------------------------------------------+
+|                                DXNet Bridge (OPC UA)                                  |
+|                                                                                       |
+|  [OPC UA Server(s)]  <--- opc.tcp --->  - Shared OPC UA Connections Table             |
+|   - DCS / SCADA / PLC                   - Read Mode (OPC UA -> DX+ Port 27126)        |
+|   - Anonymous / User / X.509 Certs      - Write Mode (DX+ -> OPC UA)                  |
+|                                           * Direct External Server Node Write         |
+|  [External OPC UA Clients] --->           * Embedded Read-Only Mirror Server (:4850)  |
+|                                           * Vector Reductions, Scale/Clamp,           |
+|                                             Boolean Conditions & Max Write Rate (Hz)  |
++---------------------------------------------------------------------------------------+
 ```
 
 ### Core Operational Modes
-1. **OPC UA $\rightarrow$ DXPNet (Client Publisher Mode)**:
-   - Connects to one or more OPC UA industrial servers.
-   - Discovers nodes, hierarchies, and engineering units.
-   - Subscribes to value changes using monitored items.
-   - Publishes samples formatted as Phoenix binary `Message` envelopes over DXPNet for consumption by `DXPNetReceiver`.
-2. **DXPNet $\rightarrow$ OPC UA (Inbound Bridge Mode)**:
-   - Connects to a DXPNet publisher or discovers transmitters over mDNS / subnet probing.
-   - Subscribes to topics and ingests incoming `Message` payloads.
-   - Supports **Hierarchical child streams** (`DATA_MESSAGES`), unpacking sub-messages (e.g., `Max`, `Min`, `RMS`) and routing them to assigned target variables.
-   - Applies flexible mapping rules:
-     - **Write Mode**: Writes values directly into designated variable nodes on an external target OPC UA server.
-     - **Mirror Mode**: Publishes data to PhoenixOPCUA's embedded, read-only `OpcUaMirrorServer`. Ideal when external DCS/SCADA servers do not expose writable tags; external OPC UA clients simply connect to PhoenixOPCUA to subscribe to live mirrored variables.
+1. **Read Mode (`OPC UA -> DX+`)**:
+   - Connects to one or more industrial OPC UA servers.
+   - Browses the address space (`Objects`), discovers variable nodes, data types, and access levels, and filters out diagnostic system nodes by default.
+   - Subscribes to selected nodes using OPC UA Monitored Items.
+   - Publishes samples formatted as 30-byte Phoenix binary `Message` envelopes over DXPNet (default responder port **`27126`**) with automatic mDNS service announcement (`_dxnet._tcp.local`).
+2. **Write Mode (`DX+ -> OPC UA`)**:
+   - Discovers running DXPNet transmitters via mDNS or connects directly by `Host:Port` (default `127.0.0.1:27126`).
+   - Unrolls **Hierarchical Composite Streams** (`DATA_MESSAGES`), allowing individual sub-channels (e.g., `Max`, `Min`, `RMS`) to be mapped to distinct OPC UA variables.
+   - Supports two inbound publishing targets:
+     - **External Server Write (`write` mode)**: Double-click any writable variable from a connected external OPC UA server to map a DXPNet stream to it.
+     - **Embedded Read-Only Mirror Server (`mirror` mode)**: Publishes DXPNet streams to `DXNet Bridge (OPC UA)`'s built-in OPC UA server (default `opc.tcp://0.0.0.0:4850/opcua/bridge/mirror/`) under `Objects/BridgeMirror`. External SCADA/DCS clients can connect and subscribe without requiring writable tags on any plant server.
+   - Supports per-channel **Vector Reductions**, **Linear Scale / Clamp**, **Boolean Threshold Conditions (`Value > X && Value < Y`)**, and **Max Write Rate (Hz)** throttling.
 
 ---
 
-## 2. Ports and Network Protocol
+## 2. Ports & Network Protocol Reference
 
 | Service | Default Port | Port Range | Transport | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| **Outbound DXPNet Service** | `27126` | `27126` – `27176` | ZeroMQ REP + PUB | Control responder and high-rate publisher. |
-| **Inbound DXPNet Target** | `27126` | `27126` – `27176` | ZeroMQ REQ + SUB | Target port to connect/query for streams. |
-| **Mirror OPC UA Server** | `4850` | `1024` – `65535` | `opc.tcp` | Embedded read-only mirror server (`opc.tcp://0.0.0.0:4850/opcua/bridge/mirror/`). Host, port, and security configurable via setup dialog. |
-| **mDNS Service Discovery** | `5353` | Fixed | UDP Multicast | Advertises as `PhoenixOPCUA` on `_dxnet._tcp.local`. |
+| **DXNet Transmit Service (`OPC UA -> DX+`)** | `27126` | `27126` – `27176` | ZeroMQ REP + PUB | Control responder (`27126`) and high-rate publisher (`27127`). |
+| **DXNet Receive Discovery (`DX+ -> OPC UA`)** | `27126` | `27126` – `27176` | ZeroMQ REQ + SUB | Target responder port to query `get_streams` / `PUB_INFO`. |
+| **Embedded Mirror OPC UA Server** | `4850` | `1024` – `65535` | `opc.tcp` | Read-only mirror endpoint (`opc.tcp://0.0.0.0:4850/opcua/bridge/mirror/`). |
+| **Standard OPC UA Server / Test Server** | `4840` | `1024` – `65535` | `opc.tcp` | Default target endpoint (`opc.tcp://127.0.0.1:4840/freeopcua/server/`). |
+| **mDNS Service Discovery** | `5353` | Fixed | UDP Multicast | Advertises `_dxnet._tcp.local` on `224.0.0.251:5353`. |
 
 ---
 
-## 3. Operator Guide
+## 3. Launching the Application & Command-Line Options
 
-### 3.1 Launching the Application
 ```powershell
-python apps/OPCUA/run_client.py
+# Frozen executable
+dx+opcua.exe
+
+# From Python source
+py -3 apps/OPCUA/run_client.py
 ```
-Or via the test runner launcher:
-```powershell
-python tests/apps/run_test_apps.py --app bridge
-```
 
-### 3.2 OPC UA $\rightarrow$ DXPNet Setup
-1. Open the **OPC UA $\rightarrow$ DXPNet** tab.
-2. Click **Add Connection** to specify an OPC UA server endpoint (e.g., `opc.tcp://127.0.0.1:4840/freeopcua/server/`), authentication (Anonymous, Username/Password, or Certificates), and security policy.
-3. Click **Browse / Refresh Nodes** to populate the stream catalog.
-4. Check the boxes in the **Subscribe** column for variables you wish to stream.
-5. In the **DX+ Service Control** section, confirm the control port (default `27126`) and click **Start DX+ Service**.
-6. Data is now streaming over DXPNet and discoverable by any `DXPNetReceiver`.
+### Command-Line Arguments
 
-### 3.3 DXPNet $\rightarrow$ OPC UA Setup & Child Stream Mapping
-1. Open the **DXPNet $\rightarrow$ OPC UA** tab.
-2. Under **DX+ Stream Discovery**, click **Discover Services** to automatically find running DXPNet transmitters on the network, or specify the responder port (default `27126`) and click **Connect DX+**.
-3. **Mirror Server Setup (Optional)**: Click **Set Up Mirror Server** to configure PhoenixOPCUA's embedded read-only OPC UA server options:
-   - **Host & Port**: Select binding host (`0.0.0.0`, `127.0.0.1`) and port (default `4850`).
-   - **Server Name & Namespace**: Customize server identity and namespace URI.
-   - **Authentication**: Choose between Anonymous access or require Username / Password authentication.
-   - **Read-Only Publishing**: Mirrored variables are strictly read-only to external clients, protecting telemetry integrity.
-   - *Note*: Settings persist automatically in `QSettings` across relaunches and are exported in configuration JSON files.
-4. Under **Target Connections**, add at least one external OPC UA connection if using `write` mode.
-5. In the **Inbound Mapping Rules** table:
-   - Select a discovered stream and click **Add Mapping**.
-   - **Hierarchical Streams**: If the stream contains child streams (Message data type), select the parent stream to automatically expand and map individual child streams (e.g. `Stream [Max]`, `Stream [Min]`), or map each child stream to its own distinct OPC UA Node ID.
-   - **Mode Selection**:
-     - `write`: Sends updates to an external target OPC UA server tag.
-     - `mirror`: Publishes to PhoenixOPCUA's embedded mirror server under `Objects/BridgeMirror`. The **OPC UA Server / Target Connection** column automatically populates with the mirror endpoint URL.
-   - **Tooltips**: Hover over any column header or table cell for clear descriptions of modes, stream sources, target server endpoints, and data types.
-6. Click **Start Inbound Bridge**:
-   - If `mirror` mode rows are present, the embedded mirror server starts, binds the configured port, and immediately pre-initializes all mirror variable nodes under `Objects/BridgeMirror` with typed initial values (`0.0`, `0`, `False`, `""`).
-   - External OPC UA clients can immediately connect, browse, and subscribe to mirror variables before telemetry arrives.
-
-### 3.4 Saving and Loading Mapping Configurations
-- **Save Configuration**: Click **Save JSON** in the Inbound Mapping Rules section. The application exports a complete configuration file including subscriber endpoints, topics, target connections, mirror server setup (host, port, security credentials), and stream mappings.
-- **Load Configuration**: Click **Load JSON** to load a previously saved configuration. PhoenixOPCUA restores all mapping rows, child field assignments, connection targets, and mirror server parameters seamlessly.
+| Argument / Environment Variable | Description |
+| :--- | :--- |
+| `--tray` / `--minimized` / `--hidden`<br>or `PHOENIX_OPCUA_START_IN_TRAY=1` | Starts the application minimized in the Windows system tray. |
+| `--no-splash` | Skips the startup splash screen. |
+| `--single-instance`<br>or `PHOENIX_OPCUA_SINGLE_INSTANCE=1` | Enforces single-instance lock (`phoenix_opcua.lock`). |
+| `--force` / `--ignore-lock` / `--allow-multiple` | Bypasses the single-instance lock check. |
+| `--test-server` *(or `--server-test`)* | Launches the standalone **OPC UA Test Server** GUI instead of the bridge. |
+| `--test-client` *(or `--client-test`)* | Launches the standalone **OPC UA Test Client** GUI instead of the bridge. |
 
 ---
 
-## 4. Discoverability
-PhoenixOPCUA automatically registers its service on the local network via mDNS:
-- **Service Type**: `_dxnet._tcp.local`
-- **Instance Name**: `PhoenixOPCUA` (or `PhoenixOPCUA_<port>`)
-- **TXT Record**: Contains protocol (`tcp`), UUID, port, and password requirements.
-This enables automatic detection by `DXPNetReceiver` and the `dxpnet_receiver_app` test utility.
+## 4. Workspace Layout & Shared Connections
+
+1. **Header Bar**:
+   - **OPC UA Status Badge**: Shows active vs. configured OPC UA connections (`OPC UA: 1/1 connected`).
+   - **Read / Write Mode Toggle Switch**: Click **Read (OPC UA -> DX+)** or **Write (DX+ -> OPC UA)** to switch views. Green status dots indicate active Read transmission or active Write bridging.
+   - **TX / RX Counters**: Real-time transmitted (`TX`) and received (`RX`) packet counters.
+   - **Load Config / Save Config**: Persist or restore the complete bridge state (`.json`).
+   - **Logs Button**: Displays an unread warning/error badge count and opens the non-modal **Application Logs** viewer on demand.
+2. **OPC UA Connections (Shared)**:
+   - Located in the top-left panel and shared across both Read and Write modes.
+   - Click **+ Add Connection** to configure an OPC UA server endpoint:
+     - **Host / IP** and **Port** (e.g. `127.0.0.1` and `4840`), or full endpoint URL (`opc.tcp://127.0.0.1:4840/freeopcua/server/`).
+     - **Discovery**: Click **Find Servers** to query the endpoint for advertised OPC UA application URLs.
+     - **Authentication**: Choose **Anonymous**, **Username / Password**, or **Certificate (`Basic256Sha256`)** (with client certificate `.der`/`.pem` and private key paths).
+   - Once added, the bridge browses the server and classifies all variable nodes into **Readable** and **Writable** channels.
+
+---
+
+## 5. Read Mode: Streaming OPC UA Nodes to DX+ (`OPC UA -> DX+`)
+
+1. Switch the header toggle to **Read (OPC UA -> DX+)**.
+2. In the **Readable OPC UA Channels (OPC UA -> DXNet)** table:
+   - The streamlined 6-column table displays **`Source`**, **`Channel Name`**, **`Node ID`**, **`Type`**, **`Units`**, and **`Live Value`**.
+   - Filter channels using the **Search** box or the **OPC UA Connection Filter** dropdown, or check **Subscribed Only** to view only active subscriptions.
+   - **Show System Nodes**: Unchecked by default so standard OPC UA server diagnostic nodes (`ServerStatus`, `NamespaceArray`, etc.) do not clutter your telemetry list. System nodes are never streamed over DX+.
+   - Select one or more channels using **`Ctrl+Click`**, **`Shift+Click`**, **`Ctrl+Shift+Click`**, or click **Select All**.
+   - Click **Subscribe Selected** to subscribe the selected channels, **Unsubscribe Selected** to remove selected channels from the subscription set, or **Clear Subscriptions** to reset all. Subscribed rows are highlighted with a warm orange theme background (`#3d2b0d`).
+3. In the **DXNet Transmit Settings (OPC UA -> DX+)** panel (top right):
+   - Confirm the responder **Port** (default **`27126`**).
+   - Click **Start DX+ Transmit**.
+   - The **Primary URI** displays `dxnet://127.0.0.1:27126`, live node values update in the table, and any `DXPNetReceiver` on the network can discover and subscribe to the streams.
+
+---
+
+## 6. Write Mode: Writing or Mirroring DX+ Streams to OPC UA (`DX+ -> OPC UA`)
+
+1. Switch the header toggle to **Write (DX+ -> OPC UA)**.
+2. **Discover or Add DXNet Transmitter(s)**:
+   - In the **DXNet Receive Settings (DX+ -> OPC UA)** panel (top right):
+     - Click **Discover** to automatically locate running DXPNet transmitters via mDNS, **OR**
+     - Enter **Host** (`127.0.0.1`) and **Port** (`27126`) and click **+ Add**.
+3. **Map a Writable OPC UA Node (`write` mode)**:
+   - Every writable variable discovered from your connected OPC UA servers is listed in the **Writable OPC UA Channels** table.
+   - **Double-click any writable channel row** (or select it and click **Map Selected...**) to open the **Channel Mapping & Transformation** dialog:
+     1. Select the **DXNet Connection**, **Source Logical Name**, and **Stream Logical Name** (including individual child channels of hierarchical `DATA_MESSAGES` streams).
+     2. Configure **Vector / Array Reduction** (`Pass-Through`, `Max`, `Min`, `Average`, `RMS`, `Peak-to-Peak`, `Std Dev`, `Median`, `Sum`, `First [0]`, `Last [-1]`, `Element at Index [i]`).
+     3. Configure **Value Transformation & Boolean Output**:
+        - **Direct Value**: Writes the reduced value directly using the target node's OPC UA VariantType.
+        - **Linear Scale / Clamp**: Applies `Scale (m)`, `Offset (b)`, and optional min/max clamping.
+        - **Boolean Condition (BOOL Output)**: Evaluates `Value > X && Value < Y` (or `||` / single threshold) with hysteresis deadband and optional `!` invert, writing a `Boolean` variant.
+     4. Configure **Write Rate Limiting**: Set **Max Write Rate (Hz)** with trailing-edge flush and optional **Write on value change only**.
+     5. Click **Save Mapping**.
+4. **Configure Embedded Read-Only Mirror Variables (`mirror` mode)**:
+   - Click **Mirror Server...** in the **DXNet Receive Settings** panel to configure the embedded OPC UA server (bind host `0.0.0.0` or `127.0.0.1`, port `4850`, server name, namespace URI, and Anonymous or Username/Password authentication).
+   - Click **Add Mirror Mapping...** below the Writable Channels table to publish a DXPNet stream (with full Vector Reduction, Scale/Boolean Condition, and Rate Limit options) to a read-only node under `Objects/BridgeMirror` (e.g., `ns=2;s=BridgeMirror.Speed`).
+5. **Start Inbound Bridge**:
+   - Click **Start Inbound Bridge**.
+   - If mirror mappings are active, the embedded mirror server binds port `4850` and immediately pre-initializes all mirrored variable nodes so external OPC UA clients can browse and subscribe even before the first DXPNet packet arrives.
+
+---
+
+## 7. Testing Locally with Built-In OPC UA Test Tools (`--test-server` & `--test-client`)
+
+### 7.1 Launching the OPC UA Test Server
+```powershell
+# From source:
+py -3 apps/OPCUA/run_client.py --test-server
+
+# Or from frozen executable:
+dx+opcua.exe --test-server
+```
+- Hosts a local `asyncua` server at `opc.tcp://127.0.0.1:4840/freeopcua/server/`.
+- Provides quick channel count presets (`10`, `25`, `50`, `100`, `250`, or **Advanced Setup...**), multi-waveform signal generators (`Sine`, `Square`, `Triangle`, `Sawtooth`, `Counter`, `Random Walk`, `Noise`), manual value editing, and a real-time **Write Audit Log** showing external client writes from `DXNet Bridge (OPC UA)`.
+
+### 7.2 Launching the OPC UA Test Client
+```powershell
+# From source:
+py -3 apps/OPCUA/run_client.py --test-client
+
+# Or from frozen executable:
+dx+opcua.exe --test-client
+```
+- Connects to any OPC UA server (including the `--test-server` on port `4840` or `DXNet Bridge (OPC UA)`'s embedded **Mirror Server** on port `4850`), browses the hierarchical address space tree, subscribes to live Monitored Items with rate (`Hz`) tracking, and writes test values to writable nodes.

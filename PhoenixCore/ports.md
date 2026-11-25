@@ -11,8 +11,11 @@ This document establishes the official port assignment and port ranges for Phoen
 | **DSNet Protocol** | `10995` | `10990` – `10999` | TCP / DSAPI | APEX DS server network stream transport protocol. |
 | **Remote Component Manager** | `27100` | `27100` – `27125` | ZeroMQ REP / REQ | Remote component management, control commands, graph lifecycle. |
 | **DXPNet Protocol** | `27126` | `27126` – `27176` | ZeroMQ REQ/REP + PUB/SUB | High-throughput stream streaming protocol for Phoenix. |
-| **PhoenixOPCUA Outbound** | `27126` | `27126` – `27176` | ZeroMQ REP (Control) + PUB | Default control port for PhoenixOPCUA outbound DXPNet publisher service. |
-| **PhoenixOPCUA Inbound Target** | `27127` | `27126` – `27176` | ZeroMQ REQ (Control) + SUB | Default target control port for PhoenixOPCUA inbound DXPNet subscriber. |
+| **PhoenixOPCUA Outbound** | `27126` | `27126` – `27176` | ZeroMQ REP (Control) + PUB | Default control port for PhoenixOPCUA outbound DXPNet publisher service (`PUB` on `27127`). |
+| **PhoenixOPCUA Inbound Target** | `27126` | `27126` – `27176` | ZeroMQ REQ (Control) + SUB | Default target discovery port for inbound DXPNet subscriber. |
+| **PhoenixOPCUA Mirror Server** | `4850` | `1024` – `65535` | `opc.tcp` | Embedded read-only OPC UA mirror server (`opc.tcp://0.0.0.0:4850/opcua/bridge/mirror/`). |
+| **PhoenixPLC Outbound** | `27136` | `27126` – `27176` | ZeroMQ REP (Control) + PUB | Default control port for PhoenixPLC (`DXNet Bridge (PLC)`) outbound DXPNet publisher service (`PUB` on `27137`). |
+| **EtherNet/IP (CIP)** | `44818` | `44818` | TCP & UDP (`ListIdentity`) | Standard Allen-Bradley ControlLogix EtherNet/IP CIP port (and `--test-server` default). |
 | **mDNS Service Discovery** | `5353` | `5353` | UDP Multicast (`224.0.0.251`) | Multicast DNS discovery for `_dxnet._tcp.local` DXPNet services. |
 | **PhoenixLM Standard Service** | `27884` | `27884` | TCP / ZeroMQ | Standard local license client service (LOCAL and PASSTHROUGH modes). |
 | **PhoenixLM License Server** | `27885` | `27885` | TCP / ZeroMQ | Floating license server control service (SERVER mode). |
