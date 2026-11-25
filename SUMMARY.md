@@ -62,4 +62,7 @@
     * [Triggers](Components/Processors/Triggers.md)
     * [Wheatstone Bridge - Strain](Components/Processors/WSBStrainProcessor.md)
 * [Applications](Apps/README.md)
-  * [PhoenixOPCUA](Apps/PhoenixOPCUA.md)
+  * [PhoenixFoundry (DX+ DB Manager)](Apps/PhoenixFoundry.md)
+  * [PhoenixOPCUA (DXNet Bridge - OPC UA)](Apps/PhoenixOPCUA.md)
+  * [PhoenixPLC (DXNet Bridge - PLC)](Apps/PhoenixPLC.md)
+  * [PhoenixEngine (Pipeline Server)](Apps/PhoenixEngine.md)
