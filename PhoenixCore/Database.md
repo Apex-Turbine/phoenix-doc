@@ -271,8 +271,8 @@ struct databaseWriterInfo_t {
 #include <PhoenixCore/Database/DatabaseLibrary.hpp>
 #include <boost/uuid/string_generator.hpp>
 
-static const std::string SQLITE_READER_UUID = "4a123456-789a-bcde-f012-3456789abcde";
-static const std::string SQLITE_WRITER_UUID = "4a123456-789a-bcde-f012-3456789abcdf";
+static const std::string SQLITE_READER_UUID = "<sqlite-reader-id>";
+static const std::string SQLITE_WRITER_UUID = "<sqlite-writer-id>";
 
 class CustomSQLiteReader : public PhoenixDBReader
 {

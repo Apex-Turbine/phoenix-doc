@@ -50,7 +50,7 @@ GraphJson is a hierarchical JSON-based data structure that represents a computat
 
 ```json
 {
-  "name": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "<graph-instance-id>",
   "version": "1.0",
   "mode": "analysis",
   "date": "2026-03-03T10:30:00Z",
@@ -70,9 +70,9 @@ A SourceJson represents an instance of a component in the pipeline. Each SourceJ
 
 ```json
 {
-  "name": "550e8400-e29b-41d4-a716-446655440001",
+  "name": "<source-instance-id>",
   "logicalName": "Primary Sensor Array",
-  "type": "39d09444-da10-426c-a8d1-40e605008c15",
+  "type": "<source-component-type-id>",
   "enabled": true,
   "metadata": {
     "manufacturer": "Acme Corp",
@@ -106,9 +106,9 @@ A SourceJson represents an instance of a component in the pipeline. Each SourceJ
 
 #### Naming Convention
 
-- **`name`**: Should be a UUID (e.g., `550e8400-e29b-41d4-a716-446655440001`) to ensure uniqueness of the component instance in the graph
+- **`name`**: Should be a UUID (e.g., `<source-instance-id>`) to ensure uniqueness of the component instance in the graph
 - **`logicalName`**: User-readable name for display in UIs (e.g., "Primary Sensor Array", "Data Filter", "File Output")
-- **`type`**: UUID of the component implementation (e.g., `39d09444-da10-426c-a8d1-40e605008c15`)
+- **`type`**: UUID of the component implementation (e.g., `<source-component-type-id>`)
 
 #### Component Classes and Types
 
@@ -145,7 +145,7 @@ Streams represent individual data channels produced or consumed by a source. The
   ],
   "sources": [
     {
-      "sourcename": "550e8400-e29b-41d4-a716-446655440001",
+      "sourcename": "<source-instance-id>",
       "streamname": "RawTemp",
       "streamlogicalname": "Raw Sensor Reading"
     }
@@ -218,7 +218,7 @@ StreamJson filteredTemperature;
 filteredTemperature.name() = "SensorDevice1/FilterProcessor1/FilteredTemp";  // Path from origin through processor
 filteredTemperature.originSource() = "SensorDevice1";   // Original creator (even though processed)
 stream_srcitem_t dependency;
-dependency.srcname = "550e8400-e29b-41d4-a716-446655440001";  // Source UUID
+dependency.srcname = "<source-instance-id>";  // Source UUID
 dependency.streamname = "SensorDevice1/RawTemp";             // Full path of input stream
 dependency.streamlogicalname = "Raw Sensor Reading";         // Logical name
 filteredTemperature.sources().push_back(dependency);         // Has dependency - processor uses this
@@ -275,7 +275,7 @@ Represents a dependency on another stream:
 
 ```json
 {
-  "sourcename": "550e8400-e29b-41d4-a716-446655440001",
+  "sourcename": "<source-instance-id>",
   "streamname": "SensorDevice1/Temperature",
   "streamlogicalname": "Ambient Temperature"
 }
@@ -414,7 +414,7 @@ Conditions define logical predicates that evaluate stream data to determine when
   "is_enabled": true,
   "arguments": [
     {
-      "sourcename": "550e8400-e29b-41d4-a716-446655440001",
+      "sourcename": "<source-instance-id>",
       "streamname": "Pressure",
       "streamlogicalname": "System Pressure"
     }
@@ -520,7 +520,7 @@ friend PHOENIXCORE_API_SYMBOL void from_json(const JSON& j, GraphJson& p);
 
 ```cpp
 GraphJson graph;
-graph.name() = "550e8400-e29b-41d4-a716-446655440000";
+graph.name() = "<graph-instance-id>";
 // ... populate graph ...
 
 // Serialize to JSON
@@ -682,7 +682,7 @@ using JSON = nlohmann::json;
 int main() {
     // Create root graph
     GraphJson graph;
-    graph.name() = "550e8400-e29b-41d4-a716-446655440000";
+    graph.name() = "<graph-instance-id>";
     graph.version() = "1.0";
     graph.date() = "2026-03-03T10:30:00Z";
     graph.mode() = "analysis";
@@ -690,9 +690,9 @@ int main() {
     
     // Create producer source (sensor device)
     GraphJson::SourceJson sensorSource;
-    sensorSource.name() = "550e8400-e29b-41d4-a716-446655440001";
+    sensorSource.name() = "<source-instance-id>";
     sensorSource.logicalName() = "Primary Sensor";
-    sensorSource.type() = "a1b2c3d4-e5f6-47a8-b9c0-d1e2f3a4b5c6";  // Component UUID
+    sensorSource.type() = "<sensor-component-type-id>";  // Component UUID
     sensorSource.isEnabled() = true;
     sensorSource.settings()["port"] = "COM3";
     sensorSource.settings()["baudrate"] = 115200;
@@ -772,7 +772,7 @@ int main() {
 
 ```json
 {
-  "name": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "<graph-instance-id>",
   "version": "1.0",
   "mode": "analysis",
   "date": "2026-03-03T10:30:00Z",
@@ -782,9 +782,9 @@ int main() {
   },
   "datasources": [
     {
-      "name": "550e8400-e29b-41d4-a716-446655440001",
+      "name": "<source-instance-id>",
       "logicalName": "Primary Sensor",
-      "type": "a1b2c3d4-e5f6-47a8-b9c0-d1e2f3a4b5c6",
+      "type": "<sensor-component-type-id>",
       "enabled": true,
       "metadata": {},
       "settings": {
@@ -820,7 +820,7 @@ int main() {
             "is_enabled": true,
             "arguments": [
               {
-                "sourcename": "550e8400-e29b-41d4-a716-446655440001",
+                "sourcename": "<source-instance-id>",
                 "streamname": "PrimarySensor/Temperature",
                 "streamlogicalname": "Ambient Temperature"
               }
@@ -945,7 +945,7 @@ LimitCondition automatically handles multiple data types:
   "is_enabled": true,
   "arguments": [
     {
-      "sourcename": "550e8400-e29b-41d4-a716-446655440001",
+      "sourcename": "<source-instance-id>",
       "streamname": "Pressure",
       "streamlogicalname": "System Pressure"
     }
@@ -1019,10 +1019,10 @@ auto automation = std::make_unique<SingleCallbackAutomation>(autoJson, callback)
 
 ```cpp
 // ✓ Good: Use UUIDs for component instance names
-source.name() = "550e8400-e29b-41d4-a716-446655440001";
+source.name() = "<source-instance-id>";
 
 // ✓ Good: Use UUIDs for component type
-source.type() = "39d09444-da10-426c-a8d1-40e605008c15";
+source.type() = "<source-component-type-id>";
 
 // ✓ Good: Use path-format for stream names
 stream.name() = "PrimarySensor/Temperature";

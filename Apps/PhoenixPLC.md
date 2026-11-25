@@ -6,18 +6,23 @@
 
 ## 1. Overview & Key Capabilities
 
-```text
-+---------------------------------------------------------------------------------------+
-|                                  DXNet Bridge (PLC)                                   |
-|                                                                                       |
-|  [Allen-Bradley ControlLogix PLCs]  <--- EtherNet/IP (CIP Port 44818) --->            |
-|   - ControlLogix 5575 (1756-L75)         - Shared PLC Connections Table               |
-|   - ControlLogix 5563 (1756-L63)         - Read Mode (PLC -> DX+ Port 27136)          |
-|   - Controller & Program:* Tags            Periodic Poll & On-Change (COV) Deadband   |
-|   - Scalars, 1D Arrays, STRING, UDTs     - Write Mode (DX+ -> PLC)                    |
-|                                            Vector Reductions, Scale/Clamp,            |
-|                                            Boolean Conditions & Max Write Rate (Hz)   |
-+---------------------------------------------------------------------------------------+
+```mermaid
+flowchart LR
+    PLC["Allen-Bradley ControlLogix PLCs<br/>• ControlLogix 5575 (1756-L75)<br/>• ControlLogix 5563 (1756-L63)<br/>• Controller & Program Tags, Arrays, STRING, UDTs"]
+
+    subgraph Bridge["DXNet Bridge (PLC) — dx+plc.exe"]
+        CONN["Shared PLC Connections Table"]
+        READ["Read Mode (PLC to DX+)<br/>Periodic Poll & COV Deadband -> Port 27136"]
+        WRITE["Write Mode (DX+ to PLC)<br/>Reductions, Scale/Clamp, Conditions & Rate Limit"]
+    end
+
+    DXP["APEX DX+ / Phoenix DXPNet<br/>(ZeroMQ Streams & mDNS)"]
+
+    PLC <-->|"EtherNet/IP (CIP :44818)"| CONN
+    CONN --> READ
+    READ -->|"PUB :27136"| DXP
+    DXP -->|"SUB Streams"| WRITE
+    WRITE --> CONN
 ```
 
 ### Operational Directions

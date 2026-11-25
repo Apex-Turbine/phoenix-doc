@@ -15,7 +15,7 @@
 2. **Telemetry Store Queries (`/api/store` & `/api/v2`)**:
    - Connect to Phoenix databases and recording files to query record catalogs, stream descriptors, time-series data slices, and discrete events.
 3. **Component & Adapter Discovery (`/api/info`)**:
-   - Inspect all loaded C++ component plugins, database adapters, file adapters, and stream adapters along with their canonical UUIDs and attribute schemas.
+   - Inspect all loaded C++ component plugins, database adapters, file adapters, and stream adapters along with their identifiers and attribute schemas.
 
 ---
 

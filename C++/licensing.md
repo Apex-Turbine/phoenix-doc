@@ -18,7 +18,7 @@ Phoenix enforces component, stream, channel, token, and hardware serial entitlem
 
 ## Registered Application Names & Identifiers
 
-- **Default Phoenix Client App ID**: `ApexLmClient::DEFAULT_APP_ID` = `"7e2c9a45-0d61-4f38-95b2-6c840e3a7f16"`
+- **Default Phoenix Client App ID**: `ApexLmClient::DEFAULT_APP_ID` (constant defined in `PhoenixCore/PhoenixLic/apexlmclient.hpp`)
 - **ApexLM Registered Apps (`ApexApps.csv`)**: `PHOENIX`, `DXPLUS`, `DX+DAQ`, `DX+ONLINEANALYSIS`, `DX+OFFLINEANALYSIS`, `DX+REMOTEVIEWER`, `DX+DATAVIEWER`, `OPCUA`, `DBMANAGE`, `DS`, `DSAPI`, `ANY`.
 
 ## `PhoenixLic` Initialization & Feature Checkout Lifecycle

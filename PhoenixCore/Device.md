@@ -192,7 +192,7 @@ protected:
 #include <PhoenixCore/Device/Device.hpp>
 #include <boost/uuid/string_generator.hpp>
 
-static const std::string MOCK_DEVICE_UUID = "5b123456-789a-bcde-f012-3456789abcde";
+static const std::string MOCK_DEVICE_UUID = "<mock-device-id>";
 
 class CustomDAQDevice : public Device
 {

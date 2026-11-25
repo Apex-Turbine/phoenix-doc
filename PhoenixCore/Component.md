@@ -213,7 +213,7 @@ Each component must define a static `componentInfo_t` object describing its capa
 #include <PhoenixCore/Component/ComponentInfo.hpp>
 #include <boost/uuid/string_generator.hpp>
 
-static const std::string CUSTOM_SCALAR_UUID = "39d09444-da10-426c-a8d1-40e605008c15";
+static const std::string CUSTOM_SCALAR_UUID = "<custom-scalar-component-id>";
 
 inline componentInfo_t createCustomScalarInfo() {
     componentInfo_t info;
@@ -464,7 +464,7 @@ from phoenixpy import component, message, graphJson, phoenixJson, phoenixLic
 class PyGainComponent(component.Component):
     """Custom Python-based gain and offset processor."""
     
-    UUID = "789abcde-1234-5678-9abc-def012345678"
+    UUID = "<custom-python-component-id>"
 
     def __init__(self, name: str):
         super().__init__(name, self.UUID)

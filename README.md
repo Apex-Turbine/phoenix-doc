@@ -17,7 +17,7 @@ Phoenix organizes acquisition and analytics into a directed acyclic pipeline exe
    - **Databases** (`GetDatabases` via `DatabaseLibraryManager`) — `SQLite` and `PostgreSQL`
    - **Streams** (`GetStreams` via `StreamLibraryManager`) — `DXPNet` ZeroMQ and `DSNet` DS 3.x ingestion
    - **Video & Virtual** (`GetVideoIO`, `GetVirtuals`) — Video capture and VTK-based digital twin virtual sensors
-4. **APEX License Manager (`PhoenixLic` / `ApexLmClient`)**: CurveZMQ (`27884`) + Ed25519 JSON licensing for `PHOENIX` (`7e2c9a45-0d61-4f38-95b2-6c840e3a7f16`), DX+ modules, and device hardware serial checks.
+4. **APEX License Manager (`PhoenixLic` / `ApexLmClient`)**: CurveZMQ (`27884`) + Ed25519 JSON licensing for `PHOENIX`, DX+ modules, and device hardware serial checks.
 
 ## Developer Guides
 

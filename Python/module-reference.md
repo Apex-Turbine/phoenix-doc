@@ -1,13 +1,13 @@
 # `phoenixpy` SWIG Module Reference
 
-Organized index of the SWIG modules compiled into `phoenixpy` (`d:\dev\jhonea\phoenix\swig\`, packaged under `cp312` `abi3` with `-DSWIG_PYTHON_STRICT_BYTE_CHAR`).
+Organized index of the SWIG modules compiled into `phoenixpy` (packaged under `cp312` `abi3` with `-DSWIG_PYTHON_STRICT_BYTE_CHAR`).
 
 ## Licensing (`PhoenixLic/`)
 
 | SWIG Module | Primary Exported Types / Symbols |
 | --- | --- |
 | `PhoenixLic` | `PhoenixLic` (`instance()`, `setAppInfo`, `connect`, `queryLicenseSeats`, `checkoutFeature`, `checkoutHardware`, `checkinFeature`, `checkinHardware`, `disconnect`) |
-| `apexlmclient` | `ApexLmClient` (`DEFAULT_APP_ID = "7e2c9a45-0d61-4f38-95b2-6c840e3a7f16"`), `HardwareLicenseRequest` |
+| `apexlmclient` | `ApexLmClient` (`DEFAULT_APP_ID`), `HardwareLicenseRequest` |
 
 ## Components & Pipelines (`Component/`)
 

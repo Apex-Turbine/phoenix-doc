@@ -82,9 +82,9 @@ A `TableJson` document consists of four main sections: `inputs`, `processing_sta
   ],
   "inputs": [
     {
-      "name": "550e8400-e29b-41d4-a716-446655440001",
+      "name": "<device-instance-id>",
       "logicalName": "Chassis 1 DAQ",
-      "type": "5b123456-789a-bcde-f012-3456789abcde",
+      "type": "<device-type-id>",
       "channels": ["Chan1", "Chan2"],
       "health": ["Temp_Sensor", "Voltage_Rail"],
       "settings": { "sample_rate": 100000.0 }
@@ -92,15 +92,15 @@ A `TableJson` document consists of four main sections: `inputs`, `processing_sta
   ],
   "streams": [
     {
-      "name": "550e8400-e29b-41d4-a716-446655440001/Chan1",
+      "name": "<device-instance-id>/Chan1",
       "logicalName": "Blade 1 Vibration",
-      "input": "550e8400-e29b-41d4-a716-446655440001",
+      "input": "<device-instance-id>",
       "input_stream": "Chan1",
       "is_enabled": true,
       "processors": {
         "unit_convert": {
-          "type": "39d09444-da10-426c-a8d1-40e605008c15",
-          "name": "39d09444-da10-426c-a8d1-40e605008c15",
+          "type": "<processor-type-id>",
+          "name": "<processor-type-id>",
           "logicalName": "EU Scaling",
           "is_enabled": true,
           "settings": { "cs_stream_scalar": 100.0, "cs_stream_offset": 0.0 }
@@ -110,9 +110,9 @@ A `TableJson` document consists of four main sections: `inputs`, `processing_sta
   ],
   "outputs": [
     {
-      "name": "660e8400-e29b-41d4-a716-446655440002",
+      "name": "<output-instance-id>",
       "logicalName": "Telemetry Streamer",
-      "type": "7d123456-789a-bcde-f012-3456789abcdf",
+      "type": "<output-type-id>",
       "settings": { "port": 5555 },
       "streams": [
         {

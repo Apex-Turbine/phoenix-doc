@@ -6,18 +6,27 @@
 
 ## 1. System Overview
 
-```text
-+---------------------------------------------------------------------------------------+
-|                                DXNet Bridge (OPC UA)                                  |
-|                                                                                       |
-|  [OPC UA Server(s)]  <--- opc.tcp --->  - Shared OPC UA Connections Table             |
-|   - DCS / SCADA / PLC                   - Read Mode (OPC UA -> DX+ Port 27126)        |
-|   - Anonymous / User / X.509 Certs      - Write Mode (DX+ -> OPC UA)                  |
-|                                           * Direct External Server Node Write         |
-|  [External OPC UA Clients] --->           * Embedded Read-Only Mirror Server (:4850)  |
-|                                           * Vector Reductions, Scale/Clamp,           |
-|                                             Boolean Conditions & Max Write Rate (Hz)  |
-+---------------------------------------------------------------------------------------+
+```mermaid
+flowchart LR
+    OPC["Industrial OPC UA Servers<br/>(DCS / SCADA / PLC)<br/>Anonymous, User or X.509"]
+    CLIENTS["External OPC UA Clients<br/>(SCADA / Historians)"]
+
+    subgraph Bridge["DXNet Bridge (OPC UA) — dx+opcua.exe"]
+        CONN["Shared OPC UA Connections Table"]
+        READ["Read Mode (OPC UA to DX+)<br/>Monitored Items -> Port 27126"]
+        WRITE["Write Mode (DX+ to OPC UA)<br/>Reductions, Scale/Clamp, Conditions & Rate Limit"]
+        MIRROR["Embedded Read-Only Mirror Server<br/>(opc.tcp :4850)"]
+    end
+
+    DXP["APEX DX+ / Phoenix DXPNet<br/>(ZeroMQ Streams & mDNS)"]
+
+    OPC <-->|"opc.tcp"| CONN
+    CONN --> READ
+    READ -->|"PUB :27126/:27127"| DXP
+    DXP -->|"SUB Streams"| WRITE
+    WRITE -->|"Direct Node Write"| CONN
+    WRITE --> MIRROR
+    CLIENTS -->|"opc.tcp Subscribe"| MIRROR
 ```
 
 ### Core Operational Modes

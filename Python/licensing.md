@@ -12,7 +12,7 @@ from phoenixpy import PhoenixLic, apexlmclient
 
 lic = PhoenixLic.PhoenixLic.instance()
 
-# 1. Configure application metadata (DEFAULT_APP_ID = "7e2c9a45-0d61-4f38-95b2-6c840e3a7f16")
+# 1. Configure application metadata using ApexLmClient.DEFAULT_APP_ID
 app_id = apexlmclient.ApexLmClient.DEFAULT_APP_ID
 lic.setAppInfo(app_id, "PHOENIX", "1.0.0", "localhost", "127.0.0.1", 0)
 

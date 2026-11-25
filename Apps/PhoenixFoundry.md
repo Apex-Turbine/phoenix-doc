@@ -6,20 +6,24 @@
 
 ## 1. System Overview
 
-```text
-+-----------------------------------------------------------------------------------+
-|                            DX+ DB Manager (PhoenixFoundry)                        |
-|                                                                                   |
-|  [Database Adapters: DXDB / Postgres] <---> [PhoenixFacade] <---> [File Adapters] |
-|                                                    |                              |
-|           +----------------------------------------+                              |
-|           v                                        v                              |
-|  [PyQtGraph Decimator & ROI]              [Multi-Format Exporter & Importer]      |
-|  - 32,768 Envelope Bins                   - Strict Columnar CSV (timestamp_irig)  |
-|  - Interactive Event Markers              - DATX & RWX Partitioning Containers    |
-|  - Human-Readable UTC & IRIG Tooltips     - Database-to-Database Cloning          |
-|  - Subsecond ROI Event Creation           - Downsampled Statistics & Reductions   |
-+-----------------------------------------------------------------------------------+
+```mermaid
+flowchart TD
+    subgraph Adapters["Database & File Adapters"]
+        DB["Database Adapters<br/>(DXDB SQLite & PostgreSQL)"]
+        FILES["File Adapters<br/>(.rwx & .datx Containers)"]
+    end
+
+    FACADE["DX+ DB Manager (PhoenixFoundry)<br/>PhoenixFacade Core"]
+
+    subgraph Modules["Visualization, Export & Maintenance"]
+        PLOT["PyQtGraph Decimator & ROI<br/>• 32,768 envelope bins (10M+ pts)<br/>• Interactive event markers & ROI<br/>• UTC & IRIG tooltips"]
+        EXPORT["Multi-Format Exporter & Maintenance<br/>• Strict columnar CSV (timestamp_irig)<br/>• Partitioned .datx / .rwx & DB cloning<br/>• Downsampled stats, merge, Vacuum & SQL"]
+    end
+
+    DB <--> FACADE
+    FILES <--> FACADE
+    FACADE --> PLOT
+    FACADE --> EXPORT
 ```
 
 ### Core Capabilities
@@ -50,16 +54,16 @@
 
 ## 2. Supported Adapters & Formats
 
-| Adapter Display Name | Native Identifier | Canonical UUID | Extensions / Transport | Role |
-| :--- | :--- | :--- | :--- | :--- |
-| **DXDB / SQLite Reader** | `DXDBReader` | `d80bbdaa-93c4-4282-bacf-d78c9f8299e3` | `.dxdb`, `.db`, `.sqlite` | Reads SQLite-backed Phoenix recordings (including multi-part partitioned `.dxdb` archives). |
-| **DXDB / SQLite Writer** | `DXDBWriter` | `ce9112b6-d80f-466c-9562-9f1d9541c023` | `.dxdb`, `.db`, `.sqlite` | Creates or writes SQLite-backed Phoenix databases (`Single`, `Per Source`, `Per Stream`). |
-| **PostgreSQL Database Reader** | `PostgreSQL Database Reader` | `b233c946-c454-4628-8695-6c9eaca91f5e` | Network / URI | Reads from enterprise PostgreSQL telemetry stores. |
-| **PostgreSQL Database Writer** | `PsqlDBWriter` | `8146bc04-cc35-4fa1-ab04-38ff17b7efdc` | Network / URI | Writes records into enterprise PostgreSQL telemetry stores. |
-| **RWX File Reader** | `RwxReader` | `36ccabd4-4c34-427e-950e-c3735bc0e5eb` | `.rwx` | Reads high-throughput RWX binary time-series containers. |
-| **RWX File Writer** | `RWXWriter` | `cda19df1-084a-476e-973a-46c4cf7f694b` | `.rwx` | Exports records into single or multi-part RWX files. |
-| **DATX File Reader** | `DatxReader` | `8f3b2c1d-4e5a-4b6c-7d8e-9f0a1b2c3d4e` | `.datx`, `.datx_index` | Reads industrial DATX binary containers. |
-| **DATX File Writer** | `DatxWriter` | `2e9adef9-dc25-4d01-89e5-a8286a8a82e8` | `.datx` | Exports records into single or multi-part DATX files. |
+| Adapter Display Name | Native Identifier | Extensions / Transport | Role |
+| :--- | :--- | :--- | :--- |
+| **DXDB / SQLite Reader** | `DXDBReader` | `.dxdb`, `.db`, `.sqlite` | Reads SQLite-backed Phoenix recordings (including multi-part partitioned `.dxdb` archives). |
+| **DXDB / SQLite Writer** | `DXDBWriter` | `.dxdb`, `.db`, `.sqlite` | Creates or writes SQLite-backed Phoenix databases (`Single`, `Per Source`, `Per Stream`). |
+| **PostgreSQL Database Reader** | `PostgreSQL Database Reader` | Network / URI | Reads from enterprise PostgreSQL telemetry stores. |
+| **PostgreSQL Database Writer** | `PsqlDBWriter` | Network / URI | Writes records into enterprise PostgreSQL telemetry stores. |
+| **RWX File Reader** | `RwxReader` | `.rwx` | Reads high-throughput RWX binary time-series containers. |
+| **RWX File Writer** | `RWXWriter` | `.rwx` | Exports records into single or multi-part RWX files. |
+| **DATX File Reader** | `DatxReader` | `.datx`, `.datx_index` | Reads industrial DATX binary containers. |
+| **DATX File Writer** | `DatxWriter` | `.datx` | Exports records into single or multi-part DATX files. |
 
 ---
 

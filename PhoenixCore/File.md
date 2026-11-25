@@ -200,8 +200,8 @@ struct fileWriterInfo_t {
 #include <boost/uuid/string_generator.hpp>
 #include <fstream>
 
-static const std::string CSV_READER_UUID = "6c123456-789a-bcde-f012-3456789abcde";
-static const std::string CSV_WRITER_UUID = "6c123456-789a-bcde-f012-3456789abcdf";
+static const std::string CSV_READER_UUID = "<csv-reader-id>";
+static const std::string CSV_WRITER_UUID = "<csv-writer-id>";
 
 class CustomCSVReader : public FileReader
 {

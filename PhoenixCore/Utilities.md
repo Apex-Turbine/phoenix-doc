@@ -234,7 +234,7 @@ void parseAndMatchStreamNames(const GraphJson::SourceJson& src, const GraphJson:
 
 void generateIds()
 {
-    std::string newId = PhoenixUUID::generateUUID(); // e.g. "550e8400-e29b-41d4-a716-446655440000"
+    std::string newId = PhoenixUUID::generateUUID(); // Returns a newly generated unique identifier string
     bool isValid = PhoenixUUID::isValidUUID(newId);
 }
 ```

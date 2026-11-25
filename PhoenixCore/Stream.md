@@ -209,8 +209,8 @@ struct streamTransmitterInfo_t {
 #include <PhoenixCore/Stream/StreamLibrary.hpp>
 #include <boost/uuid/string_generator.hpp>
 
-static const std::string ZMQ_RECEIVER_UUID = "7d123456-789a-bcde-f012-3456789abcde";
-static const std::string ZMQ_TRANSMITTER_UUID = "7d123456-789a-bcde-f012-3456789abcdf";
+static const std::string ZMQ_RECEIVER_UUID = "<zmq-receiver-id>";
+static const std::string ZMQ_TRANSMITTER_UUID = "<zmq-transmitter-id>";
 
 class CustomZMQReceiver : public StreamReceiver
 {
