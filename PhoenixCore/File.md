@@ -15,27 +15,27 @@ The file subsystem consists of the following key interfaces and classes:
 ```mermaid
 graph TD
     subgraph "Application Layer"
-        FSRC["File Source Component"] -->|Reads via| FR["FileReader (NVI Interface)"]
-        FOUT["File Output Component"] -->|Writes via| FW["FileWriter (NVI Interface)"]
+        FSRC["File Source Component"] -->|"Reads via"| FR["FileReader (NVI Interface)"]
+        FOUT["File Output Component"] -->|"Writes via"| FW["FileWriter (NVI Interface)"]
     end
 
     subgraph "File Abstraction & Callbacks"
-        FR -->|Dispatches to| FRC["FileReaderCallbackItem"]
-        FRC -->|messageCallback(msg)| FSRC
-        FOUT -->|write(msg)| FW
+        FR -->|"Dispatches to"| FRC["FileReaderCallbackItem"]
+        FRC -->|"messageCallback(msg)"| FSRC
+        FOUT -->|"write(msg)"| FW
     end
 
     subgraph "Dynamic Library / Factory"
-        FLM["FileLibraryManager"] -->|Loads DLL (GetFiles)| FL["FileLibrary"]
+        FLM["FileLibraryManager"] -->|"Loads DLL (GetFiles)"| FL["FileLibrary"]
         FL --> FA["FileAdapter"]
-        FA -->|createReader()| FR
-        FA -->|createWriter()| FW
+        FA -->|"createReader()"| FR
+        FA -->|"createWriter()"| FW
     end
 
     subgraph "File Format Implementations"
-        RWX["RWX Plugin"] -.->|Implements| FA
-        DATX["DATX Plugin"] -.->|Implements| FA
-        CSV["CSV / HDF5 Plugin"] -.->|Implements| FA
+        RWX["RWX Plugin"] -.->|"Implements"| FA
+        DATX["DATX Plugin"] -.->|"Implements"| FA
+        CSV["CSV / HDF5 Plugin"] -.->|"Implements"| FA
     end
 ```
 

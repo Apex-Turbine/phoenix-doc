@@ -1,6 +1,6 @@
 # PhoenixOPCUA — DXNet Bridge (OPC UA) User Guide
 
-`DXNet Bridge (OPC UA)` (`PhoenixOPCUA`, executable `dx+opcua.exe`) is a high-performance desktop application and bidirectional bridge between industrial **OPC UA** automation servers/clients and **Apex Phoenix DXPNet** ZeroMQ telemetry streams.
+`DXNet Bridge (OPC UA)` (`PhoenixOPCUA`, executable `dx+opcua.exe`) is a high-performance desktop application and bidirectional bridge between industrial **OPC UA** automation servers/clients and **APEX Phoenix DXPNet** ZeroMQ telemetry streams.
 
 ---
 

@@ -24,7 +24,7 @@ graph TD
         CAM --> VI["VideoInput"]
         FILE --> VI
         STREAM --> VI
-        VI -->|Encodes Frame + Header| HDR["frameMessageHdr_t (cols, rows, step, channels)"]
+        VI -->|"Encodes Frame + Header"| HDR["frameMessageHdr_t (cols, rows, step, channels)"]
         HDR --> MSG["Message (MSG_VIDEO_FRAME / DATA_BYTES)"]
     end
 
@@ -34,9 +34,9 @@ graph TD
     end
 
     subgraph "Dynamic Plugin Architecture"
-        VLM["VideoLibraryManager"] -->|Loads DLL (GetVideoIO)| VL["VideoLibrary"]
+        VLM["VideoLibraryManager"] -->|"Loads DLL (GetVideoIO)"| VL["VideoLibrary"]
         VL --> VA["VideoAdapter"]
-        VA -->|create()| VI
+        VA -->|"create()"| VI
     end
 ```
 

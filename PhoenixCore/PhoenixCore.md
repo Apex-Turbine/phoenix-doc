@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**PhoenixCore** is the high-performance, modular C++ core engine and SDK powering Apex Turbine's Phoenix data acquisition, signal processing, and digital twin analytics platform. 
+**PhoenixCore** is the high-performance, modular C++ core engine and SDK powering APEX's Phoenix data acquisition, signal processing, and digital twin analytics platform. 
 
 It is designed for real-time telemetry processing, multi-channel hardware acquisition, high-throughput signal analysis (vibration, acoustics, strain, blade tip timing), and digital twin simulation. PhoenixCore exposes both a native C++ SDK and a Python SDK ([`PhoenixPy`](#python-sdk-phoenixpy)).
 

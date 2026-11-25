@@ -15,23 +15,23 @@ The stream subsystem consists of the following primary interfaces and classes:
 ```mermaid
 graph TD
     subgraph "Publishing Node (Transmitter)"
-        SRC["Data Producer / Component"] -->|Pushes Data| ST["StreamTransmitter"]
-        ST -->|Publishes on Topic| NET["Network Transport (TCP / ZMQ / WebSocket / UDP)"]
-        ST -->|Announces Presence (mDNS)| DISC["Network Discovery Bus"]
+        SRC["Data Producer / Component"] -->|"Pushes Data"| ST["StreamTransmitter"]
+        ST -->|"Publishes on Topic"| NET["Network Transport (TCP / ZMQ / WebSocket / UDP)"]
+        ST -->|"Announces Presence (mDNS)"| DISC["Network Discovery Bus"]
     end
 
     subgraph "Subscribing Node (Receiver)"
-        DISC -->|Discovers Servers| SR["StreamReceiver"]
-        NET -->|Streams Data| SR
-        SR -->|Dispatches via| SRCB["StreamReceiverCallbackItem"]
-        SRCB -->|messageCallback(Message)| CONS["Consumer Component / Viewer"]
+        DISC -->|"Discovers Servers"| SR["StreamReceiver"]
+        NET -->|"Streams Data"| SR
+        SR -->|"Dispatches via"| SRCB["StreamReceiverCallbackItem"]
+        SRCB -->|"messageCallback(Message)"| CONS["Consumer Component / Viewer"]
     end
 
     subgraph "Dynamic Plugin Architecture"
-        SLM["StreamLibraryManager"] -->|Loads DLL (GetStreams)| SL["StreamLibrary"]
+        SLM["StreamLibraryManager"] -->|"Loads DLL (GetStreams)"| SL["StreamLibrary"]
         SL --> SA["StreamAdapter"]
-        SA -->|createReceiver()| SR
-        SA -->|createTransmitter()| ST
+        SA -->|"createReceiver()"| SR
+        SA -->|"createTransmitter()"| ST
     end
 ```
 

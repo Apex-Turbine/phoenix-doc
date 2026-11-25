@@ -14,26 +14,26 @@ The device subsystem consists of the following primary components:
 ```mermaid
 graph TD
     subgraph "Application & Graph Engine"
-        DSRC["Device Source Component"] -->|Uses| DEV["Device (NVI Interface)"]
-        DOUT["Device Output Component"] -->|Uses| DEV
+        DSRC["Device Source Component"] -->|"Uses"| DEV["Device (NVI Interface)"]
+        DOUT["Device Output Component"] -->|"Uses"| DEV
     end
 
     subgraph "Device Base Class (NVI Pattern)"
-        DEV -->|Input Mode| STRM["Data Streaming Callback"]
-        DEV -->|Output Mode| WTR["write(Message) Output Mapping"]
-        DEV -->|Settings Hierarchy| TREE["deviceItem_t Tree"]
+        DEV -->|"Input Mode"| STRM["Data Streaming Callback"]
+        DEV -->|"Output Mode"| WTR["write(Message) Output Mapping"]
+        DEV -->|"Settings Hierarchy"| TREE["deviceItem_t Tree"]
     end
 
     subgraph "Dynamic Library / Factory"
-        DLM["DeviceLibraryManager"] -->|Loads DLL (GetDevices)| DL["DeviceLibrary"]
+        DLM["DeviceLibraryManager"] -->|"Loads DLL (GetDevices)"| DL["DeviceLibrary"]
         DL --> DA["DeviceAdapter"]
-        DA -->|createDevice()| DEV
+        DA -->|"createDevice()"| DEV
     end
 
     subgraph "Hardware Drivers"
-        MC["MeCalc Driver"] -.->|Implements| DA
-        SV["Scanivalve Driver"] -.->|Implements| DA
-        NI["NI DAQ Driver"] -.->|Implements| DA
+        MC["MeCalc Driver"] -.->|"Implements"| DA
+        SV["Scanivalve Driver"] -.->|"Implements"| DA
+        NI["NI DAQ Driver"] -.->|"Implements"| DA
     end
 ```
 

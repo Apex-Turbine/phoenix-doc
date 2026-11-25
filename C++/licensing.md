@@ -1,6 +1,6 @@
 # C++ Developer Licensing (`PhoenixLic` & `ApexLmClient`)
 
-Phoenix enforces component, stream, channel, token, and hardware serial entitlements through **`PhoenixLic`** (`PhoenixCore/PhoenixLic/PhoenixLic.hpp`) backed by **Apex License Manager (`ApexLM`)** (`PhoenixCore/PhoenixLic/apexlmclient.hpp`).
+Phoenix enforces component, stream, channel, token, and hardware serial entitlements through **`PhoenixLic`** (`PhoenixCore/PhoenixLic/PhoenixLic.hpp`) backed by **APEX License Manager (`ApexLM`)** (`PhoenixCore/PhoenixLic/apexlmclient.hpp`).
 
 ## ApexLM Protocol, Ports & Licensing Modes
 

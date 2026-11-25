@@ -16,28 +16,28 @@ The database subsystem consists of the following key interfaces and classes:
 ```mermaid
 graph TD
     subgraph "Application / Component Layer"
-        SRC["Database Source Component"] -->|Reads via| RDR["PhoenixDBReader"]
-        OUT["Database Output Component"] -->|Writes via| WTR["PhoenixDBWriter"]
+        SRC["Database Source Component"] -->|"Reads via"| RDR["PhoenixDBReader"]
+        OUT["Database Output Component"] -->|"Writes via"| WTR["PhoenixDBWriter"]
     end
 
     subgraph "Database Abstraction Layer"
-        RDR -->|Inherits| CONN["PhoenixDBConnection"]
-        WTR -->|Inherits| CONN
-        CONN -->|Creates| QRY["DBQuery"]
-        RDR -->|Dispatches via| CB["PhoenixDBReaderCallbackItem"]
+        RDR -->|"Inherits"| CONN["PhoenixDBConnection"]
+        WTR -->|"Inherits"| CONN
+        CONN -->|"Creates"| QRY["DBQuery"]
+        RDR -->|"Dispatches via"| CB["PhoenixDBReaderCallbackItem"]
     end
 
     subgraph "Dynamic Library / Plugin Loading"
-        DLM["DatabaseLibraryManager"] -->|Loads DLL (GetDatabases)| DL["DatabaseLibrary"]
+        DLM["DatabaseLibraryManager"] -->|"Loads DLL (GetDatabases)"| DL["DatabaseLibrary"]
         DL --> DBA["PhoenixDBAdapter"]
-        DBA -->|createReader()| RDR
-        DBA -->|createWriter()| WTR
+        DBA -->|"createReader()"| RDR
+        DBA -->|"createWriter()"| WTR
     end
 
     subgraph "Database Driver Implementations"
-        SQLITE["SQLite Plugin"] -.->|Implements| DBA
-        PG["PostgreSQL Plugin"] -.->|Implements| DBA
-        TS["TimescaleDB Plugin"] -.->|Implements| DBA
+        SQLITE["SQLite Plugin"] -.->|"Implements"| DBA
+        PG["PostgreSQL Plugin"] -.->|"Implements"| DBA
+        TS["TimescaleDB Plugin"] -.->|"Implements"| DBA
     end
 ```
 

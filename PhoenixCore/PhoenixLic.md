@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `PhoenixCore/PhoenixLic` module provides the client-side licensing infrastructure for Phoenix. It interfaces with the **Apex License Manager (`ApexLM`)** daemon over ZeroMQ using CurveZMQ encryption to enforce:
+The `PhoenixCore/PhoenixLic` module provides the client-side licensing infrastructure for Phoenix. It interfaces with the **APEX License Manager (`ApexLM`)** daemon over ZeroMQ using CurveZMQ encryption to enforce:
 
 - **Token-based functional feature licensing** (e.g. `ANALYSIS`, `spectral_analysis`, `modal_analysis`)
 - **Channel bandwidth and sampling rate limits** (`APEXDS_CHANNELS_<CLASS>`)

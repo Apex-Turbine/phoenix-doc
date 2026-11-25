@@ -1,6 +1,6 @@
 # Licensing from Python (`PhoenixLic` & `apexlmclient`)
 
-Before instantiating licensed acquisition hardware (`Device`), DSP processor components, or database writers in Python, initialize **`PhoenixLic`** (`PhoenixLic.i` / `apexlmclient.i`) against your running **Apex License Manager (`ApexLM`)** instance.
+Before instantiating licensed acquisition hardware (`Device`), DSP processor components, or database writers in Python, initialize **`PhoenixLic`** (`PhoenixLic.i` / `apexlmclient.i`) against your running **APEX License Manager (`ApexLM`)** instance.
 
 > [!NOTE]
 > Make sure the local ApexLM daemon is reachable on CurveZMQ port `27884` (`APEXLM_PORT`), or configured to reach a floating server (`27885` / `27886`). You can check active seats and Ed25519 licenses in your browser at `http://127.0.0.1:27887/`.

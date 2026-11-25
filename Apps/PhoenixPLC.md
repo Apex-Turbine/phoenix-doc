@@ -1,6 +1,6 @@
 # PhoenixPLC — DXNet Bridge (PLC) User Guide
 
-`DXNet Bridge (PLC)` (`PhoenixPLC`, executable `dx+plc.exe`) is a bidirectional desktop bridge application that connects **Allen-Bradley ControlLogix 5575 (`1756-L75`)** and **ControlLogix 5563 (`1756-L63`)** Programmable Logic Controllers over **EtherNet/IP (CIP)** with **Apex Phoenix DXPNet** high-speed telemetry streams.
+`DXNet Bridge (PLC)` (`PhoenixPLC`, executable `dx+plc.exe`) is a bidirectional desktop bridge application that connects **Allen-Bradley ControlLogix 5575 (`1756-L75`)** and **ControlLogix 5563 (`1756-L63`)** Programmable Logic Controllers over **EtherNet/IP (CIP)** with **APEX Phoenix DXPNet** high-speed telemetry streams.
 
 ---
 

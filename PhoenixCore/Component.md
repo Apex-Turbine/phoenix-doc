@@ -25,20 +25,20 @@ graph TD
     end
 
     subgraph "Dynamic Library / Factory"
-        CLM["ComponentLibraryManager"] -->|Loads DLL| CL["ComponentLibrary (GetComponents)"]
+        CLM["ComponentLibraryManager"] -->|"Loads DLL"| CL["ComponentLibrary (GetComponents)"]
         CL --> CA["ComponentAdapter"]
-        CA -->|create()| C["Component Instance"]
+        CA -->|"create()"| C["Component Instance"]
     end
 
     subgraph "Component Execution Engine"
-        CM -->|Instantiates| C
-        OQCM -->|Lazy Subgraph Compilation| CM
-        C -->|setCallbackManager| CB["ComponentCallbackItem"]
-        CM -->|Wires Stream Routing| SH["ComponentSubscriptionHandler"]
-        TP["PhoenixThreadPool"] -->|Executes Tasks| SH
-        SH -->|process(Message)| C
-        C -->|sendMsg(Message)| CB
-        CB -->|Queues Next Stage| SH
+        CM -->|"Instantiates"| C
+        OQCM -->|"Lazy Subgraph Compilation"| CM
+        C -->|"setCallbackManager"| CB["ComponentCallbackItem"]
+        CM -->|"Wires Stream Routing"| SH["ComponentSubscriptionHandler"]
+        TP["PhoenixThreadPool"] -->|"Executes Tasks"| SH
+        SH -->|"process(Message)"| C
+        C -->|"sendMsg(Message)"| CB
+        CB -->|"Queues Next Stage"| SH
     end
 ```
 
@@ -219,7 +219,7 @@ inline componentInfo_t createCustomScalarInfo() {
     componentInfo_t info;
     info.setName("Custom Scalar");
     info.setComponentUuid(boost::uuids::string_generator()(CUSTOM_SCALAR_UUID));
-    info.setVendor("APEX Turbine");
+    info.setVendor("APEX");
     info.setDescription("Scales and offsets incoming numeric telemetry streams");
     info.setComponentClass(ComponentClass::PROCESSOR);
     info.setComponentClassType(ComponentClassType::PROCESSOR);
@@ -472,7 +472,7 @@ class PyGainComponent(component.Component):
         self.offset = 0.5
         self._info = component.componentInfo_t()
         self._info.setName("Python Gain Processor")
-        self._info.setVendor("APEX Turbine")
+        self._info.setVendor("APEX")
         self._info.setComponentClass(component.ComponentClass_PROCESSOR)
         self._info.setComponentClassType(component.ComponentClassType_PROCESSOR)
         self._info.setFeature("ANALYSIS")

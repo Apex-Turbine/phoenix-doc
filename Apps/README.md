@@ -1,6 +1,6 @@
 # Phoenix Applications — User & Operator Guides
 
-Welcome to the user and operator documentation for the **Apex Turbine Phoenix Applications Suite**. Each desktop application and protocol bridge in the Phoenix ecosystem is documented below with step-by-step operational workflows, configuration guides, network port references, command-line options, and troubleshooting tips.
+Welcome to the user and operator documentation for the **APEX Phoenix Applications Suite**. Each desktop application and protocol bridge in the Phoenix ecosystem is documented below with step-by-step operational workflows, configuration guides, network port references, command-line options, and troubleshooting tips.
 
 ---
 

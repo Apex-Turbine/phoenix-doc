@@ -9,9 +9,9 @@ In real-time telemetry processing, configuration parameters and metadata often h
 ```mermaid
 graph TD
     A["Raw JSON Object"] --> B{"PhoenixJson::getDouble(json['gain'], 1.0)"}
-    B -->|Key Exists & Valid Number| C["Returns Parsed Double"]
-    B -->|Key Missing or Null| D["Returns Default (1.0)"]
-    B -->|Type Mismatch (e.g. String '1.5')| E["Attempts Safe Coercion or Returns Default"]
+    B -->|"Key Exists & Valid Number"| C["Returns Parsed Double"]
+    B -->|"Key Missing or Null"| D["Returns Default (1.0)"]
+    B -->|"Type Mismatch (e.g. String '1.5')"| E["Attempts Safe Coercion or Returns Default"]
 ```
 
 ---
