@@ -1,8 +1,13 @@
 # PhoenixLic & Licensing Architecture
 
+> [!IMPORTANT]
+> **End-User API & Format License Notice:** PhoenixCore licensing APIs and APEX file/database/protocol formats are licensed strictly for **internal end-user use** and cannot be used for commercial means unless explicitly authorized by APEX through formal written agreement ([Software License Agreement](../../../Release%20Policies/software-license-agreement.md)).
+>
+> **Legacy FLEXlm / FlexNet Discontinuation (October 2027):** Legacy **FLEXlm / FlexNet** (`lmgrd`) licensing is discontinued as of **October 2027**. All product versions going forward use **[APEX License Manager](../../../License%20Manager/README.md)** (`ApexLM`), powered by the **APEX LM Daemon (`ApexLM_Service`)** and **APEX LM Server Daemon (`ApexLM_Server_Service`)**.
+
 ## Overview
 
-The `PhoenixCore/PhoenixLic` module provides the client-side licensing infrastructure for Phoenix. It interfaces with the **APEX License Manager (`ApexLM`)** daemon over ZeroMQ using CurveZMQ encryption to enforce:
+The `PhoenixCore/PhoenixLic` module provides the client-side licensing infrastructure for Phoenix. It interfaces with the **[APEX License Manager (`ApexLM`)](../../../License%20Manager/README.md)** daemon over ZeroMQ using CurveZMQ encryption to enforce:
 
 - **Token-based functional feature licensing** (e.g. `ANALYSIS`, `spectral_analysis`, `modal_analysis`)
 - **Channel bandwidth and sampling rate limits** (`APEXDS_CHANNELS_<CLASS>`)

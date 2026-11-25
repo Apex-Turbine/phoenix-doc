@@ -1,5 +1,8 @@
 # APEX-H5
 
+> [!IMPORTANT]
+> **End-User Format License Notice:** The `APEX-H5` HDF5 file format and schema are licensed strictly for **internal end-user use** with authorized APEX software and cannot be used for commercial means unless explicitly authorized by APEX through formal written agreement ([Software License Agreement](../../../../Release%20Policies/software-license-agreement.md)).
+
 ### APEX-H5 Output
 
 ### Settings

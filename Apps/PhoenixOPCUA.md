@@ -55,6 +55,9 @@ flowchart LR
 | **Standard OPC UA Server / Test Server** | `4840` | `1024` – `65535` | `opc.tcp` | Default target endpoint (`opc.tcp://127.0.0.1:4840/freeopcua/server/`). |
 | **mDNS Service Discovery** | `5353` | Fixed | UDP Multicast | Advertises `_dxnet._tcp.local` on `224.0.0.251:5353`. |
 
+> [!NOTE]
+> `DXNet Bridge (OPC UA)` checks out `OPCUA` / `opcua-bridge-app` via **[APEX License Manager](../../../License%20Manager/README.md)** (legacy FLEXlm discontinued **October 2027**) and is governed by the **[Software License Agreement](../../../Release%20Policies/software-license-agreement.md)**.
+
 ---
 
 ## 3. Launching the Application & Command-Line Options

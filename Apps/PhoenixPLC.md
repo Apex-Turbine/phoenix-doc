@@ -53,7 +53,7 @@ dx+plc.exe
 py -3 apps/PLC/run_client.py
 ```
 
-On launch, `DXNet Bridge (PLC)` validates its license (`plc-bridge-app` via `PhoenixLic`), displays the splash screen, and opens the main workspace.
+On launch, `DXNet Bridge (PLC)` validates its license (`plc-bridge-app` via `PhoenixLic` / **[APEX License Manager](../../../License%20Manager/README.md)**; legacy FLEXlm discontinued **October 2027**), displays the splash screen, and opens the main workspace. Usage is governed by the **[Software License Agreement](../../../Release%20Policies/software-license-agreement.md)**.
 
 ### 2.2 Command-Line Arguments
 

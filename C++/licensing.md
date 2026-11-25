@@ -1,11 +1,18 @@
 # C++ Developer Licensing (`PhoenixLic` & `ApexLmClient`)
 
-Phoenix enforces component, stream, channel, token, and hardware serial entitlements through **`PhoenixLic`** (`PhoenixCore/PhoenixLic/PhoenixLic.hpp`) backed by **APEX License Manager (`ApexLM`)** (`PhoenixCore/PhoenixLic/apexlmclient.hpp`).
+> [!IMPORTANT]
+> **End-User API & Format License Notice:** Phoenix C++ licensing APIs, SDK libraries, and APEX file/database/protocol formats are licensed strictly for **internal end-user use** and cannot be used for commercial means unless explicitly authorized by APEX through formal written agreement ([Software License Agreement](../../../Release%20Policies/software-license-agreement.md)).
+>
+> **Legacy FLEXlm / FlexNet Discontinuation (October 2027):** Legacy **FLEXlm / FlexNet** (`lmgrd`) licensing ends in **October 2027**. All product versions going forward use **[APEX License Manager](../../../License%20Manager/README.md)** (`ApexLM`), the **APEX LM Daemon (`ApexLM_Service`)**, and the **APEX LM Server Daemon (`ApexLM_Server_Service`)**.
+
+Phoenix enforces component, stream, channel, token, and hardware serial entitlements through **`PhoenixLic`** (`PhoenixCore/PhoenixLic/PhoenixLic.hpp`) backed by **[APEX License Manager (`ApexLM`)](../../../License%20Manager/README.md)** (`PhoenixCore/PhoenixLic/apexlmclient.hpp`).
 
 ## ApexLM Protocol, Ports & Licensing Modes
 
-- **Transport**: ZeroMQ **CurveZMQ** encrypted client/server messaging with **Ed25519**-signed JSON licenses stored in SQLite databases (`ApexLicenseManager.md`).
-- **Deployment Modes**: `LOCAL`, `PASSTHROUGH`, and floating `SERVER` (including offline borrowing up to **30 days**).
+See [Workstation & Server Setup](../../../License%20Manager/setup-and-server.md), [CLI Tools Reference](../../../License%20Manager/cli-reference.md), and [Web UI & Offline Reservations](../../../License%20Manager/web-ui-and-reservations.md) for daemon administration.
+
+- **Transport**: ZeroMQ **CurveZMQ** encrypted client/server messaging with signed Format Version 2 JSON licenses stored in SQLite databases.
+- **Deployment Modes**: `LOCAL`, `PASSTHROUGH`, and floating `SERVER` (including offline reservations up to **30 days** via the **Reserve** tab).
 - **Network Ports**:
 
 | Port | Constant | Purpose |
@@ -14,7 +21,7 @@ Phoenix enforces component, stream, channel, token, and hardware serial entitlem
 | `27885` | `APEXLM_SERVER_PORT` | Floating license server endpoint |
 | `27886` | `APEXLM_SERVER_LISTEN` | Floating server listener |
 | `27887` | `APEXLM_MANAGEMENT_PORT` | Local Web UI (`http://127.0.0.1:27887/`) |
-| `27888` | `APEXLM_SERVER_MANAGEMENT_PORT` | Floating server Web UI |
+| `27888` | `APEXLM_SERVER_MANAGEMENT_PORT` | Floating server Web UI (`http://127.0.0.1:27888/` on server loopback) |
 
 ## Registered Application Names & Identifiers
 

@@ -1,7 +1,7 @@
 # PhoenixEngine — Pipeline Server User Guide
 
 > [!NOTE]
-> `PhoenixEngine` (`apps/PhoenixEngine/phoenix.py`) is the legacy FastAPI/REST and system-tray pipeline server for executing C++ `PhoenixCore` signal-processing DAG graphs and querying data stores over HTTP.
+> `PhoenixEngine` (`apps/PhoenixEngine/phoenix.py`) is the legacy FastAPI/REST and system-tray pipeline server for executing C++ `PhoenixCore` signal-processing DAG graphs and querying data stores over HTTP. Licensing uses **[APEX License Manager](../../../License%20Manager/README.md)** (legacy FLEXlm discontinued **October 2027**), and API/format usage is governed by the **[Software License Agreement](../../../Release%20Policies/software-license-agreement.md)**.
 
 ---
 

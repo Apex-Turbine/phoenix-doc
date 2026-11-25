@@ -1,5 +1,8 @@
 # Phoenix Applications — User & Operator Guides
 
+> [!NOTE]
+> All Phoenix applications use **[APEX License Manager](../../../License%20Manager/README.md)** (`ApexLM`; legacy FLEXlm / `lmgrd` is discontinued as of **October 2027**) and are governed by the **[Software Release Policies](../../../Release%20Policies/README.md)** and **[Software License Agreement](../../../Release%20Policies/software-license-agreement.md)** (strictly internal end-user use; commercial use prohibited without formal written APEX agreement).
+
 Welcome to the user and operator documentation for the **APEX Phoenix Applications Suite**. Each desktop application and protocol bridge in the Phoenix ecosystem is documented below with step-by-step operational workflows, configuration guides, network port references, command-line options, and troubleshooting tips.
 
 ---
@@ -26,4 +29,4 @@ Welcome to the user and operator documentation for the **APEX Phoenix Applicatio
 | **Allen-Bradley EtherNet/IP (CIP)** | `44818` | TCP & UDP (`ListIdentity` `0x0063`) | Standard Rockwell / Allen-Bradley ControlLogix EtherNet/IP port. |
 | **OPC UA Standard Server** | `4840` | `opc.tcp` | Standard OPC UA server endpoint port (and `--test-server` default). |
 | **mDNS Service Discovery** | `5353` | UDP Multicast (`224.0.0.251`) | Automatic discovery of `_dxnet._tcp.local` transmitters (`DX+OPCUA`, `DX+PLC`). |
-| **PhoenixLM License Service** | `27884` | TCP / ZeroMQ | Local license daemon validation for `FOUNDRY-APP`, `opcua-bridge-app`, and `plc-bridge-app`. |
+| **[APEX License Manager](../../../License%20Manager/README.md) (`PhoenixLM` / `ApexLM`)** | `27884` | TCP / CurveZMQ (`27887` Web UI) | Local license daemon validation for `FOUNDRY-APP`, `opcua-bridge-app`, and `plc-bridge-app`. |

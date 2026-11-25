@@ -17,9 +17,11 @@ This document establishes the official port assignment and port ranges for Phoen
 | **PhoenixPLC Outbound** | `27136` | `27126` – `27176` | ZeroMQ REP (Control) + PUB | Default control port for PhoenixPLC (`DXNet Bridge (PLC)`) outbound DXPNet publisher service (`PUB` on `27137`). |
 | **EtherNet/IP (CIP)** | `44818` | `44818` | TCP & UDP (`ListIdentity`) | Standard Allen-Bradley ControlLogix EtherNet/IP CIP port (and `--test-server` default). |
 | **mDNS Service Discovery** | `5353` | `5353` | UDP Multicast (`224.0.0.251`) | Multicast DNS discovery for `_dxnet._tcp.local` DXPNet services. |
-| **PhoenixLM Standard Service** | `27884` | `27884` | TCP / ZeroMQ | Standard local license client service (LOCAL and PASSTHROUGH modes). |
-| **PhoenixLM License Server** | `27885` | `27885` | TCP / ZeroMQ | Floating license server control service (SERVER mode). |
-| **PhoenixLM Server Listen Port**| `27886` | `27886` | TCP / ZeroMQ | Floating license server broadcast/listen port. |
+| **PhoenixLM Standard Service** | `27884` | `27884` | TCP / ZeroMQ | Standard local license client service (`LOCAL` and `PASSTHROUGH` modes). |
+| **PhoenixLM License Server** | `27885` | `27885` | TCP / ZeroMQ | Floating license server control service (`SERVER` mode). |
+| **PhoenixLM Server Listen Port** | `27886` | `27886` | TCP / ZeroMQ | Floating license server listener for remote `PASSTHROUGH` daemons. |
+| **ApexLM Local Web Admin UI** | `27887` | `27887` | Loopback HTTP | Local daemon Web Admin UI & `/api/v1` management API (`127.0.0.1`). |
+| **ApexLM Server Web Admin UI** | `27888` | `27888` | Loopback HTTP | Floating server daemon Web Admin UI & `/api/v1` API (`127.0.0.1`). |
 
 ---
 
@@ -43,10 +45,10 @@ This document establishes the official port assignment and port ranges for Phoen
 - **Assigned Port Range**: `10990` to `10999`.
 - **Socket Architecture**: Proprietary APEX DSAPI network protocol used by `DSNetReceiver` for connecting to legacy and high-speed DS acquisition hardware.
 
-### 2.4 Licensing (PhoenixLM / ApexLM: `27884` – `27886`)
-- **Default Standard Port (`27884`)**: Used by `ApexLmClientLocal` and the local background service for license validation in `LOCAL` and `PASSTHROUGH` modes.
-- **Default Server Port (`27885`)**: Used by the enterprise floating license manager service (`SERVER` mode) to service client checkout/checkin requests across the local network.
-- **Default Server Listen Port (`27886`)**: Used by floating license servers for peer discovery, heartbeat monitoring, and failover arbitration.
+### 2.4 Licensing (PhoenixLM / ApexLM: `27884` – `27888`)
+- **Default Standard Port (`27884`)**: Used by `ApexLmClientLocal` and the local background service (**APEX LM Daemon**, `ApexLM_Service`) for license validation in `LOCAL` and `PASSTHROUGH` modes.
+- **Default Server Port (`27885`) / External Listen (`27886`)**: Used by the enterprise floating license manager service (**APEX LM Server Daemon**, `ApexLM_Server_Service`, `SERVER` mode) to service remote `PASSTHROUGH` daemon checkout, reservation, and heartbeat requests across the network.
+- **Web Admin UI Ports (`27887` / `27888`)**: Loopback-only (`127.0.0.1`) HTTP management UI & REST APIs for workstation (`27887`) and floating server (`27888`) administration. See **[APEX License Manager — Workstation & Server Setup](../../../License%20Manager/setup-and-server.md)** and **[Web UI & Reservations](../../../License%20Manager/web-ui-and-reservations.md)** *(legacy FLEXlm / `lmgrd` `27000` is discontinued October 2027)*.
 
 ---
 

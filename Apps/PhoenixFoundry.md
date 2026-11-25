@@ -77,7 +77,7 @@ dx+dbmanager.exe
 # From Python source
 py -3 apps/PhoenixFoundry/src/main.py
 ```
-Upon startup, `DX+ DB Manager` checks out the `FOUNDRY-APP` license feature via `PhoenixLic`, displays the splash screen, and opens the main ribbon workspace.
+Upon startup, `DX+ DB Manager` checks out the `FOUNDRY-APP` license feature via `PhoenixLic` (see **[APEX License Manager](../../../License%20Manager/README.md)**; legacy FLEXlm is discontinued **October 2027**), displays the splash screen, and opens the main ribbon workspace. Database and binary formats (`.dxdb`, `.rwx`, `.datx`) are governed by the **[Software License Agreement](../../../Release%20Policies/software-license-agreement.md)**.
 
 ### 3.2 Connecting to & Switching Between Databases
 1. Click **Connect DB** on the top ribbon.

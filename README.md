@@ -1,5 +1,12 @@
 # Phoenix API Developer Guide
 
+> [!IMPORTANT]
+> **Strict Non-Commercial End-User API & Format License:** All Phoenix C++20/Python (`phoenixpy`) APIs, plugin interfaces, and APEX file/database/protocol formats are licensed strictly for **internal end-user use** and **cannot be used for commercial means** unless explicitly authorized by APEX through formal written agreement. See the **[Software License Agreement](../../Release%20Policies/software-license-agreement.md)** and **[Software Release Policies](../../Release%20Policies/README.md)**.
+
+> [!WARNING]
+> **Legacy FLEXlm / FlexNet Discontinuation — October 2027**
+> Legacy **FLEXlm / FlexNet** (`lmgrd`) licensing will be **discontinued as of October 2027**. Phoenix API uses **[APEX License Manager](../../License%20Manager/README.md)** (`ApexLM`), powered by the **APEX LM Daemon (`ApexLM_Service`)** and **APEX LM Server Daemon (`ApexLM_Server_Service`)**.
+
 ![APEX Phoenix Components](Components/Images/DX+Processors.png)
 
 **Phoenix API** is a **C++20** and **Python (`phoenixpy`)** modular data acquisition, DSP pipeline, streaming, storage, and digital twin SDK powering the APEX Phoenix / DX+ platform.
@@ -17,7 +24,7 @@ Phoenix organizes acquisition and analytics into a directed acyclic pipeline exe
    - **Databases** (`GetDatabases` via `DatabaseLibraryManager`) — `SQLite` and `PostgreSQL`
    - **Streams** (`GetStreams` via `StreamLibraryManager`) — `DXPNet` ZeroMQ and `DSNet` DS 3.x ingestion
    - **Video & Virtual** (`GetVideoIO`, `GetVirtuals`) — Video capture and VTK-based digital twin virtual sensors
-4. **APEX License Manager (`PhoenixLic` / `ApexLmClient`)**: CurveZMQ (`27884`) + Ed25519 JSON licensing for `PHOENIX`, DX+ modules, and device hardware serial checks.
+4. **[APEX License Manager (`PhoenixLic` / `ApexLmClient`)](../../License%20Manager/README.md)**: CurveZMQ (`27884`) + signed v2 JSON licensing for `PHOENIX`, DX+ modules, and device hardware serial checks.
 
 ## Developer Guides
 

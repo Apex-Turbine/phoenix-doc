@@ -1,5 +1,8 @@
 # PhoenixCore Developer Guide & SDK Documentation
 
+> [!IMPORTANT]
+> **End-User SDK & Format License Notice:** `PhoenixCore` SDK headers, libraries, and APEX file/database/protocol formats are licensed strictly for **internal end-user use** and cannot be used for commercial means without formal written authorization from APEX. See the **[Software License Agreement](../../../Release%20Policies/software-license-agreement.md)**, **[Software Release Policies](../../../Release%20Policies/README.md)** (`AVX2` CPU requirement & 18-month maintenance lifecycle), and **[APEX License Manager](../../../License%20Manager/README.md)** (legacy FLEXlm discontinued October 2027).
+
 ## Introduction
 
 **PhoenixCore** is the high-performance, modular C++ core engine and SDK powering APEX's Phoenix data acquisition, signal processing, and digital twin analytics platform. 

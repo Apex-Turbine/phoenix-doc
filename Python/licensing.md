@@ -1,9 +1,14 @@
 # Licensing from Python (`PhoenixLic` & `apexlmclient`)
 
-Before instantiating licensed acquisition hardware (`Device`), DSP processor components, or database writers in Python, initialize **`PhoenixLic`** (`PhoenixLic.i` / `apexlmclient.i`) against your running **APEX License Manager (`ApexLM`)** instance.
+> [!IMPORTANT]
+> **End-User API & Format License Notice:** Phoenix Python (`phoenixpy`) APIs and APEX file/database/protocol formats are licensed strictly for **internal end-user use** and cannot be used for commercial means unless explicitly authorized by APEX through formal written agreement ([Software License Agreement](../../../Release%20Policies/software-license-agreement.md)).
+>
+> **Legacy FLEXlm / FlexNet Discontinuation (October 2027):** Legacy **FLEXlm / FlexNet** (`lmgrd`) licensing ends in **October 2027**. All product versions going forward use **[APEX License Manager](../../../License%20Manager/README.md)** (`ApexLM`).
+
+Before instantiating licensed acquisition hardware (`Device`), DSP processor components, or database writers in Python, initialize **`PhoenixLic`** (`PhoenixLic.i` / `apexlmclient.i`) against your running **[APEX License Manager (`ApexLM`)](../../../License%20Manager/README.md)** instance.
 
 > [!NOTE]
-> Make sure the local ApexLM daemon is reachable on CurveZMQ port `27884` (`APEXLM_PORT`), or configured to reach a floating server (`27885` / `27886`). You can check active seats and Ed25519 licenses in your browser at `http://127.0.0.1:27887/`.
+> Make sure the local ApexLM daemon is reachable on CurveZMQ port `27884` (`APEXLM_PORT`), or configured to reach a floating server (`27885` / `27886`). You can inspect active seats and load Format Version 2 licenses in your browser at `http://127.0.0.1:27887/`.
 
 ## Startup & Checkout Pattern
 
@@ -34,4 +39,4 @@ lic.disconnect()
 > [!TIP]
 > Hardware drivers (`Device::initialize()`) automatically handle `checkoutHardware(vendor, serial, err)` for connected chassis serial numbers and release them cleanly during `uninitialize()`.
 
-See [C++ Licensing Guide](../C++/licensing.md) and [PhoenixCore PhoenixLic Reference](../PhoenixCore/PhoenixLic.md) for port numbers (`27884`–`27888`), borrowing behavior (`30 days`), and registered `ApexApps.csv` application names.
+See [C++ Licensing Guide](../C++/licensing.md), [PhoenixCore PhoenixLic Reference](../PhoenixCore/PhoenixLic.md), **[APEX License Manager](../../../License%20Manager/README.md)**, and **[Web UI & Offline Reservations](../../../License%20Manager/web-ui-and-reservations.md)** for port numbers (`27884`–`27888`), offline reservation behavior (**Reserve** tab, up to `30 days`), and registered `ApexApps.csv` application names.
